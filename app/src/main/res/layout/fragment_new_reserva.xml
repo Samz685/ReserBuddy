@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/Theme.ReserBuddy"
+    tools:context=".ui.newReserva.NewReservaFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/nueva_reserva"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etNombreCliente"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/nombre_del_cliente"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/etTelefonoCliente"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/tel_fono"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+
+    <!--    <NumberPicker-->
+    <!--        android:id="@+id/number_picker"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:maxValue="40"-->
+    <!--        android:minValue="1 "-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:padding="16dp"-->
+    <!--        android:wrapSelectorWheel="true" />-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etFecha"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:clickable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/dd_mm_aaaa"
+                android:inputType="number"
+                android:paddingStart="10dp"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/ivDatePicker"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etFecha"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_calendar" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp">
+
+            <EditText
+                android:id="@+id/etNumComensales"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/n_comensales"
+                android:inputType="number"
+                android:paddingStart="10dp"
+                android:textSize="20sp" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <!--    <Spinner-->
+    <!--        android:id="@+id/sp_ubicacion"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:background="@drawable/edit_text_background"-->
+    <!--        android:spinnerMode="dropdown"-->
+    <!--        android:spinnerSelector="@drawable/ic_down"-->
+    <!--        android:textSize="24dp" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etHora"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/hh_mm"
+                android:inputType="number"
+                android:paddingStart="10dp"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/ivHora"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etHora"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_hora" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp">
+
+            <EditText
+                android:id="@+id/sp_ubicacion"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/salon_o_terraza"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingStart="10dp"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/etComentario"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/comentario"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_crearReserva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:clickable="true"
+        android:padding="12dp"
+        android:text="@string/crear_reserva"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

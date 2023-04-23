@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "375640903282",
+    "project_id": "reserbuddy",
+    "storage_bucket": "reserbuddy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375640903282:android:c71ebcd87c7fd125bafceb",
+        "android_client_info": {
+          "package_name": "com.example.reserbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375640903282-2an8n42es32p5n81k8j080ii4hfc2mug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbkz-iAlTu_SiLAirDMX8cs24Pbv-P7bQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375640903282-2an8n42es32p5n81k8j080ii4hfc2mug.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
