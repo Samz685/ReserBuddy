@@ -29,6 +29,15 @@ class ReservaViewModel : ViewModel() {
 
     }
 
+    fun deleteReserva(reserva: Reserva) : String{
+        return reservaRepo.deleteReserva(reserva)
+
+    }
+
+    fun updateReserva(reserva: Reserva){
+        reservaRepo.updateReserva(reserva)
+    }
+
 
 
 //    fun getById(userId: String): LiveData<Usuario> {

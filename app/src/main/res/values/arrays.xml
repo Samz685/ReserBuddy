@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ubicaciones">
+        <item>Terraza</item>
+        <item>Salon</item>
+
+    </string-array>
+
+</resources>

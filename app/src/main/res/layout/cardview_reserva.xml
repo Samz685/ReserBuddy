@@ -1,114 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card-view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardview"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_margin="16dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    card-view:cardBackgroundColor="#FFFFFF"
-    card-view:cardCornerRadius="4dp">
 
-
-    <ImageView
-        android:id="@+id/ivReserva"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card-view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        />
+        card-view:cardBackgroundColor="#FFFFFF"
+        card-view:cardCornerRadius="4dp">
 
-
-
-    <TextView
-        android:id="@+id/tvCantidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:drawableEnd="@drawable/ic_gente"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:text="12"
-        android:textStyle="bold"
-        android:textSize="25dp"/>
-
-    <ImageView
-        android:id="@+id/ivEstado"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="@drawable/ic_ok"
-        android:layout_marginStart="345dp"
-        android:layout_marginTop="60dp"
-        />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:orientation="vertical"
-        android:layout_marginStart="100dp">
-
-        <TextView
-            android:id="@+id/tvNombreCliente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="Nombre cliente"
-            android:textStyle="bold"
-            android:textSize="18dp"/>
-
-        <TextView
-            android:id="@+id/tvTelefono"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:hint="Telefono"
-            android:textSize="18dp"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/tvHora"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="24:00"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tvFechaReserva"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:hint="06/14/2023"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:orientation="vertical">
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/ivReserva"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvNombreCliente"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Nombre cliente"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <FrameLayout
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="65dp"
+                            android:layout_marginTop="10dp">
+
+
+                            <TextView
+                                android:id="@+id/tvEstado"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Completada"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:background="@drawable/estado_green_rectangle"/>
+                        </FrameLayout>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvTelefono"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Telefono"
+                        android:textSize="18dp" />
+
+                    <FrameLayout
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <View
+                            android:id="@+id/grayRectangle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/grey_rectangle" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/tvHora"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="25dp"
+                                android:drawableStart="@drawable/ic_hora"
+                                android:drawablePadding="5dp"
+                                android:hint="24:00"
+                                android:textSize="16sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:id="@+id/tvFechaReserva"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="25dp"
+                                android:drawableStart="@drawable/ic_calendar2"
+                                android:drawablePadding="5dp"
+                                android:hint="06/14/2023"
+                                android:textSize="16sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:id="@+id/tvCantidad"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_gente"
+                                android:drawablePadding="5dp"
+                                android:text="12"
+                                android:textSize="16sp"
+                                android:textStyle="normal" />
+
+
+                        </LinearLayout>
+
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+
+                <!--        <TextView-->
+                <!--            android:id="@+id/tvUbicacion"-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_marginTop="10dp"-->
+                <!--            android:hint="06/14/2023"-->
+                <!--            android:textStyle="bold"-->
+                <!--            android:textSize="18dp"/>-->
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/expandible_reserva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#88888888"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+
+                    <Button
+                        android:id="@+id/btnCancelar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:textSize="10dp"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/redlight"
+                        android:text="Cancelar"
+                        android:layout_marginRight="20dp"
+                        android:drawableLeft="@drawable/ic_cancelado"/>
+
+                    <Button
+                        android:id="@+id/btnConfirmar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="Confirmar"
+                        android:textSize="10dp"
+                        android:textColor="@color/white"
+                        android:drawableLeft="@drawable/ic_confirmado"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#88888888"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/tComentario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comentario:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="2dp"/>
+
+                <TextView
+                    android:id="@+id/etComentario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contenido del CardView"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvUbicacion"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:hint="06/14/2023"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textSize="18dp"/>-->
 
-    </LinearLayout>
-
-
-</androidx.cardview.widget.CardView>
-
-
+    </androidx.cardview.widget.CardView>

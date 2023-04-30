@@ -19,4 +19,8 @@
     <string name="comentario">Comentario</string>
     <string name="crear">Crear</string>
     <string name="crear_reserva">Crear Reserva</string>
+    <string name="semana">Semana</string>
+    <string name="mes">Mes</string>
+    <string name="periodo">Periodo</string>
+    <string name="hoy">Hoy</string>
 </resources>

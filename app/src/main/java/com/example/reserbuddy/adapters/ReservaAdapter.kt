@@ -4,27 +4,27 @@ import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reserbuddy.R
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
-import com.squareup.picasso.Picasso
 
 class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnItemClickListener, var reservaViewmodel: ReservaViewModel):
     RecyclerView.Adapter<ReservaAdapter.ViewHolder>() {
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v=LayoutInflater.from(parent.context).inflate(R.layout.cardview_reserva, parent, false)
-        return ViewHolder(v,listener,reservaViewmodel)
+        val v =
+            LayoutInflater.from(parent.context).inflate(R.layout.cardview_reserva, parent, false)
+        return ViewHolder(v, listener, reservaViewmodel)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item=listaReservas.get(position)
-        holder.tvNombreCliente.text=item.cliente
+        val item = listaReservas.get(position)
+        holder.tvNombreCliente.text = item.cliente
         holder.tvTelefono.text = item.telefono
         holder.tvFechaReserva.text = item.fecha.toString()
         holder.tvCantidad.text = item.numComensales.toString()
@@ -33,6 +33,41 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         holder.ivReserva.setImageResource(item.foto)
         holder.ivReserva.setOnClickListener {
             listener.onImageClick(position)
+        }
+        holder.etComentario.text = item.comentario
+        holder.tvEstado.text = item.estado.toString()
+
+        //Actualizar estado desde los botones del cardView
+        holder.btnConfirmar.setOnClickListener {
+            var reserva = Reserva()
+            reserva.estado = "Confirmada"
+            reserva.id = listaReservas[position].id
+            reservaViewmodel.updateReserva(reserva)
+            listaReservas[position].estado = reserva.estado.toString()
+            holder.tvEstado.setBackgroundResource(R.drawable.estado_green_rectangle)
+            notifyItemChanged(position)
+            true
+
+        }
+        holder.btnCancelar.setOnClickListener {
+            var reserva = Reserva()
+            reserva.estado = "Cancelada"
+            reserva.id = listaReservas[position].id
+            reservaViewmodel.updateReserva(reserva)
+            listaReservas[position].estado = reserva.estado.toString()
+            holder.tvEstado.setBackgroundResource(R.drawable.estado_red_rectangle)
+            notifyItemChanged(position)
+            true
+        }
+
+
+        //Setear color fondo estado
+        if(item.estado == "Confirmada"){
+            holder.tvEstado.setBackgroundResource(R.drawable.estado_green_rectangle)
+        } else if(item.estado == "Cancelada"){
+            holder.tvEstado.setBackgroundResource(R.drawable.estado_red_rectangle)
+        } else {
+            holder.tvEstado.setBackgroundResource(R.drawable.estado_grey_rectangle)
         }
 
     }
@@ -47,13 +82,17 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         reservaViewmodel: ReservaViewModel
     ) : RecyclerView.ViewHolder(v), View.OnClickListener, View.OnCreateContextMenuListener {
 
+
         var tvNombreCliente: TextView = v.findViewById(R.id.tvNombreCliente)
         var tvTelefono: TextView = v.findViewById(R.id.tvTelefono)
         var tvFechaReserva: TextView = v.findViewById(R.id.tvFechaReserva)
         var tvHora: TextView = v.findViewById(R.id.tvHora)
         var tvCantidad: TextView = v.findViewById(R.id.tvCantidad)
         var ivReserva: ImageView = v.findViewById(R.id.ivReserva)
-
+        var etComentario: TextView = v.findViewById(R.id.etComentario)
+        var btnConfirmar: Button = v.findViewById(R.id.btnConfirmar)
+        var btnCancelar: Button = v.findViewById(R.id.btnCancelar)
+        var tvEstado : TextView = v.findViewById(R.id.tvEstado)
 
 
 
@@ -63,21 +102,22 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         }
 
         override fun onClick(p0: View?) {
-            this.listener.OnItemClick(p0!!,adapterPosition)
+            this.listener.OnItemClick(p0!!, adapterPosition)
+
 
         }
 
-       override fun onCreateContextMenu(
-           menu: ContextMenu?,
-           v: View?,
-           menuInfo: ContextMenu.ContextMenuInfo?
-       ) {
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
 
-           menu!!.setHeaderTitle(""+listaReservas[adapterPosition].cliente)
-           val item = menu!!.add("Confirmar")
-           val item2 = menu.add("Cancelar")
+            menu!!.setHeaderTitle("" + listaReservas[adapterPosition].cliente)
+            val item = menu!!.add("Confirmar")
+            val item2 = menu.add("Cancelar")
 
-           item.setOnMenuItemClickListener {
+            item.setOnMenuItemClickListener {
 
 //               var fruta : Fruta = listaReservas[adapterPosition]
 //
@@ -87,14 +127,22 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
 //
 //               notifyItemRemoved(adapterPosition)
 //               notifyDataSetChanged()
-               true    }
+                true
+            }
 
-           item2.setOnMenuItemClickListener {
-//               listaReservas[adapterPosition].cantidad = 0
-//               notifyItemChanged(adapterPosition)
-               true    }
-       }
+            item2.setOnMenuItemClickListener {
+                var res = listaReservas[adapterPosition]
+                reservaViewmodel.deleteReserva(res)
 
-   }
+                listaReservas.removeAt(adapterPosition)
+                notifyItemRemoved(adapterPosition)
+                notifyDataSetChanged()
 
+                true
+            }
+
+        }
+
+    }
 }
+

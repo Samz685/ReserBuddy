@@ -1,6 +1,7 @@
 package com.example.reserbuddy
 
 import android.os.Bundle
+import android.widget.LinearLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider

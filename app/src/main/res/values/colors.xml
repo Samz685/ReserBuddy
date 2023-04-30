@@ -8,4 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4CAF50</color>
+    <color name="greenlight">#0F9D58</color>
+    <color name="greylight">#F0F0F0</color>
+    <color name="greylight2">#d3d3d3</color>
+    <color name="redlight">#BA4949</color>
+    <color name="grey3">#616161</color>
 </resources>

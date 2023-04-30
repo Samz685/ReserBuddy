@@ -35,7 +35,8 @@ class ReservaRepo {
             "numComensales" to reserva.numComensales,
             "foto" to reserva.foto,
             "comentario" to reserva.comentario,
-            "grupo" to reserva.grupo
+            "grupo" to reserva.grupo,
+            "estado" to reserva.estado
 
         )
         solicitudRef.set(datos).addOnSuccessListener {
@@ -47,6 +48,37 @@ class ReservaRepo {
         return reserva.id
     }
 
+    fun deleteReserva(reserva: Reserva) : String{
+
+        val db = Firebase.firestore
+        val solicitudRef = db.collection("reservas").document(reserva.id)
+
+        reserva.id = solicitudRef.id
+
+        solicitudRef.delete().addOnSuccessListener {
+            Log.i("Firebase", "Datos borrados correctamente")
+        }.addOnFailureListener { error ->
+            Log.e("FirebaseError", error.message.toString())
+        }
+
+        return reserva.id
+    }
+
+    fun updateReserva(reserva: Reserva) {
+
+        var reservaRef = db.collection("reservas").document(reserva.id)
+
+
+        val datos = hashMapOf(
+
+            "estado" to reserva.estado
+        )
+        reservaRef.update(datos as Map<String, Any>).addOnSuccessListener {
+            Log.i("FireBase", "Reserva Actualizada")
+        }.addOnFailureListener { error ->
+            Log.e("FirebaseError", error.message.toString())
+        }
+    }
 
 //    fun getAll() {
 //        var reserva = Reserva()

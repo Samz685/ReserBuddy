@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.AdapterView
+
 import androidx.lifecycle.ViewModelProvider
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentNewReservaBinding
@@ -14,7 +15,7 @@ import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.Timestamp
-import java.text.SimpleDateFormat
+
 import java.util.*
 
 private lateinit var datePickerDialog: DatePickerDialog
@@ -24,11 +25,10 @@ var calendar = Calendar.getInstance()
 var yearSelected = calendar.get(Calendar.YEAR)
 var monthSelected = calendar.get(Calendar.MONTH)
 var dayOfMonthSelected = calendar.get(Calendar.DAY_OF_MONTH)
-private lateinit var formattedTime : Timestamp
-private lateinit var formattedDate : Date
 
 private lateinit var fechaElegida : String
 private lateinit var horaElegida : String
+var ubiSeleccionada = ""
 
 
 
@@ -49,6 +49,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
         _binding = FragmentNewReservaBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
         return binding.root
 
 
@@ -87,6 +88,17 @@ class NewReservaFragment : BottomSheetDialogFragment() {
             crearReserva()
         }
 
+        binding.spUbicacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                ubiSeleccionada = parent.getItemAtPosition(position).toString()
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                ubiSeleccionada = "Sin seleccionar"
+            }
+        }
+
 
     }
 
@@ -108,28 +120,23 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun elegirhora(){
 
-        timePickerDialog.show()
-
-    }
 
     private fun crearReserva(){
 
-        var grupo = "El Pikon"
         var nombre = binding.etNombreCliente.text.toString()
         var telefono = binding.etTelefonoCliente.text.toString()
         var fecha = fechaElegida
         var hora = horaElegida
         var numComensales = binding.etNumComensales.text.toString().toInt()
-        var ubicacion = binding.spUbicacion.text.toString()
+        var ubicacion = ubiSeleccionada
         var foto = R.drawable.ic_terraza
         if (ubicacion.equals("Terraza")){
             foto = R.drawable.ic_terraza
         } else{
             foto = R.drawable.ic_comedor
         }
-        var comentario = binding.etComentario
+        var comentario = binding.etComentario.text.toString()
 
         var reserva = Reserva()
         reserva.cliente = nombre.toString()
@@ -137,13 +144,18 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         reserva.fecha = fecha
         reserva.hora = hora
         reserva.numComensales = numComensales
-        reserva.ubicacion = ubicacion.toString()
+        reserva.ubicacion = ubicacion
         reserva.foto = foto
-        reserva.comentario
+        reserva.comentario = comentario.toString()
         reserva.grupo = "El Pikon"
+        reserva.estado = "Pendiente"
 
         reservaViewModel.addReserva(reserva)
+
         dismiss()
+
+
+
 
 
 

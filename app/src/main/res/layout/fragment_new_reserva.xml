@@ -117,15 +117,7 @@
     </LinearLayout>
 
 
-    <!--    <Spinner-->
-    <!--        android:id="@+id/sp_ubicacion"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:background="@drawable/edit_text_background"-->
-    <!--        android:spinnerMode="dropdown"-->
-    <!--        android:spinnerSelector="@drawable/ic_down"-->
-    <!--        android:textSize="24dp" />-->
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -169,16 +161,25 @@
             android:orientation="horizontal"
             android:layout_marginStart="16dp">
 
-            <EditText
-                android:id="@+id/sp_ubicacion"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/salon_o_terraza"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingStart="10dp"
-                android:textSize="20sp" />
+<!--            <EditText-->
+<!--                android:id="@+id/sp_ubicacion"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@drawable/edit_text_background"-->
+<!--                android:hint="@string/salon_o_terraza"-->
+<!--                android:importantForAutofill="no"-->
+<!--                android:inputType="text"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:textSize="20sp" />-->
+
+                <Spinner
+                    android:id="@+id/sp_ubicacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:textSize="20sp"
+                    android:entries="@array/ubicaciones"
+                    android:drawableRight="@drawable/ic_down" />
         </RelativeLayout>
     </LinearLayout>
 
