@@ -27,6 +27,7 @@ var monthSelected = calendar.get(Calendar.MONTH)
 var dayOfMonthSelected = calendar.get(Calendar.DAY_OF_MONTH)
 
 private lateinit var fechaElegida : String
+private lateinit var fechaElegida2 : String
 private lateinit var horaElegida : String
 var ubiSeleccionada = ""
 
@@ -108,7 +109,8 @@ class NewReservaFragment : BottomSheetDialogFragment() {
             val selectedDate = "$_dayOfMonth/${_monthOfYear + 1}/$_year"
             binding.etFecha.setText(selectedDate)
 
-            fechaElegida = "$_dayOfMonth/${_monthOfYear+1}/$_year"
+            fechaElegida = "$_year-${_monthOfYear+1}-$_dayOfMonth"
+            fechaElegida2 = "$_dayOfMonth/${_monthOfYear+1}/$_year"
 
             dayOfMonthSelected = _dayOfMonth
             monthSelected = _monthOfYear
@@ -142,6 +144,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         reserva.cliente = nombre.toString()
         reserva.telefono = telefono
         reserva.fecha = fecha
+        reserva.fechaCard = fechaElegida2
         reserva.hora = hora
         reserva.numComensales = numComensales
         reserva.ubicacion = ubicacion

@@ -11,6 +11,7 @@ class Reserva {
     var cliente: String? = ""
     var telefono: String? = ""
     var fecha: String = ""
+    var fechaCard: String = ""
     var hora: String = ""
     var numComensales: Int = 0
     var ubicacion: String? = ""

@@ -26,7 +26,7 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         val item = listaReservas.get(position)
         holder.tvNombreCliente.text = item.cliente
         holder.tvTelefono.text = item.telefono
-        holder.tvFechaReserva.text = item.fecha.toString()
+        holder.tvFechaReserva.text = item.fechaCard.toString()
         holder.tvCantidad.text = item.numComensales.toString()
         holder.tvHora.text = item.hora.toString()
 //        Picasso.get().load(item.foto).fit().into(holder.ivReserva)

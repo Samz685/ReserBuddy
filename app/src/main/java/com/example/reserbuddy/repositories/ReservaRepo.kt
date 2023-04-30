@@ -30,6 +30,7 @@ class ReservaRepo {
             "cliente" to reserva.cliente,
             "telefono" to reserva.telefono,
             "fecha" to reserva.fecha,
+            "fechaCard" to reserva.fechaCard,
             "hora" to reserva.hora,
             "ubicacion" to reserva.ubicacion,
             "numComensales" to reserva.numComensales,
@@ -109,6 +110,65 @@ class ReservaRepo {
         }
         return reservasData
     }
+
+    fun getToday(): LiveData<LinkedList<Reserva>> {
+
+        val calendar = Calendar.getInstance()
+
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+
+        var reservasData = MutableLiveData<LinkedList<Reserva>>()
+        val reservaRef = db.collection("reservas")
+
+        val query = reservaRef.whereEqualTo("fecha", "$year-${month+1}-$day")
+        query.get().addOnSuccessListener { result ->
+            var listaReservas = LinkedList<Reserva>()
+            for (document in result) {
+                var reserva = document.toObject<Reserva>()!!
+                listaReservas.addLast(reserva)
+            }
+            reservasData.value = listaReservas
+        }
+        return reservasData
+    }
+
+    fun getWeek(): LiveData<LinkedList<Reserva>> {
+
+        val fecha1 = Calendar.getInstance()
+        val fecha2 = Calendar.getInstance().apply {
+            timeInMillis = fecha1.timeInMillis
+            add(Calendar.DAY_OF_YEAR, 7)
+        }
+
+        val day1 = fecha1.get(Calendar.DAY_OF_MONTH)
+        val month1 = fecha1.get(Calendar.MONTH) + 1
+        val year1 = fecha1.get(Calendar.YEAR)
+        var fechaInicial = "$year1-$month1-$day1"
+
+
+        val day2 = fecha2.get(Calendar.DAY_OF_MONTH)
+        val month2 = fecha2.get(Calendar.MONTH) + 1
+        val year2 = fecha2.get(Calendar.YEAR)
+        var fechaFinal = "$year2-$month2-$day2"
+
+        var reservasData = MutableLiveData<LinkedList<Reserva>>()
+        val reservaRef = db.collection("reservas")
+
+        val query = reservaRef.orderBy("fecha").startAt(fechaInicial)
+            .endAt(fechaFinal)
+        query.get().addOnSuccessListener { result ->
+            var listaReservas = LinkedList<Reserva>()
+            for (document in result) {
+                var reserva = document.toObject<Reserva>()!!
+                listaReservas.addLast(reserva)
+            }
+            reservasData.value = listaReservas
+        }
+        return reservasData
+    }
+
 
 //    fun getByCliente(cl : Cliente) {
 //        var reserva = Reserva()

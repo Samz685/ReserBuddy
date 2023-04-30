@@ -77,12 +77,23 @@ class ReservasFragment : Fragment() {
 
         refreshReservas()
 
+        binding.btnHoy.setOnClickListener {
+            listaReservas.clear()
+            getReservasToday()
+        }
+
+        binding.btnSemana.setOnClickListener {
+            listaReservas.clear()
+            getReservasWeek()
+        }
+
 
     }
 
     fun refreshReservas() {
         swipeRefresh.setOnRefreshListener {
-            getReservasByGroup()
+//            getReservasByGroup()
+            getReservasToday()
             swipeRefresh.isRefreshing = false
 
         }
@@ -128,6 +139,30 @@ class ReservasFragment : Fragment() {
 
     fun getReservasByGroup() {
         reservaViewModel.getByGroup(grupoActual).observe(viewLifecycleOwner, Observer {
+            listaReservas.clear()
+            for( reserva in it){
+                listaReservas.add(reserva)
+            }
+
+
+            mAdapter.notifyDataSetChanged()
+        })
+    }
+
+    fun getReservasToday() {
+        reservaViewModel.getToday().observe(viewLifecycleOwner, Observer {
+            listaReservas.clear()
+            for( reserva in it){
+                listaReservas.add(reserva)
+            }
+
+
+            mAdapter.notifyDataSetChanged()
+        })
+    }
+
+    fun getReservasWeek() {
+        reservaViewModel.getWeek().observe(viewLifecycleOwner, Observer {
             listaReservas.clear()
             for( reserva in it){
                 listaReservas.add(reserva)
