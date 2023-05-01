@@ -7,6 +7,7 @@ import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Grupo
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.models.Solicitud
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -137,9 +138,45 @@ class ReservaRepo {
     fun getWeek(): LiveData<LinkedList<Reserva>> {
 
         val fecha1 = Calendar.getInstance()
+        val fecha2 = Calendar.getInstance()
+        fecha2.add(Calendar.DATE, 7)
+
+        val day1 = fecha1.get(Calendar.DAY_OF_MONTH)
+        val month1 = fecha1.get(Calendar.MONTH) + 1
+        val year1 = fecha1.get(Calendar.YEAR)
+        var fechaInicial = "$year1-$month1-$day1"
+
+
+        val day2 = fecha2.get(Calendar.DAY_OF_MONTH)
+        val month2 = fecha2.get(Calendar.MONTH) + 1
+        val year2 = fecha2.get(Calendar.YEAR)
+        var fechaFinal = "$year2-$month2-$day2"
+
+        var reservasData = MutableLiveData<LinkedList<Reserva>>()
+        val reservaRef = db.collection("reservas")
+
+        val query = reservaRef.orderBy("fecha").startAt(fechaInicial)
+            .endAt("2023-05-03")
+        println("reserva********-------------------------------$fechaFinal")
+        query.get().addOnSuccessListener { result ->
+
+            var listaReservas = LinkedList<Reserva>()
+            for (document in result) {
+                var reserva = document.toObject<Reserva>()!!
+                listaReservas.addLast(reserva)
+            }
+            reservasData.value = listaReservas
+
+        }
+        return reservasData
+    }
+
+    fun getMonth(): LiveData<LinkedList<Reserva>> {
+
+        val fecha1 = Calendar.getInstance()
         val fecha2 = Calendar.getInstance().apply {
             timeInMillis = fecha1.timeInMillis
-            add(Calendar.DAY_OF_YEAR, 7)
+            add(Calendar.MONTH, 1)
         }
 
         val day1 = fecha1.get(Calendar.DAY_OF_MONTH)
@@ -158,6 +195,25 @@ class ReservaRepo {
 
         val query = reservaRef.orderBy("fecha").startAt(fechaInicial)
             .endAt(fechaFinal)
+        query.get().addOnSuccessListener { result ->
+            var listaReservas = LinkedList<Reserva>()
+            for (document in result) {
+                var reserva = document.toObject<Reserva>()!!
+                listaReservas.addLast(reserva)
+            }
+            reservasData.value = listaReservas
+        }
+        return reservasData
+    }
+
+    fun getPeriod(fecha1 : String, fecha2 : String): LiveData<LinkedList<Reserva>> {
+
+
+        var reservasData = MutableLiveData<LinkedList<Reserva>>()
+        val reservaRef = db.collection("reservas")
+
+        val query = reservaRef.orderBy("fecha").startAt(fecha1)
+            .endAt(fecha2)
         query.get().addOnSuccessListener { result ->
             var listaReservas = LinkedList<Reserva>()
             for (document in result) {

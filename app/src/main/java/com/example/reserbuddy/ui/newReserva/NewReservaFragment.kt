@@ -83,6 +83,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
         binding.ivHora.setOnClickListener {
             timePickerDialog.show()
+
         }
 
         binding.btnCrearReserva.setOnClickListener{

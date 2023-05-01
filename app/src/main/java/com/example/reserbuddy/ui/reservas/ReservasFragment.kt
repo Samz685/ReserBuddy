@@ -1,6 +1,7 @@
 package com.example.reserbuddy.ui.reservas
 
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.databinding.FragmentReservasBinding
+import com.example.reserbuddy.ui.newReserva.*
 import com.example.reservarapp.models.Grupo
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
@@ -25,7 +27,7 @@ import com.example.reservarapp.viewmodels.ReservaViewModel
 class ReservasFragment : Fragment() {
 
     private var _binding: FragmentReservasBinding? = null
-
+    private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var listaReservas: MutableList<Reserva>
     lateinit var mAdapter: RecyclerView.Adapter<ReservaAdapter.ViewHolder>
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
@@ -34,6 +36,12 @@ class ReservasFragment : Fragment() {
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
     private lateinit var grupoActual : Grupo
     private lateinit var swipeRefresh : SwipeRefreshLayout
+    private var reservaTiming = ""
+    private var fechaInicial = ""
+    private var fechaFinal = ""
+
+
+
 
 
 
@@ -66,6 +74,7 @@ class ReservasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        datePickerDialog = DatePickerDialog(requireContext())
         swipeRefresh = binding.swipeRefresh
 
         listaReservas = mutableListOf<Reserva>()
@@ -80,23 +89,49 @@ class ReservasFragment : Fragment() {
         binding.btnHoy.setOnClickListener {
             listaReservas.clear()
             getReservasToday()
+            reservaTiming = "Hoy"
+
         }
 
         binding.btnSemana.setOnClickListener {
             listaReservas.clear()
             getReservasWeek()
+            reservaTiming = "Semana"
         }
 
+        binding.btnMes.setOnClickListener {
+            listaReservas.clear()
+            getReservasMonth()
+            reservaTiming = "Mes"
+        }
+
+        binding.btnPeriodo.setOnClickListener {
+            fechaInicial = elegirFecha()
+            fechaFinal = elegirFecha()
+            listaReservas.clear()
+            getReservasPeriod()
+            reservaTiming = "Periodo"
+
+        }
 
     }
 
     fun refreshReservas() {
         swipeRefresh.setOnRefreshListener {
-//            getReservasByGroup()
-            getReservasToday()
+            traerReservas()
             swipeRefresh.isRefreshing = false
 
         }
+    }
+
+    private fun traerReservas() {
+        when(reservaTiming){
+            "Hoy" -> getReservasToday()
+            "Semana" -> getReservasWeek()
+            "Mes" -> getReservasMonth()
+            "Periodo" -> getReservasPeriod()
+        }
+
     }
 
     override fun onDestroyView() {
@@ -173,11 +208,39 @@ class ReservasFragment : Fragment() {
         })
     }
 
+    fun getReservasMonth() {
+        reservaViewModel.getMonth().observe(viewLifecycleOwner, Observer {
+            listaReservas.clear()
+            for( reserva in it){
+                listaReservas.add(reserva)
+            }
+            mAdapter.notifyDataSetChanged()
+        })
+    }
+
+    fun getReservasPeriod() {
+        reservaViewModel.getPeriod(fechaInicial, fechaFinal).observe(viewLifecycleOwner, Observer {
+            listaReservas.clear()
+            for( reserva in it){
+                listaReservas.add(reserva)
+            }
+            mAdapter.notifyDataSetChanged()
+        })
+    }
 
 
+    private fun elegirFecha() : String{
+
+        var fecha = ""
+        datePickerDialog.show()
+        datePickerDialog.setOnDateSetListener { _, _year, _monthOfYear, _dayOfMonth ->
+
+            fecha = "$_year-${_monthOfYear + 1}-$_dayOfMonth"
+
+        }
 
 
-
-
+    return fecha
+    }
 
 }

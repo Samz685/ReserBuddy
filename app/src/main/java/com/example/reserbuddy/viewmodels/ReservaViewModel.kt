@@ -40,6 +40,22 @@ class ReservaViewModel : ViewModel() {
         return reservasData
     }
 
+    fun getMonth(): LiveData<LinkedList<Reserva>> {
+        val reservasData = MutableLiveData<LinkedList<Reserva>>()
+        reservaRepo.getMonth().observeForever {
+            reservasData.value = it
+        }
+        return reservasData
+    }
+
+    fun getPeriod(fecha1 : String, fecha2 : String): LiveData<LinkedList<Reserva>> {
+        val reservasData = MutableLiveData<LinkedList<Reserva>>()
+        reservaRepo.getPeriod(fecha1, fecha2).observeForever {
+            reservasData.value = it
+        }
+        return reservasData
+    }
+
     fun addReserva(reserva: Reserva) : String{
         return reservaRepo.addReserva(reserva)
 
