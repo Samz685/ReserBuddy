@@ -156,7 +156,7 @@ class ReservaRepo {
         val reservaRef = db.collection("reservas")
 
         val query = reservaRef.orderBy("fecha").startAt(fechaInicial)
-            .endAt("2023-05-03")
+            .endAt(fechaFinal)
         println("reserva********-------------------------------$fechaFinal")
         query.get().addOnSuccessListener { result ->
 
