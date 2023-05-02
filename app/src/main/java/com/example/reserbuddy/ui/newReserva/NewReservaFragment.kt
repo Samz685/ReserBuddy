@@ -110,7 +110,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
             val selectedDate = "$_dayOfMonth/${_monthOfYear + 1}/$_year"
             binding.etFecha.setText(selectedDate)
 
-            fechaElegida = "$_year-${_monthOfYear+1}-$_dayOfMonth"
+            fechaElegida = String.format("%04d-%02d-%02d", _year, _monthOfYear+1, _dayOfMonth)
             fechaElegida2 = "$_dayOfMonth/${_monthOfYear+1}/$_year"
 
             dayOfMonthSelected = _dayOfMonth

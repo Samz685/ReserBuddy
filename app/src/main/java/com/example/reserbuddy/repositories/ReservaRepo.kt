@@ -117,13 +117,15 @@ class ReservaRepo {
         val calendar = Calendar.getInstance()
 
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1
         val year = calendar.get(Calendar.YEAR)
+        var fechaInicial = String.format("%04d-%02d-%02d", year, month, day)
 
         var reservasData = MutableLiveData<LinkedList<Reserva>>()
         val reservaRef = db.collection("reservas")
 
-        val query = reservaRef.whereEqualTo("fecha", "$year-${month+1}-$day")
+        val query = reservaRef.whereEqualTo("fecha", fechaInicial)
+
         query.get().addOnSuccessListener { result ->
             var listaReservas = LinkedList<Reserva>()
             for (document in result) {
@@ -144,13 +146,13 @@ class ReservaRepo {
         val day1 = fecha1.get(Calendar.DAY_OF_MONTH)
         val month1 = fecha1.get(Calendar.MONTH) + 1
         val year1 = fecha1.get(Calendar.YEAR)
-        var fechaInicial = "$year1-$month1-$day1"
+        var fechaInicial = String.format("%04d-%02d-%02d", year1, month1, day1)
 
 
         val day2 = fecha2.get(Calendar.DAY_OF_MONTH)
         val month2 = fecha2.get(Calendar.MONTH) + 1
         val year2 = fecha2.get(Calendar.YEAR)
-        var fechaFinal = "$year2-$month2-$day2"
+        var fechaFinal = String.format("%04d-%02d-%02d", year2, month2, day2)
 
         var reservasData = MutableLiveData<LinkedList<Reserva>>()
         val reservaRef = db.collection("reservas")
@@ -182,13 +184,13 @@ class ReservaRepo {
         val day1 = fecha1.get(Calendar.DAY_OF_MONTH)
         val month1 = fecha1.get(Calendar.MONTH) + 1
         val year1 = fecha1.get(Calendar.YEAR)
-        var fechaInicial = "$year1-$month1-$day1"
+        var fechaInicial = String.format("%04d-%02d-%02d", year1, month1, day1)
 
 
         val day2 = fecha2.get(Calendar.DAY_OF_MONTH)
         val month2 = fecha2.get(Calendar.MONTH) + 1
         val year2 = fecha2.get(Calendar.YEAR)
-        var fechaFinal = "$year2-$month2-$day2"
+        var fechaFinal = String.format("%04d-%02d-%02d", year2, month2, day2)
 
         var reservasData = MutableLiveData<LinkedList<Reserva>>()
         val reservaRef = db.collection("reservas")

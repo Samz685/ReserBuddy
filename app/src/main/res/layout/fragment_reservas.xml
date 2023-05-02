@@ -4,7 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ui.reservas.ReservasFragment">
+    tools:context=".ui.reservas.ReservasFragment"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tvContadorReservas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:drawableEnd="@drawable/ic_contador_reservas"
+        android:drawablePadding="2dp"/>
 
     <LinearLayout
         android:id="@+id/linearCabecera"

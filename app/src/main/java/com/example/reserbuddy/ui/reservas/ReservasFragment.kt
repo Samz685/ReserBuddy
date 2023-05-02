@@ -2,6 +2,7 @@ package com.example.reserbuddy.ui.reservas
 
 
 import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,8 @@ import com.example.reserbuddy.ui.newReserva.*
 import com.example.reservarapp.models.Grupo
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ReservasFragment : Fragment() {
@@ -31,17 +34,14 @@ class ReservasFragment : Fragment() {
     private lateinit var listaReservas: MutableList<Reserva>
     lateinit var mAdapter: RecyclerView.Adapter<ReservaAdapter.ViewHolder>
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
-    private var contador:Int=0
+    private var contador: Int = 0
     private lateinit var mRecyclerView: RecyclerView
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
-    private lateinit var grupoActual : Grupo
-    private lateinit var swipeRefresh : SwipeRefreshLayout
+    private lateinit var grupoActual: Grupo
+    private lateinit var swipeRefresh: SwipeRefreshLayout
     private var reservaTiming = ""
     private var fechaInicial = ""
     private var fechaFinal = ""
-
-
-
 
 
 
@@ -51,7 +51,7 @@ class ReservasFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        mAdapter.notifyDataSetChanged()
+        traerReservas()
         true
     }
 
@@ -70,7 +70,6 @@ class ReservasFragment : Fragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -81,35 +80,31 @@ class ReservasFragment : Fragment() {
         grupoActual = Grupo()
         grupoActual.id = "El Pikon"
 
-        getReservasByGroup()
+
+        getReservasToday()
         inicializarAdapters()
 
         refreshReservas()
 
         binding.btnHoy.setOnClickListener {
-            listaReservas.clear()
             getReservasToday()
             reservaTiming = "Hoy"
 
         }
 
         binding.btnSemana.setOnClickListener {
-            listaReservas.clear()
             getReservasWeek()
             reservaTiming = "Semana"
         }
 
         binding.btnMes.setOnClickListener {
-            listaReservas.clear()
             getReservasMonth()
             reservaTiming = "Mes"
         }
 
         binding.btnPeriodo.setOnClickListener {
-            fechaInicial = elegirFecha()
-            fechaFinal = elegirFecha()
-            listaReservas.clear()
-            getReservasPeriod()
+            //getReservasPeriod se ejecuta dentro del la función elegirFecha
+            elegirFecha()
             reservaTiming = "Periodo"
 
         }
@@ -125,13 +120,18 @@ class ReservasFragment : Fragment() {
     }
 
     private fun traerReservas() {
-        when(reservaTiming){
+        when (reservaTiming) {
             "Hoy" -> getReservasToday()
             "Semana" -> getReservasWeek()
             "Mes" -> getReservasMonth()
             "Periodo" -> getReservasPeriod()
         }
+        resetearContador()
 
+    }
+
+    private fun resetearContador(){
+        binding.tvContadorReservas.text = listaReservas.size.toString()
     }
 
     override fun onDestroyView() {
@@ -140,8 +140,6 @@ class ReservasFragment : Fragment() {
     }
 
     private fun inicializarAdapters() {
-
-
 
 
         mRecyclerView = binding.recyclerReservas
@@ -165,17 +163,17 @@ class ReservasFragment : Fragment() {
             }
 
 
-        },reservaViewModel)
-        mRecyclerView.adapter=mAdapter
+        }, reservaViewModel)
+        mRecyclerView.adapter = mAdapter
         mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.itemAnimator= DefaultItemAnimator()
-        mRecyclerView.layoutManager=mLayoutManager
+        mRecyclerView.itemAnimator = DefaultItemAnimator()
+        mRecyclerView.layoutManager = mLayoutManager
     }
 
     fun getReservasByGroup() {
         reservaViewModel.getByGroup(grupoActual).observe(viewLifecycleOwner, Observer {
             listaReservas.clear()
-            for( reserva in it){
+            for (reserva in it) {
                 listaReservas.add(reserva)
             }
 
@@ -187,11 +185,12 @@ class ReservasFragment : Fragment() {
     fun getReservasToday() {
         reservaViewModel.getToday().observe(viewLifecycleOwner, Observer {
             listaReservas.clear()
-            for( reserva in it){
+            for (reserva in it) {
                 listaReservas.add(reserva)
             }
 
 
+            resetearContador()
             mAdapter.notifyDataSetChanged()
         })
     }
@@ -199,11 +198,11 @@ class ReservasFragment : Fragment() {
     fun getReservasWeek() {
         reservaViewModel.getWeek().observe(viewLifecycleOwner, Observer {
             listaReservas.clear()
-            for( reserva in it){
+            for (reserva in it) {
                 listaReservas.add(reserva)
             }
 
-
+            resetearContador()
             mAdapter.notifyDataSetChanged()
         })
     }
@@ -211,9 +210,10 @@ class ReservasFragment : Fragment() {
     fun getReservasMonth() {
         reservaViewModel.getMonth().observe(viewLifecycleOwner, Observer {
             listaReservas.clear()
-            for( reserva in it){
+            for (reserva in it) {
                 listaReservas.add(reserva)
             }
+            resetearContador()
             mAdapter.notifyDataSetChanged()
         })
     }
@@ -221,26 +221,52 @@ class ReservasFragment : Fragment() {
     fun getReservasPeriod() {
         reservaViewModel.getPeriod(fechaInicial, fechaFinal).observe(viewLifecycleOwner, Observer {
             listaReservas.clear()
-            for( reserva in it){
+            for (reserva in it) {
                 listaReservas.add(reserva)
             }
+            resetearContador()
             mAdapter.notifyDataSetChanged()
         })
     }
 
 
-    private fun elegirFecha() : String{
-
-        var fecha = ""
-        datePickerDialog.show()
-        datePickerDialog.setOnDateSetListener { _, _year, _monthOfYear, _dayOfMonth ->
-
-            fecha = "$_year-${_monthOfYear + 1}-$_dayOfMonth"
-
-        }
-
-
-    return fecha
+    private fun elegirFecha() {
+        val startDatePicker = DatePickerDialog(
+            requireContext(),
+            { _, year, month, day ->
+                val startDate = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, day)
+                }
+                val endDatePicker = DatePickerDialog(
+                    requireContext(),
+                    { _, year, month, day ->
+                        val endDate = Calendar.getInstance().apply {
+                            set(Calendar.YEAR, year)
+                            set(Calendar.MONTH, month)
+                            set(Calendar.DAY_OF_MONTH, day)
+                        }
+                        fechaInicial = SimpleDateFormat(
+                            "yyyy-MM-dd",
+                            Locale.getDefault()
+                        ).format(startDate.time)
+                        fechaFinal =
+                            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(endDate.time)
+                        getReservasPeriod()
+                    },
+                    year,
+                    month,
+                    day
+                )
+                endDatePicker.show()
+            },
+            Calendar.getInstance().get(Calendar.YEAR),
+            Calendar.getInstance().get(Calendar.MONTH),
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        )
+        startDatePicker.show()
     }
+
 
 }
