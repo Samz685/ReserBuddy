@@ -16,6 +16,7 @@
         android:textSize="20sp"
         android:drawableEnd="@drawable/ic_contador_reservas"
         android:drawablePadding="2dp"
+        android:paddingTop="5dp"
         android:layout_marginBottom="1dp"/>
 
     <LinearLayout

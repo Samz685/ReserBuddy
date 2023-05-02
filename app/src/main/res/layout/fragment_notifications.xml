@@ -1,116 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
-    tools:context=".ui.notifications.NotificationsFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.notifications.NotificationsFragment"
+    android:gravity="center">
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nueva reserva"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etNombreCliente"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Nombre del cliente"
-            android:inputType="text"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textSize="24dp"/>
-
-        <EditText
-            android:id="@+id/etTelefonoCliente"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Teléfono"
-            android:inputType="phone"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textSize="24dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/fechaEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Fecha"
-            android:inputType="date"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textSize="24dp"/>
-
-        <Button
-            android:id="@+id/seleccionarFechaButton"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:text="Seleccionar"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:background="@drawable/button_background"
-            android:padding="12dp"
-            android:layout_marginStart="16dp"/>
-
-</LinearLayout>
-
-
-
-
-    <EditText
-            android:id="@+id/numComensalesEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Número de comensales"
-            android:inputType="number"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textSize="24dp"/>
-
-
-
-        <EditText
-            android:id="@+id/ubicacionEditText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Ubicación"
-            android:inputType="text"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textSize="24dp"/>
-
-        <EditText
-            android:id="@+id/etComentario"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Comentario"
-            android:inputType="text"
-            android:background="@drawable/edit_text_background"
-            android:layout_marginTop="16dp"
-            android:textSize="24dp"/>
-
-    <Button
-        android:id="@+id/sendButton"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvContadorReservas"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enviar"
+        android:text="100"
+        android:textStyle="bold"
         android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/button_background"
-        android:padding="12dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp" />
+        android:drawableEnd="@drawable/ic_usuario"
+        android:drawablePadding="2dp"
+        android:paddingTop="5dp"
+        android:layout_marginBottom="10dp"/>
+
+
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerUsuarios"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

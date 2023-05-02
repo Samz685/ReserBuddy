@@ -20,7 +20,6 @@ import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.databinding.FragmentReservasBinding
 import com.example.reserbuddy.ui.newReserva.*
-import com.example.reservarapp.models.Grupo
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import java.text.SimpleDateFormat
@@ -34,19 +33,13 @@ class ReservasFragment : Fragment() {
     private lateinit var listaReservas: MutableList<Reserva>
     lateinit var mAdapter: RecyclerView.Adapter<ReservaAdapter.ViewHolder>
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
-    private var contador: Int = 0
     private lateinit var mRecyclerView: RecyclerView
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
-    private lateinit var grupoActual: Grupo
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private var reservaTiming = ""
     private var fechaInicial = ""
     private var fechaFinal = ""
 
-
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onResume() {
@@ -77,8 +70,6 @@ class ReservasFragment : Fragment() {
         swipeRefresh = binding.swipeRefresh
 
         listaReservas = mutableListOf<Reserva>()
-        grupoActual = Grupo()
-        grupoActual.id = "El Pikon"
 
 
         getReservasToday()
@@ -170,17 +161,6 @@ class ReservasFragment : Fragment() {
         mRecyclerView.layoutManager = mLayoutManager
     }
 
-    fun getReservasByGroup() {
-        reservaViewModel.getByGroup(grupoActual).observe(viewLifecycleOwner, Observer {
-            listaReservas.clear()
-            for (reserva in it) {
-                listaReservas.add(reserva)
-            }
-
-
-            mAdapter.notifyDataSetChanged()
-        })
-    }
 
     fun getReservasToday() {
         reservaViewModel.getToday().observe(viewLifecycleOwner, Observer {

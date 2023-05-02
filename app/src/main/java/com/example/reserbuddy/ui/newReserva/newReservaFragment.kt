@@ -14,7 +14,6 @@ import com.example.reserbuddy.databinding.FragmentNewReservaBinding
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.Timestamp
 
 import java.util.*
 

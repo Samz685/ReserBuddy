@@ -3,9 +3,7 @@ package com.example.reservarapp.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.reservarapp.models.Grupo
 import com.example.reservarapp.models.Reserva
-import com.example.reservarapp.models.Solicitud
 import com.example.reservarapp.repositories.ReservaRepo
 
 import java.util.*
@@ -16,13 +14,13 @@ class ReservaViewModel : ViewModel() {
     private val reservaRepo = ReservaRepo()
 
 
-    fun getByGroup(grupo : Grupo): LiveData<LinkedList<Reserva>> {
-        val reservasData = MutableLiveData<LinkedList<Reserva>>()
-        reservaRepo.getByGroup(grupo).observeForever {
-            reservasData.value = it
-        }
-        return reservasData
-    }
+//    fun getByGroup(grupo : Grupo): LiveData<LinkedList<Reserva>> {
+//        val reservasData = MutableLiveData<LinkedList<Reserva>>()
+//        reservaRepo.getByGroup(grupo).observeForever {
+//            reservasData.value = it
+//        }
+//        return reservasData
+//    }
 
     fun getToday(): LiveData<LinkedList<Reserva>> {
         val reservasData = MutableLiveData<LinkedList<Reserva>>()
