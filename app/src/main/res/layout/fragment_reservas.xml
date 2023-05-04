@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -62,17 +63,39 @@
     </LinearLayout>
 
 
+
+
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerReservas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp" />
+
+        <TextView
+            android:id="@+id/tvMensajeReserva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="No hay reservas"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        </FrameLayout>
+
+
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

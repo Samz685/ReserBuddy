@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:theme="@style/Theme.ReserBuddy"
-    tools:context=".ui.newTarea.newTareaFragment">
+    tools:context=".ui.newTarea.NewTareaFragment">
 
 
     <TextView

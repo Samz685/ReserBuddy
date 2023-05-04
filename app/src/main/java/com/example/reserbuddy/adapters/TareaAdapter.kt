@@ -2,6 +2,7 @@ package com.example.reserbuddy.adapters
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,7 +17,7 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.cardview_usuario, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.cardview_tarea, parent, false)
         return ViewHolder(v, listener, tareaViewModel)
     }
 
@@ -28,6 +29,17 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
         holder.tvFechaCompletada.text = item.doneDateCard
         holder.tvComentario.text = item.comentario
         holder.ivTarea.setImageResource(item.foto)
+        holder.tvEstadoTarea.text = item.estado
+
+        if(item.estado.equals("Completada")){
+            holder.btnAsignar.visibility = GONE
+        } else if(item.estado.equals("Pendiente")){
+            holder.btnAsignar.setText("Quitar")
+            holder.btnAsignar.setBackgroundResource(R.drawable.estado_red_rectangle)
+        } else{
+            holder.btnAsignar.setText("Asignar")
+            holder.btnAsignar.setBackgroundResource(R.drawable.estado_azul_rectangle)
+        }
 
         holder.btnAsignar.setOnClickListener {
 
@@ -62,6 +74,7 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
         var tvFechaCompletada : TextView = v.findViewById(R.id.tvFechaCompletada)
         var tvComentario : TextView = v.findViewById(R.id.tvComentarioTarea)
         var ivTarea : ImageView = v.findViewById(R.id.ivTarea)
+        var tvEstadoTarea : TextView = v.findViewById(R.id.tvEstadoTarea)
 
 
 

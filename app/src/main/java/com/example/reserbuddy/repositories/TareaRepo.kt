@@ -112,7 +112,7 @@ class TareaRepo {
 
     fun getAll(): LiveData<LinkedList<Tarea>> {
         var tareasData = MutableLiveData<LinkedList<Tarea>>()
-        val tareaRef = db.collection("perfil_usuarios")
+        val tareaRef = db.collection("tareas")
         tareaRef.get().addOnSuccessListener { result ->
             var listaTareas = LinkedList<Tarea>()
             for (document in result) {

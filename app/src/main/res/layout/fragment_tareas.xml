@@ -21,18 +21,40 @@
 
 
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp">
 
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerTareas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp" />
+
+            <TextView
+                android:id="@+id/tvMensajeTarea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No hay tareas"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_gravity="center"/>
+
+
+        </FrameLayout>
+
+
+
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

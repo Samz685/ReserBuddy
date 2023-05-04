@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentNewReservaBinding
+import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -37,7 +38,6 @@ class NewReservaFragment : BottomSheetDialogFragment() {
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
 
     private var _binding: FragmentNewReservaBinding? = null
-
 
 
     private val binding get() = _binding!!
