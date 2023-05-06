@@ -114,6 +114,11 @@ class NewTareaFragment : BottomSheetDialogFragment() {
 //        (parentFragment as TareasFragment)?.mAdapter?.notifyDataSetChanged()
     }
 
+//    fun habilitarBoton(){
+//        var btnCrear = binding.btnCrearTarea
+//        btnCrear.isEnabled = !(btnCrear.text.equals("")  || binding.etComentario.text.equals(""))
+//    }
+
 
 }
 

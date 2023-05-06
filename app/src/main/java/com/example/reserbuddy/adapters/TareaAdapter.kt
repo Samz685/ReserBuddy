@@ -54,12 +54,14 @@ class TareaAdapter(
             if (item.estado.equals("Pendiente")) {
                 holder.btnCompletada.visibility = GONE
                 holder.btnNoCompletada.visibility = VISIBLE
+                holder.bloqueFecha.visibility = GONE
 
             } else if (item.estado.equals("Completada")) {
                 holder.btnQuitar.visibility = GONE
                 holder.btnAsignar.visibility = GONE
                 holder.btnCompletada.visibility = VISIBLE
                 holder.btnNoCompletada.visibility = GONE
+                holder.bloqueFecha.visibility = VISIBLE
 
             } else if(item.estado.equals("Sin asignar")) {
                 holder.btnAsignar.visibility = VISIBLE
@@ -67,6 +69,7 @@ class TareaAdapter(
                 holder.tvEstadoTarea.visibility = GONE
                 holder.btnCompletada.visibility = GONE
                 holder.btnNoCompletada.visibility = GONE
+                holder.bloqueFecha.visibility = GONE
             }
         }
 

@@ -166,7 +166,7 @@ class TareasFragment : Fragment() {
                 } else{
                     tarea.estado = "Pendiente"
                     tarea.doneDate = ""
-                    tarea.doneDateCard = ""
+                    tarea.doneDateCard = "Sin fecha"
                     tareaViewModel.updateEstado(tarea)
                 }
                 mAdapter.notifyDataSetChanged()
