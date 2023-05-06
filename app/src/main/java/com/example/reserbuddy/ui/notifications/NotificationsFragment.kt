@@ -96,6 +96,10 @@ class NotificationsFragment : Fragment() {
                 TODO("Not yet implemented")
             }
 
+            override fun onEstadoClick(position: Int) {
+                TODO("Not yet implemented")
+            }
+
             override fun onImageClick(position: Int) {
 
 

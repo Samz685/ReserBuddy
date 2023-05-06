@@ -133,17 +133,6 @@
                 android:orientation="horizontal">
 
 
-                <Button
-                    android:id="@+id/btnAsignar1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="20dp"
-                    android:backgroundTint="@color/redlight"
-                    android:drawableLeft="@drawable/ic_cancelado"
-                    android:text="Asignar"
-                    android:textColor="@color/white"
-                    android:textSize="10dp" />
-
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -182,7 +171,6 @@
                         android:clickable="true">
 
                         <ImageView
-                            android:id="@+id/icono"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/ic_quitar" />
@@ -199,16 +187,59 @@
 
 
                 </FrameLayout>
-
-
-                <Button
-                    android:id="@+id/btnCompletada"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:drawableLeft="@drawable/ic_confirmado"
-                    android:text="Completada"
-                    android:textColor="@color/white"
-                    android:textSize="10dp" />
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/bloque_checkOK"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_completar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Hecha"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/bloque_checkNO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_sincompletar" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Completar"
+                            android:textSize="12sp"
+                            android:textStyle="bold"/>
+
+
+                    </LinearLayout>
+
+
+                </FrameLayout>
 
 
             </LinearLayout>

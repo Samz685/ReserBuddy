@@ -72,7 +72,8 @@ class TareaRepo {
             "asignedToId" to tarea.asignedToId,
             "asignedDate" to tarea.asignedDate,
             "asignedDateCard" to tarea.asignedDateCard,
-            "foto" to tarea.foto
+            "foto" to tarea.foto,
+            "estado" to tarea.estado
 
         )
         tareaRef.update(datos as Map<String, Any>).addOnSuccessListener {
@@ -91,7 +92,9 @@ class TareaRepo {
             "asignedTo" to "",
             "asignedToId" to "",
             "asignedDate" to "",
-            "asignedDateCard" to ""
+            "asignedDateCard" to "Sin fecha",
+            "estado" to "Sin asignar",
+
 
         )
         tareaRef.update(datos as Map<String, Any>).addOnSuccessListener {
@@ -108,16 +111,18 @@ class TareaRepo {
 
         val datos = hashMapOf(
             "estado" to tarea.estado,
-            "doneDate" to tarea.nombre,
+            "doneDate" to tarea.doneDate,
             "doneDateCard" to tarea.doneDateCard
 
         )
         tareaRef.update(datos as Map<String, Any>).addOnSuccessListener {
-            Log.i("FireBase", "Tarea estado Actualizado")
+            Log.i("FireBase", "Tarea estado -> Completada")
         }.addOnFailureListener { error ->
             Log.e("FirebaseError", error.message.toString())
         }
     }
+
+
 
     fun deleteTarea(tarea: Tarea): String {
 

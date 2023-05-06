@@ -2,6 +2,7 @@ package com.example.reserbuddy
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.reserbuddy.adapters.TareaAdapter
 import com.example.reservarapp.models.Tarea
 import com.example.reservarapp.models.Usuario
 import java.time.LocalDate

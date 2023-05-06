@@ -39,41 +39,57 @@ class TareaAdapter(
         holder.tvEstadoTarea.text = item.estado
 
         //Visibilidad de componentes del CardView
-        if (item.asignedToId.equals("")) {
+        if (item.asignedToId =="") {
             holder.bloqueFecha.visibility = GONE
             holder.tvEstadoTarea.visibility = GONE
             holder.btnCompletada.visibility = GONE
+            holder.btnNoCompletada.visibility = GONE
             holder.btnQuitar.visibility = GONE
             holder.btnAsignar.visibility = VISIBLE
         } else {
             holder.btnQuitar.visibility = VISIBLE
             holder.btnAsignar.visibility = GONE
             holder.tvEstadoTarea.visibility = VISIBLE
+
             if (item.estado.equals("Pendiente")) {
-                holder.btnCompletada.visibility = VISIBLE
-            } else if (item.asignedTo.equals("Completada")) {
+                holder.btnCompletada.visibility = GONE
+                holder.btnNoCompletada.visibility = VISIBLE
+
+            } else if (item.estado.equals("Completada")) {
                 holder.btnQuitar.visibility = GONE
                 holder.btnAsignar.visibility = GONE
                 holder.btnCompletada.visibility = VISIBLE
+                holder.btnNoCompletada.visibility = GONE
 
+            } else if(item.estado.equals("Sin asignar")) {
+                holder.btnAsignar.visibility = VISIBLE
+                holder.btnQuitar.visibility = GONE
+                holder.tvEstadoTarea.visibility = GONE
+                holder.btnCompletada.visibility = GONE
+                holder.btnNoCompletada.visibility = GONE
             }
         }
 
 
+
         holder.btnCompletada.setOnClickListener {
+            listener.onEstadoClick(position)
+
+        }
+
+        holder.btnNoCompletada.setOnClickListener {
+            listener.onEstadoClick(position)
 
         }
 
         holder.btnAsignar.setOnClickListener {
             listener.onAsignarClick(position)
-//            holder.btnAsignar.visibility = GONE
-//            holder.btnQuitar.visibility = VISIBLE
+
         }
 
         holder.btnQuitar.setOnClickListener {
             listener.onAsignarClick(position)
-//            holder.btnQuitar.visibility = GONE
-//            holder.btnAsignar.visibility = VISIBLE
+
         }
 
 
@@ -95,7 +111,8 @@ class TareaAdapter(
         var tvFechaAsignada: TextView = v.findViewById(R.id.tvFechaAsignada)
         var btnAsignar: LinearLayout = v.findViewById(R.id.bloque_asignar)
         var btnQuitar: LinearLayout = v.findViewById(R.id.bloque_quitar)
-        var btnCompletada: TextView = v.findViewById(R.id.btnCompletada)
+        var btnCompletada: LinearLayout = v.findViewById(R.id.bloque_checkOK)
+        var btnNoCompletada: LinearLayout = v.findViewById(R.id.bloque_checkNO)
         var tvFechaCompletada: TextView = v.findViewById(R.id.tvFechaCompletada)
         var tvComentario: TextView = v.findViewById(R.id.tvComentarioTarea)
         var ivTarea: ImageView = v.findViewById(R.id.ivTarea)

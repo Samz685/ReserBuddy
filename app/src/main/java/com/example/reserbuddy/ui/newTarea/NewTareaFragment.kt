@@ -1,6 +1,5 @@
 package com.example.reserbuddy.ui.newTarea
 
-import android.app.DatePickerDialog
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -11,19 +10,18 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.FechaGenerator
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentNewTareaBinding
+import com.example.reserbuddy.ui.tareas.TareasFragment
 import com.example.reservarapp.models.Tarea
 import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.TareaViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-private lateinit var datePickerDialog: DatePickerDialog
 
 class NewTareaFragment : BottomSheetDialogFragment() {
 
@@ -56,13 +54,10 @@ class NewTareaFragment : BottomSheetDialogFragment() {
         val spinner: Spinner = binding.spUsuarios
 
 
-
         binding.btnCrearTarea.setOnClickListener {
             crearReserva()
         }
-
         listaUsuarios = DataHolder.listaUsuariosSpinner
-
 
 
         adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, listaUsuarios)
@@ -115,8 +110,8 @@ class NewTareaFragment : BottomSheetDialogFragment() {
         }
 
         tareaViewModel.addTarea(tarea)
-
         dismiss()
+//        (parentFragment as TareasFragment)?.mAdapter?.notifyDataSetChanged()
     }
 
 
