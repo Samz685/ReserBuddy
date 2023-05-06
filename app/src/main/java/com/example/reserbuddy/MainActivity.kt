@@ -1,10 +1,8 @@
 package com.example.reserbuddy
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -45,9 +43,9 @@ class MainActivity : AppCompatActivity() {
         newReservaViewModel = ViewModelProvider(this).get(NewReservaViewModel::class.java)
         newTareaViewModel = ViewModelProvider(this).get(NewTareaViewModel::class.java)
         binding.btnAdd.setOnClickListener {
-            if (CurrentFragment.currentFragment == "FragmentReservas"){
+            if (DataHolder.currentFragment == "FragmentReservas"){
                 NewReservaFragment().show(supportFragmentManager, "newReserva")
-            } else if(CurrentFragment.currentFragment == "FragmentTareas"){
+            } else if(DataHolder.currentFragment == "FragmentTareas"){
                 NewTareaFragment().show(supportFragmentManager, "newTarea")
             }
 

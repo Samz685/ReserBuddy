@@ -22,7 +22,7 @@ import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.databinding.FragmentReservasBinding
-import com.example.reserbuddy.CurrentFragment
+import com.example.reserbuddy.DataHolder
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
@@ -33,6 +33,7 @@ import java.util.*
 class ReservasFragment : Fragment() {
 
     private var _binding: FragmentReservasBinding? = null
+    private val binding get() = _binding!!
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var listaReservas: MutableList<Reserva>
     lateinit var mAdapter: RecyclerView.Adapter<ReservaAdapter.ViewHolder>
@@ -45,10 +46,8 @@ class ReservasFragment : Fragment() {
     private var fechaFinal = ""
     private lateinit var contador : TextView
     private lateinit var tvMensajeReserva : TextView
-    private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
 
 
-    private val binding get() = _binding!!
 
     override fun onResume() {
         super.onResume()
@@ -74,8 +73,7 @@ class ReservasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CurrentFragment.currentFragment = "FragmentReservas"
-        getAllUsuarios()
+        DataHolder.currentFragment = "FragmentReservas"
 
         datePickerDialog = DatePickerDialog(requireContext())
         swipeRefresh = binding.swipeRefresh
@@ -87,11 +85,7 @@ class ReservasFragment : Fragment() {
 
         getReservasToday()
         inicializarAdapters()
-
         refreshReservas()
-
-
-
         mensajeListaVacia()
 
         binding.btnHoy.setOnClickListener {
@@ -143,6 +137,7 @@ class ReservasFragment : Fragment() {
             "Semana" -> getReservasWeek()
             "Mes" -> getReservasMonth()
             "Periodo" -> getReservasPeriod()
+            else -> getReservasToday()
         }
         resetearContador()
 
@@ -175,6 +170,10 @@ class ReservasFragment : Fragment() {
                     expandible_reserva.visibility = VISIBLE
                 }
 
+            }
+
+            override fun onAsignarClick(position: Int) {
+                TODO("Not yet implemented")
             }
 
             override fun onImageClick(position: Int) {
@@ -277,17 +276,7 @@ class ReservasFragment : Fragment() {
         startDatePicker.show()
     }
 
-    fun getAllUsuarios() {
-        usuarioViewModel.getAll().observe(viewLifecycleOwner, Observer {
-            CurrentFragment.listaUsuariosTemp.clear()
-            for (usuario in it) {
-                CurrentFragment.listaUsuariosTemp.add(usuario)
-            }
 
-
-
-        })
-    }
 
 
 }

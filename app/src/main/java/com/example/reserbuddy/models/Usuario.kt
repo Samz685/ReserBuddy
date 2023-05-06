@@ -13,7 +13,7 @@ class Usuario {
     var comentario : String = ""
 
     override fun toString(): String {
-        return "Usuario(id=$id, alias='$alias', email='$email')"
+        return alias
     }
 
 

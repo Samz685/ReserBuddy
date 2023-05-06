@@ -71,7 +71,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun resetearContador(){
-        binding.tvContadorReservas.text = listaUsuarios.size.toString()
+        binding.tvContadorUsuarios.text = listaUsuarios.size.toString()
     }
 
     private fun inicializarAdapters() {
@@ -90,6 +90,10 @@ class NotificationsFragment : Fragment() {
                     expandible_usuario.visibility = View.VISIBLE
                 }
 
+            }
+
+            override fun onAsignarClick(position: Int) {
+                TODO("Not yet implemented")
             }
 
             override fun onImageClick(position: Int) {
@@ -118,16 +122,16 @@ class NotificationsFragment : Fragment() {
         })
     }
 
-    fun crearUsuario(nombre : String, email : String) : Usuario{
-
-        var usuario = Usuario()
-        usuario.alias = nombre
-        usuario.rol = "Admin"
-        usuario.email = email
-        usuario.telefono = "622622622"
-        usuario.foto = R.drawable.ic_usuario_perfil
-        return usuario
-    }
+//    fun crearUsuario(nombre : String, email : String) : Usuario{
+//
+//        var usuario = Usuario()
+//        usuario.alias = nombre
+//        usuario.rol = "Admin"
+//        usuario.email = email
+//        usuario.telefono = "622622622"
+//        usuario.foto = R.drawable.ic_usuario_perfil
+//        return usuario
+//    }
 
 
 

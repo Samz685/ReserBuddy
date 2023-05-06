@@ -3,8 +3,10 @@ import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reserbuddy.R
@@ -23,7 +25,7 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = listaTareas.get(position)
-        holder.tvNombreTarea.text = item.alias
+        holder.tvNombreTarea.text = item.nombre
         holder.tvUsuarioAsignado.text = item.asignedTo
         holder.tvFechaAsignada.text = item.asignedDateCard
         holder.tvFechaCompletada.text = item.doneDateCard
@@ -31,14 +33,34 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
         holder.ivTarea.setImageResource(item.foto)
         holder.tvEstadoTarea.text = item.estado
 
+        if(item.asignedTo.equals("Sin asignar")){
+            holder.bloqueFecha.visibility = GONE
+            holder.tvEstadoTarea.visibility = GONE
+            holder.btnCompletada.visibility = GONE
+            holder.btnAsignar.text = "Asignar"
+        } else {
+            holder.tvEstadoTarea.visibility = VISIBLE
+            if (holder.tvEstadoTarea.equals("Pendiente")){
+
+
+            }
+        }
+
+
         if(item.estado.equals("Completada")){
             holder.btnAsignar.visibility = GONE
+            holder.tvEstadoTarea.visibility = VISIBLE
+            holder.bloqueFecha.visibility = VISIBLE
         } else if(item.estado.equals("Pendiente")){
+            holder.tvEstadoTarea.visibility = VISIBLE
+            holder.bloqueFecha.visibility = GONE
             holder.btnAsignar.setText("Quitar")
-            holder.btnAsignar.setBackgroundResource(R.drawable.estado_red_rectangle)
+            holder.btnCompletada.visibility = VISIBLE
         } else{
+            holder.bloqueFecha.visibility = GONE
+            holder.tvEstadoTarea.visibility = GONE
+            holder.btnCompletada.visibility = GONE
             holder.btnAsignar.setText("Asignar")
-            holder.btnAsignar.setBackgroundResource(R.drawable.estado_azul_rectangle)
         }
 
         holder.btnAsignar.setOnClickListener {
@@ -48,8 +70,8 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
 
         }
 
-        holder.ivTarea.setOnClickListener {
-            listener.onImageClick(position)
+        holder.btnAsignar.setOnClickListener {
+            listener.onAsignarClick(position)
         }
 
 
@@ -75,6 +97,7 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
         var tvComentario : TextView = v.findViewById(R.id.tvComentarioTarea)
         var ivTarea : ImageView = v.findViewById(R.id.ivTarea)
         var tvEstadoTarea : TextView = v.findViewById(R.id.tvEstadoTarea)
+        var bloqueFecha : LinearLayout = v.findViewById(R.id.bloqueFecha)
 
 
 
@@ -97,7 +120,7 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
 
-            menu!!.setHeaderTitle("" + listaTareas[adapterPosition].alias)
+            menu!!.setHeaderTitle("" + listaTareas[adapterPosition].nombre)
             val item = menu!!.add("Asignar")
             val item2 = menu.add("Borrar")
 

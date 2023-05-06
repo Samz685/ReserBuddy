@@ -25,4 +25,8 @@
     <string name="hoy">Hoy</string>
     <string name="crear_tarea">Crear Tarea</string>
     <string name="nueva_tarea">Nueva Tarea</string>
+    <string name="asignar_usuario">Asignar usuario</string>
+    <string name="quitar">Quitar</string>
+    <string name="asignar">Asignar</string>
+
 </resources>

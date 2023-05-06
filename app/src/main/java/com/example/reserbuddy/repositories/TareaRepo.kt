@@ -21,10 +21,11 @@ class TareaRepo {
 
         val datos = hashMapOf(
             "id" to tarea.id,
-            "alias" to tarea.alias,
+            "nombre" to tarea.nombre,
             "owner" to tarea.owner,
             "foto" to tarea.foto,
             "asignedTo" to tarea.asignedTo,
+            "asignetToId" to tarea.asignedToId,
             "asignedDate" to tarea.asignedDate,
             "doneDate" to tarea.doneDate,
             "asignedDateCard" to tarea.asignedDateCard,
@@ -47,8 +48,11 @@ class TareaRepo {
 
 
         val datos = hashMapOf(
-            "alias" to tarea.alias,
+            "nombre" to tarea.nombre,
             "asignedTo" to tarea.asignedTo,
+            "asignedToId" to tarea.asignedToId,
+            "asignedDate" to tarea.asignedDate,
+            "asignedDateCard" to tarea.asignedDateCard,
             "comentario" to tarea.comentario,
         )
         tareaRef.update(datos as Map<String, Any>).addOnSuccessListener {
@@ -64,7 +68,8 @@ class TareaRepo {
 
 
         val datos = hashMapOf(
-            "asignedTo" to tarea.alias,
+            "asignedTo" to tarea.asignedTo,
+            "asignedToId" to tarea.asignedToId,
             "asignedDate" to tarea.asignedDate,
             "asignedDateCard" to tarea.asignedDateCard,
             "foto" to tarea.foto
@@ -84,7 +89,7 @@ class TareaRepo {
 
         val datos = hashMapOf(
             "estado" to tarea.estado,
-            "doneDate" to tarea.alias,
+            "doneDate" to tarea.nombre,
             "doneDateCard" to tarea.doneDateCard
 
         )

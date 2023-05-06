@@ -1,24 +1,26 @@
 package com.example.reserbuddy.ui.newTarea
 
 import android.app.DatePickerDialog
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.example.reserbuddy.CurrentFragment
+import androidx.annotation.RequiresApi
+import com.example.reserbuddy.DataHolder
+import com.example.reserbuddy.FechaGenerator
 import com.example.reserbuddy.R
-import com.example.reserbuddy.adapters.UsuarioAdapter
-import com.example.reserbuddy.adapters.UsuarioAdapterSP
 import com.example.reserbuddy.databinding.FragmentNewTareaBinding
-import com.example.reserbuddy.ui.newReserva.*
-import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.models.Tarea
 import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.TareaViewModel
-import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 private lateinit var datePickerDialog: DatePickerDialog
@@ -26,20 +28,14 @@ private lateinit var datePickerDialog: DatePickerDialog
 class NewTareaFragment : BottomSheetDialogFragment() {
 
     private val tareaViewModel by lazy { ViewModelProvider(this).get(TareaViewModel::class.java) }
-    private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
 
     private var _binding: FragmentNewTareaBinding? = null
-
     private val binding get() = _binding!!
 
-    var calendar = Calendar.getInstance()
-    var yearSelected = calendar.get(Calendar.YEAR)
-    var monthSelected = calendar.get(Calendar.MONTH)
-    var dayOfMonthSelected = calendar.get(Calendar.DAY_OF_MONTH)
-    private lateinit var fechaElegida: String
-    private lateinit var fechaElegida2: String
-    private lateinit var adapter: UsuarioAdapterSP
+    private lateinit var adapter: ArrayAdapter<Usuario>
+
     private lateinit var listaUsuarios: MutableList<Usuario>
+    private lateinit var usuarioElegido : Usuario
 
 
     override fun onCreateView(
@@ -53,67 +49,76 @@ class NewTareaFragment : BottomSheetDialogFragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        datePickerDialog = DatePickerDialog(requireContext())
+        val spinner: Spinner = binding.spUsuarios
 
-        binding.ivDatePicker.setOnClickListener {
-            elegirFecha()
-        }
 
 
         binding.btnCrearTarea.setOnClickListener {
             crearReserva()
         }
 
-        listaUsuarios = CurrentFragment.listaUsuariosTemp
+        listaUsuarios = DataHolder.listaUsuariosSpinner
 
 
 
-        adapter = UsuarioAdapterSP(listaUsuarios)
-        val spinner: Spinner = binding.spUsuarios
+        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, listaUsuarios)
         spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedUser = parent.getItemAtPosition(position) as Usuario
+                usuarioElegido = selectedUser
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+
+
+            }
+        }
+
 
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun crearReserva() {
+        //recogiendo datos del form
         var nombre = binding.etNombreTarea.text.toString()
-        var fecha = fechaElegida
         var comentario = binding.etComentario.text.toString()
         var foto = R.drawable.ic_tarea
+        var asignedTo = usuarioElegido.alias
+        var asignedToId = usuarioElegido.id
+        var fechaAsignada = FechaGenerator.elegirFecha().Asignada
+        var fechaAsignadaCard = FechaGenerator.elegirFecha().AsignadaCard
 
-
+        //llenando objeto tarea para firebase
         var tarea = Tarea()
-        tarea.alias = nombre
+        tarea.nombre = nombre
         tarea.comentario = comentario
-        tarea.asignedDate = fecha
         tarea.foto = foto
 
-        tarea.estado = "Completada"
+        //si tarea es asignada, estado -> pendiente, añadir fecha asignacion
+        if (usuarioElegido.id != ""){
+            tarea.estado = "Pendiente"
+            tarea.asignedTo = asignedTo
+            tarea.asignedToId = asignedToId
+            tarea.asignedDate = fechaAsignada
+            tarea.asignedDateCard = fechaAsignadaCard
+        } else{
+            tarea.estado = "Sin asignar"
+            tarea.asignedDateCard = "Sin fecha"
+        }
 
         tareaViewModel.addTarea(tarea)
 
         dismiss()
     }
 
-    private fun elegirFecha() {
-        datePickerDialog.show()
-        datePickerDialog.setOnDateSetListener { _, _year, _monthOfYear, _dayOfMonth ->
-            val selectedDate = "$_dayOfMonth/${_monthOfYear + 1}/$_year"
-            binding.etFecha.setText(selectedDate)
-
-            fechaElegida = String.format("%04d-%02d-%02d", _year, _monthOfYear + 1, _dayOfMonth)
-            fechaElegida2 = "$_dayOfMonth/${_monthOfYear + 1}/$_year"
-
-            dayOfMonthSelected = _dayOfMonth
-            monthSelected = _monthOfYear
-            yearSelected = _year
-
-
-        }
-    }
 
 }
 

@@ -31,83 +31,6 @@
         android:textSize="20sp" />
 
 
-    <!--    <NumberPicker-->
-    <!--        android:id="@+id/number_picker"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:maxValue="40"-->
-    <!--        android:minValue="1 "-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:padding="16dp"-->
-    <!--        android:wrapSelectorWheel="true" />-->
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/etFecha"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edit_text_background"
-                android:clickable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/dd_mm_aaaa"
-                android:inputType="number"
-                android:paddingStart="10dp"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/ivDatePicker"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignBottom="@id/etFecha"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="?attr/selectableItemBackground"
-                android:padding="12dp"
-                android:src="@drawable/ic_calendar" />
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginStart="16dp">
-
-            <Spinner
-                android:id="@+id/sp_usuarios"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edit_text_background"
-                android:textSize="20sp"
-                android:entries="@array/ubicaciones"
-                android:drawableRight="@drawable/ic_down" />
-
-
-        </RelativeLayout>
-    </LinearLayout>
-
-
-
-
-
-
 
     <EditText
         android:id="@+id/etComentario"
@@ -119,6 +42,15 @@
         android:inputType="text"
         android:paddingStart="10dp"
         android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/sp_usuarios"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="5dp"
+        android:textSize="50sp"
+        android:prompt="@string/asignar_usuario"/>
 
     <Button
         android:id="@+id/btn_crearTarea"
