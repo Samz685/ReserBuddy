@@ -1,4 +1,5 @@
 package com.example.reserbuddy.adapters
+
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,11 @@ import com.example.reserbuddy.R
 import com.example.reservarapp.models.Tarea
 import com.example.reservarapp.viewmodels.TareaViewModel
 
-class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClickListener, var tareaViewModel: TareaViewModel):
+class TareaAdapter(
+    var listaTareas: MutableList<Tarea>,
+    var listener: OnItemClickListener,
+    var tareaViewModel: TareaViewModel
+) :
     RecyclerView.Adapter<TareaAdapter.ViewHolder>() {
 
 
@@ -33,45 +38,42 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
         holder.ivTarea.setImageResource(item.foto)
         holder.tvEstadoTarea.text = item.estado
 
-        if(item.asignedTo.equals("Sin asignar")){
+        //Visibilidad de componentes del CardView
+        if (item.asignedToId.equals("")) {
             holder.bloqueFecha.visibility = GONE
             holder.tvEstadoTarea.visibility = GONE
             holder.btnCompletada.visibility = GONE
-            holder.btnAsignar.text = "Asignar"
+            holder.btnQuitar.visibility = GONE
+            holder.btnAsignar.visibility = VISIBLE
         } else {
+            holder.btnQuitar.visibility = VISIBLE
+            holder.btnAsignar.visibility = GONE
             holder.tvEstadoTarea.visibility = VISIBLE
-            if (holder.tvEstadoTarea.equals("Pendiente")){
-
+            if (item.estado.equals("Pendiente")) {
+                holder.btnCompletada.visibility = VISIBLE
+            } else if (item.asignedTo.equals("Completada")) {
+                holder.btnQuitar.visibility = GONE
+                holder.btnAsignar.visibility = GONE
+                holder.btnCompletada.visibility = VISIBLE
 
             }
         }
 
 
-        if(item.estado.equals("Completada")){
-            holder.btnAsignar.visibility = GONE
-            holder.tvEstadoTarea.visibility = VISIBLE
-            holder.bloqueFecha.visibility = VISIBLE
-        } else if(item.estado.equals("Pendiente")){
-            holder.tvEstadoTarea.visibility = VISIBLE
-            holder.bloqueFecha.visibility = GONE
-            holder.btnAsignar.setText("Quitar")
-            holder.btnCompletada.visibility = VISIBLE
-        } else{
-            holder.bloqueFecha.visibility = GONE
-            holder.tvEstadoTarea.visibility = GONE
-            holder.btnCompletada.visibility = GONE
-            holder.btnAsignar.setText("Asignar")
-        }
-
-        holder.btnAsignar.setOnClickListener {
-
-        }
         holder.btnCompletada.setOnClickListener {
 
         }
 
         holder.btnAsignar.setOnClickListener {
             listener.onAsignarClick(position)
+//            holder.btnAsignar.visibility = GONE
+//            holder.btnQuitar.visibility = VISIBLE
+        }
+
+        holder.btnQuitar.setOnClickListener {
+            listener.onAsignarClick(position)
+//            holder.btnQuitar.visibility = GONE
+//            holder.btnAsignar.visibility = VISIBLE
         }
 
 
@@ -91,16 +93,14 @@ class TareaAdapter(var listaTareas:MutableList<Tarea>, var listener: OnItemClick
         var tvNombreTarea: TextView = v.findViewById(R.id.tvNombreTarea)
         var tvUsuarioAsignado: TextView = v.findViewById(R.id.tvUsuarioAsignado)
         var tvFechaAsignada: TextView = v.findViewById(R.id.tvFechaAsignada)
-        var btnAsignar: TextView = v.findViewById(R.id.btnAsignar)
+        var btnAsignar: LinearLayout = v.findViewById(R.id.bloque_asignar)
+        var btnQuitar: LinearLayout = v.findViewById(R.id.bloque_quitar)
         var btnCompletada: TextView = v.findViewById(R.id.btnCompletada)
-        var tvFechaCompletada : TextView = v.findViewById(R.id.tvFechaCompletada)
-        var tvComentario : TextView = v.findViewById(R.id.tvComentarioTarea)
-        var ivTarea : ImageView = v.findViewById(R.id.ivTarea)
-        var tvEstadoTarea : TextView = v.findViewById(R.id.tvEstadoTarea)
-        var bloqueFecha : LinearLayout = v.findViewById(R.id.bloqueFecha)
-
-
-
+        var tvFechaCompletada: TextView = v.findViewById(R.id.tvFechaCompletada)
+        var tvComentario: TextView = v.findViewById(R.id.tvComentarioTarea)
+        var ivTarea: ImageView = v.findViewById(R.id.ivTarea)
+        var tvEstadoTarea: TextView = v.findViewById(R.id.tvEstadoTarea)
+        var bloqueFecha: LinearLayout = v.findViewById(R.id.bloqueFecha)
 
 
         init {

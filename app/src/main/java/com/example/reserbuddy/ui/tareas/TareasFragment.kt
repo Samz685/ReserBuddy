@@ -40,6 +40,7 @@ class TareasFragment : Fragment() {
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var tvMensajeTarea : TextView
     private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
+    private lateinit var vistaActual : View
 
     private val binding get() = _binding!!
 
@@ -119,6 +120,8 @@ class TareasFragment : Fragment() {
         mAdapter = TareaAdapter(listaTareas, object : OnItemClickListener {
             override fun OnItemClick(vista: View, position: Int) {
 
+                vistaActual = vista
+
                 val expandible_tarea: LinearLayout = vista.findViewById(R.id.expandible_tarea)
 
                 if (expandible_tarea.visibility == View.VISIBLE) {
@@ -132,11 +135,26 @@ class TareasFragment : Fragment() {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onAsignarClick(position: Int) {
 
-                var tarea = listaTareas[position]
-                tarea.asignedDate = FechaGenerator.elegirFecha().Asignada
-                tarea.asignedDateCard = FechaGenerator.elegirFecha().AsignadaCard
-                DataHolder.currentTarea = tarea
-                ListaUsuariosFragment().show(childFragmentManager, "listaUsuariosFragment")
+                var btnAsignar : LinearLayout = vistaActual.findViewById(R.id.bloque_asignar)
+                var btnQuitar : LinearLayout = vistaActual.findViewById(R.id.bloque_quitar)
+
+                if(listaTareas[position].asignedToId == ""){
+                    var tarea = listaTareas[position]
+                    tarea.asignedDate = FechaGenerator.elegirFecha().Asignada
+                    tarea.asignedDateCard = FechaGenerator.elegirFecha().AsignadaCard
+                    DataHolder.currentTarea = tarea
+                    ListaUsuariosFragment().show(childFragmentManager, "listaUsuariosFragment")
+                    btnAsignar.visibility = GONE
+                    btnQuitar.visibility = VISIBLE
+
+
+                } else{
+                    tareaViewModel.quitarAsignacion(listaTareas[position])
+                    btnAsignar.visibility = VISIBLE
+                    btnQuitar.visibility = GONE
+                    mAdapter.notifyItemChanged(position)
+                }
+
 
             }
 

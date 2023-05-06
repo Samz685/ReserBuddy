@@ -26,6 +26,10 @@ class TareaViewModel : ViewModel() {
         tareaRepo.updateAsignacion(tarea)
 
     }
+
+    fun quitarAsignacion(tarea: Tarea){
+        tareaRepo.quitarAsignacion(tarea)
+    }
     fun updateEstado(tarea: Tarea) {
         tareaRepo.updateEstado(tarea)
 

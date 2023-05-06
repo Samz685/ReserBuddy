@@ -82,6 +82,25 @@ class TareaRepo {
         }
     }
 
+    fun quitarAsignacion(tarea: Tarea) {
+
+        var tareaRef = db.collection("tareas").document(tarea.id)
+
+
+        val datos = hashMapOf(
+            "asignedTo" to "",
+            "asignedToId" to "",
+            "asignedDate" to "",
+            "asignedDateCard" to ""
+
+        )
+        tareaRef.update(datos as Map<String, Any>).addOnSuccessListener {
+            Log.i("FireBaase", "Tarea asignacion Actualizada")
+        }.addOnFailureListener { error ->
+            Log.e("FirebaseError", error.message.toString())
+        }
+    }
+
     fun updateEstado(tarea: Tarea) {
 
         var tareaRef = db.collection("tareas").document(tarea.id)

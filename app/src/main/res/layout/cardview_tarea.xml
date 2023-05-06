@@ -115,7 +115,7 @@
             android:orientation="vertical"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
 
             <View
@@ -149,12 +149,13 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:id="@+id/linear_Asignar"
+                        android:id="@+id/bloque_asignar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        android:clickable="true">
 
                         <ImageView
                             android:id="@+id/iconoAsignar"
@@ -166,17 +167,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/asignar"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linear_quitar"
+                        android:id="@+id/bloque_quitar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:clickable="true">
 
                         <ImageView
                             android:id="@+id/icono"
@@ -188,7 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/quitar"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
                             android:textStyle="bold"/>
 
 
