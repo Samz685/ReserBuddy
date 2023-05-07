@@ -7,7 +7,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,12 +19,15 @@ import com.example.reserbuddy.ui.newReserva.NewReservaFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
+import com.example.reserbuddy.ui.reservas.ReservasFragment
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var newReservaViewModel : NewReservaViewModel
     private lateinit var newTareaViewModel : NewTareaViewModel
+    private lateinit var toggle : ActionBarDrawerToggle
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,21 +36,35 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
+        val navViewComponent : NavigationView = findViewById(R.id.nav_view_component)
+
+        toggle = ActionBarDrawerToggle(this,drawerLayout,R.string.open_drawer,R.string.close_drawer)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
+
+
+
+
 
         // Configura la ActionBar para mostrar el botón de menú
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        val toolbar: Toolbar = findViewById(R.id.toolbar)
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+//
 
         // Configura el DrawerLayout para que se muestre por encima de la ActionBar
-        val toggle = ActionBarDrawerToggle(
-            this, binding.drawerLayout, binding.toolbar, R.string.open_drawer, R.string.close_drawer)
-        binding.drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+//        val toggle = ActionBarDrawerToggle(
+//            this, binding.drawerLayout, binding.toolbar, R.string.open_drawer, R.string.close_drawer)
+//        binding.drawerLayout.addDrawerListener(toggle)
+//        toggle.syncState()
 
 
 
@@ -77,19 +96,29 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
-
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                // Abre el DrawerLayout cuando se toca el botón de menú de la ActionBar
-                binding.drawerLayout.openDrawer(GravityCompat.START)
-                return true
+        navViewComponent.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.nav_reservas -> {
+                    navController.navigate(R.id.navigation_reservas)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                else -> false
             }
         }
-        return super.onOptionsItemSelected(item)
+
+
+
     }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            android.R.id.home -> {
+//                // Abre el DrawerLayout cuando se toca el botón de menú de la ActionBar
+//                binding.drawerLayout.openDrawer(GravityCompat.START)
+//                return true
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 }
