@@ -3,13 +3,17 @@ package com.example.reserbuddy.ui.newTarea
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.FechaGenerator
@@ -33,7 +37,8 @@ class NewTareaFragment : BottomSheetDialogFragment() {
     private lateinit var adapter: ArrayAdapter<Usuario>
 
     private lateinit var listaUsuarios: MutableList<Usuario>
-    private lateinit var usuarioElegido : Usuario
+    private lateinit var usuarioElegido: Usuario
+    private lateinit var btnCrear: Button
 
 
     override fun onCreateView(
@@ -52,6 +57,10 @@ class NewTareaFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val spinner: Spinner = binding.spUsuarios
+        btnCrear = binding.btnCrearTarea
+
+        btnCrear.isEnabled = false
+        habilitarBotonAdd()
 
 
         binding.btnCrearTarea.setOnClickListener {
@@ -60,11 +69,20 @@ class NewTareaFragment : BottomSheetDialogFragment() {
         listaUsuarios = DataHolder.listaUsuariosSpinner
 
 
-        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, listaUsuarios)
+        adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            listaUsuarios
+        )
         spinner.adapter = adapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val selectedUser = parent.getItemAtPosition(position) as Usuario
                 usuarioElegido = selectedUser
             }
@@ -72,10 +90,8 @@ class NewTareaFragment : BottomSheetDialogFragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {
 
 
-
             }
         }
-
 
 
     }
@@ -98,13 +114,13 @@ class NewTareaFragment : BottomSheetDialogFragment() {
         tarea.foto = foto
 
         //si tarea es asignada, estado -> pendiente, añadir fecha asignacion
-        if (usuarioElegido.id != ""){
+        if (usuarioElegido.id != "") {
             tarea.estado = "Pendiente"
             tarea.asignedTo = asignedTo
             tarea.asignedToId = asignedToId
             tarea.asignedDate = fechaAsignada
             tarea.asignedDateCard = fechaAsignadaCard
-        } else{
+        } else {
             tarea.estado = "Sin asignar"
             tarea.asignedDateCard = "Sin fecha"
         }
@@ -114,10 +130,28 @@ class NewTareaFragment : BottomSheetDialogFragment() {
 //        (parentFragment as TareasFragment)?.mAdapter?.notifyDataSetChanged()
     }
 
-//    fun habilitarBoton(){
-//        var btnCrear = binding.btnCrearTarea
-//        btnCrear.isEnabled = !(btnCrear.text.equals("")  || binding.etComentario.text.equals(""))
-//    }
+    fun habilitarBotonAdd() {
+
+        val textWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                // Verificar si ambos EditText están vacíos
+                btnCrear.isEnabled =
+                    !binding.etNombreTarea.text.isNullOrEmpty() && !binding.etComentario.text.isNullOrEmpty()
+            }
+
+            //Estos dos metodos no necesitan ser implementados
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        }
+
+        // Agregar el TextWatcher a ambos EditText
+        binding.etNombreTarea.addTextChangedListener(textWatcher)
+        binding.etComentario.addTextChangedListener(textWatcher)
+
+    }
 
 
 }

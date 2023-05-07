@@ -4,8 +4,8 @@ import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reserbuddy.R
@@ -37,28 +37,18 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         holder.etComentario.text = item.comentario
         holder.tvEstado.text = item.estado.toString()
 
-        //Actualizar estado desde los botones del cardView
         holder.btnConfirmar.setOnClickListener {
-            var reserva = Reserva()
-            reserva.estado = "Confirmada"
-            reserva.id = listaReservas[position].id
-            reservaViewmodel.updateReserva(reserva)
-            listaReservas[position].estado = reserva.estado.toString()
-            holder.tvEstado.setBackgroundResource(R.drawable.estado_green_rectangle)
-            notifyItemChanged(position)
-            true
+            listener.onClick2(position)
 
         }
+
         holder.btnCancelar.setOnClickListener {
-            var reserva = Reserva()
-            reserva.estado = "Cancelada"
-            reserva.id = listaReservas[position].id
-            reservaViewmodel.updateReserva(reserva)
-            listaReservas[position].estado = reserva.estado.toString()
-            holder.tvEstado.setBackgroundResource(R.drawable.estado_red_rectangle)
-            notifyItemChanged(position)
-            true
+            listener.onClick3(position)
+
         }
+
+        //Actualizar estado desde los botones del cardView
+
 
 
         //Setear color fondo estado
@@ -90,8 +80,8 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         var tvCantidad: TextView = v.findViewById(R.id.tvCantidad)
         var ivReserva: ImageView = v.findViewById(R.id.ivReserva)
         var etComentario: TextView = v.findViewById(R.id.etComentario)
-        var btnConfirmar: Button = v.findViewById(R.id.btnConfirmar)
-        var btnCancelar: Button = v.findViewById(R.id.btnCancelar)
+        var btnConfirmar: LinearLayout = v.findViewById(R.id.bloque_confirmar)
+        var btnCancelar: LinearLayout = v.findViewById(R.id.bloque_cancelar)
         var tvEstado : TextView = v.findViewById(R.id.tvEstado)
 
 

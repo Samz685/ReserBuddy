@@ -85,10 +85,10 @@ class ListaUsuariosFragment : BottomSheetDialogFragment() {
 
 
             }
-            override fun onAsignarClick(position: Int) {
+            override fun onClick2(position: Int) {
             }
 
-            override fun onEstadoClick(position: Int) {
+            override fun onClick3(position: Int) {
                 TODO("Not yet implemented")
             }
 

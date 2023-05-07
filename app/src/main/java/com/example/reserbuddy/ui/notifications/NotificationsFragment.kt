@@ -92,11 +92,11 @@ class NotificationsFragment : Fragment() {
 
             }
 
-            override fun onAsignarClick(position: Int) {
+            override fun onClick2(position: Int) {
                 TODO("Not yet implemented")
             }
 
-            override fun onEstadoClick(position: Int) {
+            override fun onClick3(position: Int) {
                 TODO("Not yet implemented")
             }
 

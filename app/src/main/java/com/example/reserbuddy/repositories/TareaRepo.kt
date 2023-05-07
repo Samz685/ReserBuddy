@@ -25,7 +25,7 @@ class TareaRepo {
             "owner" to tarea.owner,
             "foto" to tarea.foto,
             "asignedTo" to tarea.asignedTo,
-            "asignetToId" to tarea.asignedToId,
+            "asignedToId" to tarea.asignedToId,
             "asignedDate" to tarea.asignedDate,
             "doneDate" to tarea.doneDate,
             "asignedDateCard" to tarea.asignedDateCard,

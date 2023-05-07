@@ -55,6 +55,7 @@ class TareaAdapter(
                 holder.btnCompletada.visibility = GONE
                 holder.btnNoCompletada.visibility = VISIBLE
                 holder.bloqueFecha.visibility = GONE
+                holder.tvEstadoTarea.visibility = VISIBLE
 
             } else if (item.estado.equals("Completada")) {
                 holder.btnQuitar.visibility = GONE
@@ -76,22 +77,22 @@ class TareaAdapter(
 
 
         holder.btnCompletada.setOnClickListener {
-            listener.onEstadoClick(position)
+            listener.onClick3(position)
 
         }
 
         holder.btnNoCompletada.setOnClickListener {
-            listener.onEstadoClick(position)
+            listener.onClick3(position)
 
         }
 
         holder.btnAsignar.setOnClickListener {
-            listener.onAsignarClick(position)
+            listener.onClick2(position)
 
         }
 
         holder.btnQuitar.setOnClickListener {
-            listener.onAsignarClick(position)
+            listener.onClick2(position)
 
         }
 

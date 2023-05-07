@@ -3,6 +3,8 @@ package com.example.reserbuddy.ui.newReserva
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +28,10 @@ var yearSelected = calendar.get(Calendar.YEAR)
 var monthSelected = calendar.get(Calendar.MONTH)
 var dayOfMonthSelected = calendar.get(Calendar.DAY_OF_MONTH)
 
-private lateinit var fechaElegida : String
-private lateinit var fechaElegida2 : String
-private lateinit var horaElegida : String
+private lateinit var fechaElegida: String
+private lateinit var fechaElegida2: String
+private lateinit var horaElegida: String
 var ubiSeleccionada = ""
-
 
 
 class NewReservaFragment : BottomSheetDialogFragment() {
@@ -53,15 +54,18 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         return binding.root
 
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnCrearReserva.isEnabled = false
+        habilitarBotonAdd()
+
         datePickerDialog = DatePickerDialog(requireContext())
 
-        timePickerDialog = TimePickerDialog(requireContext(),
+        timePickerDialog = TimePickerDialog(
+            requireContext(),
             TimePickerDialog.OnTimeSetListener { view, _hourOfDay, _minute ->
                 val selectedTime = "$_hourOfDay:$_minute"
                 binding.etHora.setText(selectedTime)
@@ -71,7 +75,8 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
                 horaElegida = "$_hourOfDay:$_minute"
 
-            }, 12, 0, true)
+            }, 12, 0, true
+        )
 
 
 
@@ -85,12 +90,17 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
         }
 
-        binding.btnCrearReserva.setOnClickListener{
+        binding.btnCrearReserva.setOnClickListener {
             crearReserva()
         }
 
         binding.spUbicacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 ubiSeleccionada = parent.getItemAtPosition(position).toString()
 
             }
@@ -103,28 +113,25 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
     }
 
-    private fun elegirFecha(){
+    private fun elegirFecha() {
         datePickerDialog.show()
         datePickerDialog.setOnDateSetListener { _, _year, _monthOfYear, _dayOfMonth ->
             val selectedDate = "$_dayOfMonth/${_monthOfYear + 1}/$_year"
             binding.etFecha.setText(selectedDate)
 
-            fechaElegida = String.format("%04d-%02d-%02d", _year, _monthOfYear+1, _dayOfMonth)
-            fechaElegida2 = "$_dayOfMonth/${_monthOfYear+1}/$_year"
+            fechaElegida = String.format("%04d-%02d-%02d", _year, _monthOfYear + 1, _dayOfMonth)
+            fechaElegida2 = "$_dayOfMonth/${_monthOfYear + 1}/$_year"
 
             dayOfMonthSelected = _dayOfMonth
             monthSelected = _monthOfYear
             yearSelected = _year
 
 
-
-
         }
     }
 
 
-
-    private fun crearReserva(){
+    private fun crearReserva() {
 
         var nombre = binding.etNombreCliente.text.toString()
         var telefono = binding.etTelefonoCliente.text.toString()
@@ -133,9 +140,9 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         var numComensales = binding.etNumComensales.text.toString().toInt()
         var ubicacion = ubiSeleccionada
         var foto = R.drawable.ic_terraza
-        if (ubicacion.equals("Terraza")){
+        if (ubicacion.equals("Terraza")) {
             foto = R.drawable.ic_terraza
-        } else{
+        } else {
             foto = R.drawable.ic_comedor
         }
         var comentario = binding.etComentario.text.toString()
@@ -158,19 +165,37 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         dismiss()
 
 
-
-
-
-
-
-
-
-
-
     }
 
+    fun habilitarBotonAdd() {
 
+        val textWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                // Verificar si ambos EditText están vacíos
+                binding.btnCrearReserva.isEnabled =
+                            !binding.etNombreCliente.text.isNullOrEmpty() &&
+                            !binding.etTelefonoCliente.text.isNullOrEmpty() &&
+                            !binding.etFecha.text.isNullOrEmpty() &&
+                            !binding.etHora.text.isNullOrEmpty() &&
+                            !binding.etNumComensales.text.isNullOrEmpty()
+            }
 
+            //Estos dos metodos no necesitan ser implementados
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        }
+
+        // Agregar el TextWatcher a ambos EditText
+        binding.etNombreCliente.addTextChangedListener(textWatcher)
+        binding.etTelefonoCliente.addTextChangedListener(textWatcher)
+        binding.etFecha.addTextChangedListener(textWatcher)
+        binding.etHora.addTextChangedListener(textWatcher)
+        binding.etNumComensales.addTextChangedListener(textWatcher)
+
+    }
 
 
 }

@@ -172,12 +172,22 @@ class ReservasFragment : Fragment() {
 
             }
 
-            override fun onAsignarClick(position: Int) {
-                TODO("Not yet implemented")
+            override fun onClick2(position: Int) {
+                var reserva = listaReservas[position]
+                reserva.estado = "Confirmada"
+                reservaViewModel.updateReserva(reserva)
+                mAdapter.notifyDataSetChanged()
+
             }
 
-            override fun onEstadoClick(position: Int) {
-                TODO("Not yet implemented")
+            override fun onClick3(position: Int) {
+                var reserva = listaReservas[position]
+                reserva.estado = "Cancelada"
+                reservaViewModel.updateReserva(reserva)
+                mAdapter.notifyDataSetChanged()
+
+
+
             }
 
             override fun onImageClick(position: Int) {

@@ -130,7 +130,7 @@ class TareasFragment : Fragment() {
             }
 
             @RequiresApi(Build.VERSION_CODES.O)
-            override fun onAsignarClick(position: Int) {
+            override fun onClick2(position: Int) {
 
                 var tarea = listaTareas[position]
                 if(tarea.asignedToId == ""){
@@ -155,7 +155,7 @@ class TareasFragment : Fragment() {
             }
 
             @RequiresApi(Build.VERSION_CODES.O)
-            override fun onEstadoClick(position: Int) {
+            override fun onClick3(position: Int) {
                 var tarea = listaTareas[position]
                 if(tarea.estado == "Pendiente"){
                     tarea.estado = "Completada"
