@@ -28,5 +28,10 @@
     <string name="asignar_usuario">Asignar usuario</string>
     <string name="quitar">Quitar</string>
     <string name="asignar">Asignar</string>
+    <string name="clientes">Clientes</string>
+    <string name="lista_de_la_compra">Lista de la compra</string>
+    <string name="home">Home</string>
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
 
 </resources>

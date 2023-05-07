@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:showIn="navigation_view">
+
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="@string/home"/>
+            <item
+                android:id="@+id/nav_reservas"
+                android:icon="@drawable/ic_reservas"
+                android:title="@string/reservas" />
+            <item
+                android:id="@+id/nav_tareas"
+                android:icon="@drawable/ic_tareas"
+                android:title="@string/tareas" />
+
+            <item
+                android:id="@+id/nav_compras"
+                android:icon="@drawable/ic_compras"
+                android:title="@string/lista_de_la_compra" />
+            <item
+                android:id="@+id/nav_clientes"
+                android:icon="@drawable/ic_clientes"
+                android:title="@string/clientes" />
+
+        </group>
+
+        <group
+            android:id="@+id/second_section"
+            android:checkableBehavior="none">
+
+            <item
+                android:id="@+id/nav_cerrar_sesion"
+                android:icon="@drawable/ic_logout"
+                android:title="Cerrar sesion"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </group>
+
+</menu>
