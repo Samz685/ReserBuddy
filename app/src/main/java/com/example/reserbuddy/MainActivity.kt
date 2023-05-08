@@ -98,11 +98,27 @@ class MainActivity : AppCompatActivity() {
 
         navViewComponent.setNavigationItemSelectedListener {
             when(it.itemId){
+                R.id.nav_home -> {
+                    navController.navigate(R.id.navigation_home)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
                 R.id.nav_reservas -> {
                     navController.navigate(R.id.navigation_reservas)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
+                R.id.nav_tareas -> {
+                    navController.navigate(R.id.navigation_tareas)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_home -> {
+                    navController.navigate(R.id.navigation_notifications)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+
                 else -> false
             }
         }

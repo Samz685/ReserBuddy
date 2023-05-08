@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.reservas.ReservasFragment"
-    android:gravity="center">
+    tools:context=".ui.reservas.ReservasFragment">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerReservas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:id="@+id/tvContadorReservas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="1dp"
         android:drawableEnd="@drawable/ic_contador_reservas"
         android:drawablePadding="2dp"
         android:paddingTop="5dp"
-        android:layout_marginBottom="1dp"/>
+        android:text="100"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/linearCabecera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tvContadorReservas"
         android:layout_marginBottom="2dp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -59,46 +68,41 @@
             android:text="@string/periodo"
             android:textColor="@color/white" />
 
-
     </LinearLayout>
-
-
-
-
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/linearCabecera"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="60dp">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerReservas"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerReservas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="60dp" />
 
-        <TextView
-            android:id="@+id/tvMensajeReserva"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="No hay reservas"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/tvMensajeReserva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="No hay reservas"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </FrameLayout>
-
-
 
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-</LinearLayout>
+</RelativeLayout>
