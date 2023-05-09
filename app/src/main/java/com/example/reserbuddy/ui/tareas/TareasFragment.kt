@@ -42,6 +42,7 @@ class TareasFragment : Fragment() {
     private lateinit var tvMensajeTarea : TextView
     private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
     private lateinit var tabLayout: TabLayout
+    var tareaTiming = ""
 
     private val binding get() = _binding!!
 
@@ -104,7 +105,7 @@ class TareasFragment : Fragment() {
 
     fun refreshTareas() {
         swipeRefresh.setOnRefreshListener {
-            getAllTareas()
+            traerReservas()
             swipeRefresh.isRefreshing = false
             resetearContador()
 
@@ -114,6 +115,19 @@ class TareasFragment : Fragment() {
     private fun resetearContador(){
         binding.tvContadorTareas.text = listaTareas.size.toString()
         mensajeListaVacia()
+    }
+
+    private fun traerReservas() {
+
+        when (tareaTiming) {
+            "Todas" -> getAllTareas()
+            "Pendiente" -> getByEstado("Pendiente")
+            "Sin asignar" -> getByEstado("Pendiente")
+            else -> getAllTareas()
+        }
+        resetearContador()
+
+
     }
 
     private fun inicializarAdapters() {
@@ -202,6 +216,7 @@ class TareasFragment : Fragment() {
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
+        tareaTiming = "Todas"
     }
 
     fun getByEstado(estado : String) {
@@ -213,6 +228,8 @@ class TareasFragment : Fragment() {
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
+        if(estado == "Pendiente") tareaTiming = "Pendiente"
+        else if (estado == "Sin asignar") tareaTiming = "Sin asignar"
     }
 
     override fun onDestroyView() {
@@ -260,7 +277,7 @@ class TareasFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
                     0 -> getAllTareas()
-                    1 -> getByEstado("Pendientes")
+                    1 -> getByEstado("Pendiente")
                     2 -> getByEstado("Sin asignar")
 //                    3 -> getTareasSinAsignar()
 
