@@ -28,6 +28,7 @@ import com.example.reservarapp.models.Tarea
 import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.TareaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
+import com.google.android.material.tabs.TabLayout
 
 class TareasFragment : Fragment() {
 
@@ -40,6 +41,7 @@ class TareasFragment : Fragment() {
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var tvMensajeTarea : TextView
     private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
+    private lateinit var tabLayout: TabLayout
 
     private val binding get() = _binding!!
 
@@ -67,6 +69,9 @@ class TareasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        tabLayout = binding.tabReservas
+        setupTabs()
 
         traerUsuarios()
 
@@ -199,6 +204,17 @@ class TareasFragment : Fragment() {
         })
     }
 
+    fun getByEstado(estado : String) {
+        tareaViewModel.getByEstado(estado).observe(viewLifecycleOwner, Observer {
+            listaTareas.clear()
+            for (tarea in it) {
+                listaTareas.add(tarea)
+            }
+            resetearContador()
+            mAdapter.notifyDataSetChanged()
+        })
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -217,6 +233,7 @@ class TareasFragment : Fragment() {
 
     }
 
+    //Para llenar el bottomsheet de asignacion de usuarios
     fun getAllUsuarios() {
         usuarioViewModel.getAll().observe(viewLifecycleOwner, Observer {
             DataHolder.listaUsuarios.clear()
@@ -230,5 +247,30 @@ class TareasFragment : Fragment() {
     fun traerUsuarios(){
         getAllUsuariosSP()
         getAllUsuarios()
+    }
+
+    private fun setupTabs() {
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.todas))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.pendientes))
+//        tabLayout.addTab(tabLayout.newTab().setText(R.string.completadas))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.sin_asignar))
+
+        // Cambiar la lista de reservas según la pestaña seleccionada
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> getAllTareas()
+                    1 -> getByEstado("Pendientes")
+                    2 -> getByEstado("Sin asignar")
+//                    3 -> getTareasSinAsignar()
+
+                    else -> getAllTareas()
+                }
+                mRecyclerView.adapter?.notifyDataSetChanged()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
     }
 }

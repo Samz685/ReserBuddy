@@ -26,6 +26,7 @@ import com.example.reserbuddy.DataHolder
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
+import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,6 +47,7 @@ class ReservasFragment : Fragment() {
     private var fechaFinal = ""
     private lateinit var contador : TextView
     private lateinit var tvMensajeReserva : TextView
+    private lateinit var tabLayout: TabLayout
 
 
 
@@ -73,6 +75,8 @@ class ReservasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        tabLayout = binding.tabReservas
+        setupTabs()
 
         DataHolder.currentFragment = "FragmentReservas"
 
@@ -89,28 +93,6 @@ class ReservasFragment : Fragment() {
         refreshReservas()
         mensajeListaVacia()
 
-        binding.btnHoy.setOnClickListener {
-            getReservasToday()
-            reservaTiming = "Hoy"
-
-        }
-
-        binding.btnSemana.setOnClickListener {
-            getReservasWeek()
-            reservaTiming = "Semana"
-        }
-
-        binding.btnMes.setOnClickListener {
-            getReservasMonth()
-            reservaTiming = "Mes"
-        }
-
-        binding.btnPeriodo.setOnClickListener {
-            //getReservasPeriod se ejecuta dentro del la función elegirFecha
-            elegirFecha()
-            reservaTiming = "Periodo"
-
-        }
 
     }
 
@@ -216,6 +198,7 @@ class ReservasFragment : Fragment() {
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
+        reservaTiming = "Hoy"
     }
 
     fun getReservasWeek() {
@@ -228,6 +211,7 @@ class ReservasFragment : Fragment() {
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
+        reservaTiming = "Semana"
     }
 
     fun getReservasMonth() {
@@ -239,6 +223,7 @@ class ReservasFragment : Fragment() {
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
+        reservaTiming = "Mes"
     }
 
     fun getReservasPeriod() {
@@ -250,6 +235,7 @@ class ReservasFragment : Fragment() {
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
+        reservaTiming = "Periodo"
     }
 
 
@@ -289,6 +275,31 @@ class ReservasFragment : Fragment() {
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         )
         startDatePicker.show()
+    }
+
+    private fun setupTabs() {
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.hoy))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.semana))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.mes))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.periodo))
+
+        // Cambiar la lista de reservas según la pestaña seleccionada
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> getReservasToday()
+                    1 -> getReservasWeek()
+                    2 -> getReservasMonth()
+                    3 -> elegirFecha()
+
+                    else -> getReservasToday()
+                }
+                mRecyclerView.adapter?.notifyDataSetChanged()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
     }
 
 

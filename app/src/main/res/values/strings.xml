@@ -33,5 +33,9 @@
     <string name="home">Home</string>
     <string name="open_drawer">open</string>
     <string name="close_drawer">close</string>
+    <string name="todas">Todas</string>
+    <string name="pendientes">Pendientes</string>
+    <string name="completadas">Completadas</string>
+    <string name="sin_asignar">Sin asignar</string>
 
 </resources>

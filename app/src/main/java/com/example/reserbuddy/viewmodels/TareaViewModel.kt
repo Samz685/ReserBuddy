@@ -58,6 +58,17 @@ class TareaViewModel : ViewModel() {
         return tareasData
     }
 
+    fun getByEstado(estado : String): LiveData<LinkedList<Tarea>> {
+        val tareasData = MutableLiveData<LinkedList<Tarea>>()
+        tareaRepo.getByEstado(estado).observeForever {
+            tareasData.value = it
+        }
+
+        return tareasData
+    }
+
+
+
 
 
 //

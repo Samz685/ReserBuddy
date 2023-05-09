@@ -167,4 +167,21 @@ class TareaRepo {
         }
         return tareasData
     }
+
+    fun getByEstado(estado : String): LiveData<LinkedList<Tarea>> {
+        var tareasData = MutableLiveData<LinkedList<Tarea>>()
+        val tareaRef = db.collection("tareas")
+        val query = tareaRef.whereEqualTo("estado", estado)
+        query.get().addOnSuccessListener { result ->
+            var listaTareas = LinkedList<Tarea>()
+            for (document in result) {
+                var tarea = document.toObject<Tarea>()!!
+                listaTareas.addLast(tarea)
+            }
+            tareasData.value = listaTareas
+        }
+        return tareasData
+    }
+
+
 }
