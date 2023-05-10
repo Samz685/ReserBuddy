@@ -50,18 +50,18 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //setup
-        val bundle: Bundle? = intent.extras
-        val email:String? = bundle?.getString("email")
-        val provider:String? = bundle?.getString("provider")
-        setup(email?:"", provider?:"")
+//        //setup
+//        val bundle: Bundle? = intent.extras
+//        val email:String? = bundle?.getString("email")
+//        val provider:String? = bundle?.getString("provider")
+//        setup(email?:"", provider?:"")
 
-
-        //guardando datos
-        val prefs: SharedPreferences.Editor? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-        prefs?.putString("eamil", email)
-        prefs?.putString("provider",provider)
-        prefs?.apply()
+//
+//        //guardando datos
+//        val prefs: SharedPreferences.Editor? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+//        prefs?.putString("eamil", email)
+//        prefs?.putString("provider",provider)
+//        prefs?.apply()
 
 
 //        //borrar datos

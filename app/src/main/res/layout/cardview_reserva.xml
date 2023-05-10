@@ -159,7 +159,7 @@
             android:orientation="vertical"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <View
                 android:layout_width="match_parent"
