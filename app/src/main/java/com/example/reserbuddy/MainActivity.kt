@@ -25,7 +25,8 @@ import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.google.android.material.navigation.NavigationView
 
 enum class ProviderType{
-    GOOGLE
+    GOOGLE,
+    BASIC
 }
 class MainActivity : AppCompatActivity() {
 
@@ -49,29 +50,6 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-//        //setup
-//        val bundle: Bundle? = intent.extras
-//        val email:String? = bundle?.getString("email")
-//        val provider:String? = bundle?.getString("provider")
-//        setup(email?:"", provider?:"")
-
-//
-//        //guardando datos
-//        val prefs: SharedPreferences.Editor? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-//        prefs?.putString("eamil", email)
-//        prefs?.putString("provider",provider)
-//        prefs?.apply()
-
-
-//        //borrar datos
-//        val prefs: SharedPreferences.Editor? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-//        prefs?.clear()
-//        prefs?.apply()
-
-
-
-
 
 
 

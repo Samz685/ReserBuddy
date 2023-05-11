@@ -30,6 +30,9 @@ import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
+enum class ProviderType{
+    BASIC
+}
 
 class ReservasFragment : Fragment() {
 
@@ -67,8 +70,13 @@ class ReservasFragment : Fragment() {
         _binding = FragmentReservasBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        //Aqui se recogen los datos del login
+        val username = arguments?.getString("username")
+        val password = arguments?.getString("password")
 
         return root
+
+
     }
 
 
