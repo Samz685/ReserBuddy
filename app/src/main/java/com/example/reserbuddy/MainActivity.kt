@@ -1,6 +1,7 @@
 package com.example.reserbuddy
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
@@ -17,15 +18,18 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.reserbuddy.databinding.ActivityMainBinding
+import com.example.reserbuddy.ui.login.Login_Activity
 import com.example.reserbuddy.ui.newReserva.NewReservaFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
 import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 enum class ProviderType{
-    GOOGLE,
     BASIC
 }
 class MainActivity : AppCompatActivity() {
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newReservaViewModel : NewReservaViewModel
     private lateinit var newTareaViewModel : NewTareaViewModel
     private lateinit var toggle : ActionBarDrawerToggle
+    private lateinit var auth: FirebaseAuth;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = Firebase.auth
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
         val navViewComponent : NavigationView = findViewById(R.id.nav_view_component)
@@ -50,6 +56,18 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        //setup login
+        val bundle = intent.extras
+        val email = bundle?.getString("email")
+        val provider = bundle?.getString("provider")
+        setup(email ?:"", provider ?: "")
+
+        var user = auth.currentUser
+        if (user?.email != ""){
+            DataHolder.emailRecuperado = user?.email.toString()
+        }
+
 
 
 
@@ -122,9 +140,29 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
+                R.id.nav_cerrar_sesion -> {
+
+                    auth.signOut()
+                    val intent = Intent(this, Login_Activity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    true
+
+                }
+
+
                 else -> false
             }
         }
+
+
+
+    }
+
+    private fun setup(email: String, provider: String) {
+        title = "Inicio"
+
+
 
 
 
@@ -140,4 +178,6 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        return super.onOptionsItemSelected(item)
 //    }
+
+
 }

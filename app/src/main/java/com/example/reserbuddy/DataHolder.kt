@@ -18,6 +18,7 @@ class DataHolder {
         var listaUsuarios = mutableListOf<Usuario>()
         var currentUser = Usuario()
         var currentTarea = Tarea()
+        var emailRecuperado = ""
 
 
     }

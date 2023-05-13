@@ -30,9 +30,7 @@ import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
-enum class ProviderType{
-    BASIC
-}
+
 
 class ReservasFragment : Fragment() {
 
@@ -103,6 +101,8 @@ class ReservasFragment : Fragment() {
 
 
     }
+
+
 
     private fun mensajeListaVacia() {
         if (listaReservas.size == 0) {

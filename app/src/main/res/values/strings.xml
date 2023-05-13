@@ -48,5 +48,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="inicia_sesi_n">Inicia sesión</string>
     <string name="prefs_file">com.example.reserbuddy.PREFERENCE_FILE_KEY</string>
+    <string name="cerrar_sesion">Cerrar sesion</string>
+    <string name="login">Login</string>
 
 </resources>
