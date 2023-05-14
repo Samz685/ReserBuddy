@@ -57,5 +57,6 @@
     <string name="registro_exitoso">Registro exitoso</string>
     <string name="nombre_usuario">Nombre usuario</string>
     <string name="telefono">Telefono:</string>
+    <string name="usuarios">Usuarios</string>
 
 </resources>

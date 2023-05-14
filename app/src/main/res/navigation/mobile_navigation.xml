@@ -25,6 +25,12 @@
         tools:layout="@layout/fragment_tareas" />
 
     <fragment
+        android:id="@+id/navigation_usuarios"
+        android:name="com.example.reserbuddy.ui.usuarios.UsuariosFragment"
+        android:label="@string/usuarios"
+        tools:layout="@layout/fragment_usuarios" />
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.reserbuddy.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"

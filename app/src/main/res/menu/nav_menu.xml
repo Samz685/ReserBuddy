@@ -27,6 +27,10 @@
                 android:id="@+id/nav_clientes"
                 android:icon="@drawable/ic_clientes"
                 android:title="@string/clientes" />
+            <item
+                android:id="@+id/nav_usuarios"
+                android:icon="@drawable/ic_usuario"
+                android:title="@string/usuarios" />
 
         </group>
 
