@@ -14,6 +14,7 @@ import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.MainActivity
 import com.example.reserbuddy.ProviderType
 import com.example.reserbuddy.databinding.ActivityLoginBinding
+import com.example.reserbuddy.ui.registro.RegistroActivity
 import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -51,42 +52,9 @@ class Login_Activity : AppCompatActivity() {
 
         btnRegistrar.setOnClickListener {
 
-            val email = etEmail.text.toString().trim()
-            val password = etPassword.text.toString().trim()
+            val intent = Intent(this, RegistroActivity::class.java)
+            startActivity(intent)
 
-            if(email.isNotEmpty() && password.isNotEmpty()){
-
-                // Verificar si el email es válido
-                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    etEmail.error = "Email inválido"
-                    etEmail.requestFocus()
-                    return@setOnClickListener
-                }
-
-                // Verificar si la contraseña es válida
-                if(password.length < 6){
-                    etPassword.error = "La contraseña debe tener al menos 6 caracteres"
-                    etPassword.requestFocus()
-                    return@setOnClickListener
-                }
-
-                auth.
-                createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if(it.isSuccessful){
-                        showHome(it.result.user?.email.toString(), ProviderType.BASIC)
-
-                        var userProfile = Usuario()
-                        userProfile.email = auth.currentUser?.email.toString()
-                        userProfile.alias = "Nuevo usuario"
-
-                        var usuario = UsuarioViewModel()
-                        usuario.addUsuario(userProfile)
-
-                    } else{
-                        showAlert()
-                    }
-                }
-            }
         }
 
 

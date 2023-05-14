@@ -19,7 +19,7 @@
         app:cardBackgroundColor="@color/white">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/ivUsuarioFoto"
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:background="@drawable/ic_user_ejemplo"

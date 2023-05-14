@@ -50,6 +50,15 @@ class UsuarioViewModel : ViewModel() {
         return usuarioData
     }
 
+    fun getByEmail(email : String): LiveData<Usuario> {
+        val usuarioData = MutableLiveData<Usuario>()
+        usuarioRepo.getByEmail(email).observeForever {
+            usuarioData.value = it
+        }
+
+        return usuarioData
+    }
+
 
 
 //

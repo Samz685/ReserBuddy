@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -24,6 +25,7 @@ import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
 import com.example.reserbuddy.ui.reservas.ReservasFragment
+import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -35,6 +37,7 @@ enum class ProviderType{
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var usuarioViewModel : UsuarioViewModel
     private lateinit var newReservaViewModel : NewReservaViewModel
     private lateinit var newTareaViewModel : NewTareaViewModel
     private lateinit var toggle : ActionBarDrawerToggle
@@ -48,6 +51,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = Firebase.auth
 
+        newReservaViewModel = ViewModelProvider(this).get(NewReservaViewModel::class.java)
+        newTareaViewModel = ViewModelProvider(this).get(NewTareaViewModel::class.java)
+        usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
+
+
         val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
         val navViewComponent : NavigationView = findViewById(R.id.nav_view_component)
 
@@ -57,16 +65,8 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //setup login
-        val bundle = intent.extras
-        val email = bundle?.getString("email")
-        val provider = bundle?.getString("provider")
-        setup(email ?:"", provider ?: "")
+        getCurrentUsuario()
 
-        var user = auth.currentUser
-        if (user?.email != ""){
-            DataHolder.emailRecuperado = user?.email.toString()
-        }
 
 
 
@@ -106,8 +106,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        newReservaViewModel = ViewModelProvider(this).get(NewReservaViewModel::class.java)
-        newTareaViewModel = ViewModelProvider(this).get(NewTareaViewModel::class.java)
+
+
         binding.btnAdd.setOnClickListener {
             if (DataHolder.currentFragment == "FragmentReservas"){
                 NewReservaFragment().show(supportFragmentManager, "newReserva")
@@ -159,14 +159,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setup(email: String, provider: String) {
-        title = "Inicio"
+    fun getCurrentUsuario() {
+        usuarioViewModel.getByEmail(auth.currentUser!!.email!!).observe(this, Observer {
 
+            DataHolder.currentUser = it
 
-
-
+        })
 
     }
+
+
 
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        when (item.itemId) {

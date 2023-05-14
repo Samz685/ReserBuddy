@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:hint="Nombre usuario"
+                        android:hint="@string/nombre_usuario"
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             android:paddingTop="10dp"
             android:paddingBottom="15dp">
 
@@ -113,7 +113,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Telefono: "
+                    android:text="@string/telefono"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:drawableStart="@drawable/ic_smartphone"

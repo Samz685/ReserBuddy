@@ -3,6 +3,7 @@ package com.example.reserbuddy.ui.tareas
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,12 +44,13 @@ class TareasFragment : Fragment() {
     private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
     private lateinit var tabLayout: TabLayout
     var tareaTiming = ""
+    private lateinit var user : Usuario
 
     private val binding get() = _binding!!
 
     override fun onResume() {
         super.onResume()
-        getAllTareas()
+        traerTareas()
         true
     }
 
@@ -71,6 +73,7 @@ class TareasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        user = DataHolder.currentUser
         tabLayout = binding.tabReservas
         setupTabs()
 
@@ -82,17 +85,36 @@ class TareasFragment : Fragment() {
         swipeRefresh = binding.swipeRefresh
 
         listaTareas = mutableListOf<Tarea>()
+        tvMensajeTarea = binding.tvMensajeTarea
 
-        getAllTareas()
+
+
+        traerTareas()
         inicializarAdapters()
         refreshTareas()
 
-        tvMensajeTarea = binding.tvMensajeTarea
+
 
         mensajeListaVacia()
 
 
 
+    }
+
+    private fun traerTareasRol() {
+        if(DataHolder.currentUser.rol == "admin"){
+            getAllTareas()
+        } else{
+            getTareasByUsuario()
+        }
+    }
+
+    private fun traerTareasEstadoUsuario(idUsuario: String, estado: String) {
+        if(DataHolder.currentUser.rol == "admin"){
+            getByEstado(estado)
+        } else{
+            getTareasByUsuarioEstado(idUsuario,estado)
+        }
     }
 
     private fun mensajeListaVacia() {
@@ -105,7 +127,7 @@ class TareasFragment : Fragment() {
 
     fun refreshTareas() {
         swipeRefresh.setOnRefreshListener {
-            traerReservas()
+            traerTareas()
             swipeRefresh.isRefreshing = false
             resetearContador()
 
@@ -117,13 +139,14 @@ class TareasFragment : Fragment() {
         mensajeListaVacia()
     }
 
-    private fun traerReservas() {
+    private fun traerTareas() {
+
 
         when (tareaTiming) {
-            "Todas" -> getAllTareas()
-            "Pendiente" -> getByEstado("Pendiente")
-            "Sin asignar" -> getByEstado("Pendiente")
-            else -> getAllTareas()
+            "Todas" -> traerTareasRol()
+            "Pendiente" -> traerTareasEstadoUsuario(user.id,"Pendiente")
+            "Sin asignar" -> traerTareasEstadoUsuario(user.id,"Sin asignar")
+            else -> traerTareasRol()
         }
         resetearContador()
 
@@ -219,6 +242,35 @@ class TareasFragment : Fragment() {
         tareaTiming = "Todas"
     }
 
+    fun getTareasByUsuario() {
+        tareaViewModel.getByUsuario(DataHolder.currentUser.id).observe(viewLifecycleOwner, Observer {
+            listaTareas.clear()
+            for (tarea in it) {
+                listaTareas.add(tarea)
+            }
+
+
+            resetearContador()
+            mAdapter.notifyDataSetChanged()
+        })
+        tareaTiming = "Todas"
+    }
+
+    fun getTareasByUsuarioEstado(idUsuario : String, estado : String) {
+        tareaViewModel.getByUsuarioEstado(DataHolder.currentUser.id, estado).observe(viewLifecycleOwner, Observer {
+            listaTareas.clear()
+            for (tarea in it) {
+                listaTareas.add(tarea)
+            }
+
+
+            resetearContador()
+            mAdapter.notifyDataSetChanged()
+        })
+        if(estado == "Pendiente") tareaTiming = "Pendiente"
+        else if (estado == "Sin asignar") tareaTiming = "Sin asignar"
+    }
+
     fun getByEstado(estado : String) {
         tareaViewModel.getByEstado(estado).observe(viewLifecycleOwner, Observer {
             listaTareas.clear()
@@ -270,16 +322,18 @@ class TareasFragment : Fragment() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.todas))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pendientes))
 //        tabLayout.addTab(tabLayout.newTab().setText(R.string.completadas))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.sin_asignar))
+        if(user.rol == "admin"){
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.sin_asignar))
+        }
+
 
         // Cambiar la lista de reservas según la pestaña seleccionada
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> getAllTareas()
-                    1 -> getByEstado("Pendiente")
-                    2 -> getByEstado("Sin asignar")
-//                    3 -> getTareasSinAsignar()
+                    0 -> traerTareas()
+                    1 -> getTareasByUsuarioEstado(DataHolder.currentUser.id,"Pendiente")
+                    2 -> getTareasByUsuarioEstado(DataHolder.currentUser.id,"Sin asignar")
 
                     else -> getAllTareas()
                 }

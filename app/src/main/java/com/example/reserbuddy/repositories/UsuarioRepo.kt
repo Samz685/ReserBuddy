@@ -113,20 +113,20 @@ class UsuarioRepo {
         return usuario.id
     }
 
-//    fun getByGroup(grupo : Grupo): LiveData<LinkedList<Usuario>> {
-//        var usuariosData = MutableLiveData<LinkedList<Usuario>>()
-//        val usuarioRef = db.collection("usuarios")
-//        val query = usuarioRef.whereArrayContains("listaGrupos", grupo.id)
-//        query.get().addOnSuccessListener { result ->
-//            var listaUsuarios = LinkedList<Usuario>()
-//            for (document in result) {
-//                var usuario = document.toObject<Usuario>()!!
-//                listaUsuarios.addLast(usuario)
-//            }
-//            usuariosData.value = listaUsuarios
-//        }
-//        return usuariosData
-//    }
+    fun getByEmail(email : String): LiveData<Usuario> {
+        var usuarioData = MutableLiveData<Usuario>()
+        val usuarioRef = db.collection("perfil_usuarios")
+        val query = usuarioRef.whereEqualTo("email", email)
+        query.get().addOnSuccessListener { result ->
+            var usuarioEncontrado = Usuario()
+            for (document in result) {
+                usuarioEncontrado = document.toObject<Usuario>()!!
+
+            }
+            usuarioData.value = usuarioEncontrado
+        }
+        return usuarioData
+    }
 
 
 

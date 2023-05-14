@@ -156,7 +156,23 @@ class TareaRepo {
     fun getByUsuario(idUsuario: String): LiveData<LinkedList<Tarea>> {
         var tareasData = MutableLiveData<LinkedList<Tarea>>()
         val tareaRef = db.collection("tareas")
-        val query = tareaRef.whereEqualTo("asignedTo", idUsuario)
+        val query = tareaRef.whereEqualTo("asignedToId", idUsuario)
+        query.get().addOnSuccessListener { result ->
+            var listaTareas = LinkedList<Tarea>()
+            for (document in result) {
+                var tarea = document.toObject<Tarea>()!!
+                listaTareas.addLast(tarea)
+            }
+            tareasData.value = listaTareas
+        }
+        return tareasData
+    }
+
+    fun getByUsuarioEstado(idUsuario: String, estado : String): LiveData<LinkedList<Tarea>> {
+        var tareasData = MutableLiveData<LinkedList<Tarea>>()
+        val tareaRef = db.collection("tareas")
+        val query = tareaRef.whereEqualTo("asignedToId", idUsuario)
+            .whereEqualTo("estado", estado )
         query.get().addOnSuccessListener { result ->
             var listaTareas = LinkedList<Tarea>()
             for (document in result) {
