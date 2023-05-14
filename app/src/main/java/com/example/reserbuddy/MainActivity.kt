@@ -68,37 +68,17 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
         val navViewComponent : NavigationView = findViewById(R.id.nav_view_component)
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
         toggle = ActionBarDrawerToggle(this,drawerLayout,R.string.open_drawer,R.string.close_drawer)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         getCurrentUsuario()
-
-
-
-
-
-
-        // Configura la ActionBar para mostrar el botón de menú
-
-//        val toolbar: Toolbar = findViewById(R.id.toolbar)
-
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-//
-
-        // Configura el DrawerLayout para que se muestre por encima de la ActionBar
-//        val toggle = ActionBarDrawerToggle(
-//            this, binding.drawerLayout, binding.toolbar, R.string.open_drawer, R.string.close_drawer)
-//        binding.drawerLayout.addDrawerListener(toggle)
-//        toggle.syncState()
-
-
-
-
 
 
 
