@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.registro.RegistroActivity"
+    android:orientation="vertical"
+    android:background="@drawable/bg_reserbuddy">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="170dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/white">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:background="@drawable/ic_user_ejemplo"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <EditText
+        android:id="@+id/etUsuarioNombre"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/nombre"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/etUsuarioEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/prompt_email"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/etUsuarioTelefono"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="Telefono"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+
+
+    <EditText
+        android:id="@+id/etPassword1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/contrase_a"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:selectAllOnFocus="true"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/etPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/repite_contrase_a"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:selectAllOnFocus="true"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="72dp"
+        android:layout_gravity="center"
+        android:enabled="true"
+        android:text="Registrarte" />
+
+
+
+
+
+</LinearLayout>

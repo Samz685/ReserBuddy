@@ -39,7 +39,7 @@ class Login_Activity : AppCompatActivity() {
         setContentView(binding.root)
 
         btnIniciar = binding.btnIniciar
-        btnRegistrar = binding.btnRegistrar
+        btnRegistrar = binding.btnRegistrarte
         etEmail = binding.username
         etPassword = binding.password
         auth = Firebase.auth
