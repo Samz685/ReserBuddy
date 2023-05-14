@@ -51,6 +51,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = Firebase.auth
 
+        // Comprobar si el usuario ya ha iniciado sesión
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            // El usuario ya ha iniciado sesión, llevarlo a la pantalla principal de la aplicación
+            val intent = Intent(this, Login_Activity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         newReservaViewModel = ViewModelProvider(this).get(NewReservaViewModel::class.java)
         newTareaViewModel = ViewModelProvider(this).get(NewTareaViewModel::class.java)
         usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)

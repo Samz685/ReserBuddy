@@ -66,10 +66,10 @@ class Login_Activity : AppCompatActivity() {
                 signInWithEmailAndPassword(etEmail.text.toString(),
                     etPassword.text.toString()).addOnCompleteListener {
                     if(it.isSuccessful){
-                        val user = auth.currentUser
-                        Log.d(TAG,"--------------------------${user?.email}")
 
-                        DataHolder.emailRecuperado = user?.email.toString()
+                        FirebaseAuth.getInstance().currentUser?.let { user ->
+                            FirebaseAuth.getInstance().updateCurrentUser(user)
+                        }
                         showHome(it.result.user?.email.toString(), ProviderType.BASIC)
 
                     } else{
