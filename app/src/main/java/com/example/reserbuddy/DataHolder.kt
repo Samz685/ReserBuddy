@@ -16,6 +16,7 @@ class DataHolder {
         var currentFragment = ""
         var listaUsuariosSpinner = mutableListOf<Usuario>()
         var listaUsuarios = mutableListOf<Usuario>()
+        var listaTareas = mutableListOf<Tarea>()
         var currentUser = Usuario()
         var currentTarea = Tarea()
         var emailRecuperado = ""

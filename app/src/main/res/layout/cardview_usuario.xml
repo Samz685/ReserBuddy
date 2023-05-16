@@ -59,7 +59,7 @@
 
 
                     <TextView
-                        android:id="@+id/tvTareasPendientes"
+                        android:id="@+id/tvAsignarTarea"
                         android:layout_width="100dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="65dp"

@@ -12,11 +12,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.reserbuddy.DataHolder
+import com.example.reserbuddy.FechaGenerator
 import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.UsuarioAdapter
 import com.example.reserbuddy.databinding.FragmentUsuariosBinding
+import com.example.reserbuddy.ui.botomSheetListas.ListaTareasFragment
+import com.example.reserbuddy.ui.botomSheetListas.ListaUsuariosFragment
 import com.example.reservarapp.models.Usuario
+import com.example.reservarapp.viewmodels.TareaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 
 class UsuariosFragment : Fragment() {
@@ -57,6 +62,7 @@ class UsuariosFragment : Fragment() {
         getAllUsuarios()
         inicializarAdapters()
         refreshUsuarios()
+        getTareasPendientes()
 
 
 
@@ -93,7 +99,9 @@ class UsuariosFragment : Fragment() {
             }
 
             override fun onClick2(position: Int) {
-                TODO("Not yet implemented")
+                var usuario = listaUsuarios[position]
+                    DataHolder.currentUser = usuario
+                    ListaTareasFragment().show(childFragmentManager, "listaTareasFragment")
             }
 
             override fun onClick3(position: Int) {
@@ -126,16 +134,17 @@ class UsuariosFragment : Fragment() {
         })
     }
 
-//    fun crearUsuario(nombre : String, email : String) : Usuario{
-//
-//        var usuario = Usuario()
-//        usuario.alias = nombre
-//        usuario.rol = "Admin"
-//        usuario.email = email
-//        usuario.telefono = "622622622"
-//        usuario.foto = R.drawable.ic_usuario_perfil
-//        return usuario
-//    }
+    fun getTareasPendientes() {
+        val tareaViewModel = TareaViewModel()
+        tareaViewModel.getByEstado("Pendiente").observe(viewLifecycleOwner, Observer {
+            DataHolder.listaTareas.clear()
+            for (tarea in it) {
+                DataHolder.listaTareas.add(tarea)
+            }
+
+        })
+    }
+
 
 
 

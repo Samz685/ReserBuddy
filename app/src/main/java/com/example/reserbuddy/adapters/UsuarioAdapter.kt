@@ -12,6 +12,7 @@ import com.example.reserbuddy.R
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.UsuarioViewModel
+import org.w3c.dom.Text
 
 class UsuarioAdapter(var listaUsuarios:MutableList<Usuario>, var listener: OnItemClickListener, var usuarioViewmodel: UsuarioViewModel):
     RecyclerView.Adapter<UsuarioAdapter.ViewHolder>() {
@@ -36,6 +37,10 @@ class UsuarioAdapter(var listaUsuarios:MutableList<Usuario>, var listener: OnIte
             listener.onImageClick(position)
         }
 
+        holder.tvAsignar.setOnClickListener {
+            listener.onClick2(position)
+        }
+
 
     }
 
@@ -56,6 +61,7 @@ class UsuarioAdapter(var listaUsuarios:MutableList<Usuario>, var listener: OnIte
         var tvTelefono: TextView = v.findViewById(R.id.tvTelefonoUsuario)
         var tvComentario: TextView = v.findViewById(R.id.tvComentarioUsuario)
         var ivUsuario : ImageView = v.findViewById(R.id.ivUsuario)
+        var tvAsignar : TextView = v.findViewById(R.id.tvAsignarTarea)
 
 
 
