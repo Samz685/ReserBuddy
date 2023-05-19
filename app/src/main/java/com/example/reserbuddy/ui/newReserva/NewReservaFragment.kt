@@ -14,7 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentNewReservaBinding
 import com.example.reserbuddy.ui.reservas.ReservasFragment
+import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Reserva
+import com.example.reservarapp.viewmodels.ClienteViewModel
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -37,6 +39,7 @@ var ubiSeleccionada = ""
 class NewReservaFragment : BottomSheetDialogFragment() {
 
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
+    private val clienteViewModel by lazy { ViewModelProvider(this).get(ClienteViewModel::class.java) }
 
     private var _binding: FragmentNewReservaBinding? = null
 
@@ -160,6 +163,8 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         reserva.grupo = "El Pikon"
         reserva.estado = "Pendiente"
 
+        crearCliente(telefono, nombre)
+
         reservaViewModel.addReserva(reserva)
 
         dismiss()
@@ -196,6 +201,18 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         binding.etNumComensales.addTextChangedListener(textWatcher)
 
     }
+
+    fun crearCliente(telefono: String, nombre: String) {
+        clienteViewModel.exists(telefono).observeForever { existe ->
+            if (!existe) {
+                val cliente = Cliente()
+                cliente.nombre = nombre
+                cliente.telefono = telefono
+                clienteViewModel.addCliente(cliente)
+            }
+        }
+    }
+
 
 
 }

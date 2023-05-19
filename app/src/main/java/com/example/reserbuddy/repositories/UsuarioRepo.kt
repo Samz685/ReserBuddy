@@ -80,7 +80,6 @@ class UsuarioRepo {
         }
 
         return usuarioData
-
     }
 
     fun getAll(): LiveData<LinkedList<Usuario>> {

@@ -75,7 +75,7 @@ class TareasFragment : Fragment() {
 
         user = DataHolder.currentUser
         tabLayout = binding.tabReservas
-        setupTabs()
+
 
         traerUsuarios()
 
@@ -93,6 +93,8 @@ class TareasFragment : Fragment() {
         inicializarAdapters()
         refreshTareas()
 
+        setupTabs()
+
 
 
         mensajeListaVacia()
@@ -107,14 +109,23 @@ class TareasFragment : Fragment() {
         } else{
             getTareasByUsuario()
         }
+        tareaTiming = "Todas"
     }
 
-    private fun traerTareasEstadoUsuario(idUsuario: String, estado: String) {
+    private fun traerTareasPendientesUsuario() {
         if(DataHolder.currentUser.rol == "admin"){
-            getByEstado(estado)
+            getByEstado("Pendiente")
         } else{
-            getTareasByUsuarioEstado(idUsuario,estado)
+            getTareasByUsuarioEstado(DataHolder.currentUser.id,"Pendiente")
         }
+        tareaTiming = "Pendiente"
+    }
+
+    private fun traerTareasSinAsignar() {
+        if(DataHolder.currentUser.rol == "admin"){
+            getByEstado("Sin asignar")
+        }
+        tareaTiming = "Sin asignar"
     }
 
     private fun mensajeListaVacia() {
@@ -144,8 +155,8 @@ class TareasFragment : Fragment() {
 
         when (tareaTiming) {
             "Todas" -> traerTareasRol()
-            "Pendiente" -> traerTareasEstadoUsuario(user.id,"Pendiente")
-            "Sin asignar" -> traerTareasEstadoUsuario(user.id,"Sin asignar")
+            "Pendiente" -> traerTareasPendientesUsuario()
+            "Sin asignar" -> traerTareasSinAsignar()
             else -> traerTareasRol()
         }
         resetearContador()
@@ -257,7 +268,7 @@ class TareasFragment : Fragment() {
     }
 
     fun getTareasByUsuarioEstado(idUsuario : String, estado : String) {
-        tareaViewModel.getByUsuarioEstado(DataHolder.currentUser.id, estado).observe(viewLifecycleOwner, Observer {
+        tareaViewModel.getByUsuarioEstado(idUsuario, estado).observe(viewLifecycleOwner, Observer {
             listaTareas.clear()
             for (tarea in it) {
                 listaTareas.add(tarea)
@@ -331,9 +342,9 @@ class TareasFragment : Fragment() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> traerTareas()
-                    1 -> getTareasByUsuarioEstado(DataHolder.currentUser.id,"Pendiente")
-                    2 -> getTareasByUsuarioEstado(DataHolder.currentUser.id,"Sin asignar")
+                    0 -> traerTareasRol()
+                    1 -> traerTareasPendientesUsuario()
+                    2 -> traerTareasSinAsignar()
 
                     else -> getAllTareas()
                 }

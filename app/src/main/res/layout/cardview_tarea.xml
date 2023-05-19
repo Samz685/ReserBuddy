@@ -50,7 +50,7 @@
 
                     <TextView
                         android:id="@+id/tvNombreTarea"
-                        android:layout_width="wrap_content"
+                        android:layout_width="190dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:hint="Nombre tarea"
@@ -62,7 +62,7 @@
                         android:id="@+id/tvEstadoTarea"
                         android:layout_width="100dp"
                         android:layout_height="20dp"
-                        android:layout_marginStart="65dp"
+                        android:layout_marginStart="0dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/estado_green_rectangle"
                         android:gravity="center"

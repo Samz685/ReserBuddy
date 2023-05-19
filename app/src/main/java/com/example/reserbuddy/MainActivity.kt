@@ -129,6 +129,12 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
+                R.id.nav_clientes -> {
+                    navController.navigate(R.id.navigation_clientes)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+
                 R.id.nav_usuarios -> {
                     navController.navigate(R.id.navigation_usuarios)
                     drawerLayout.closeDrawer(GravityCompat.START)

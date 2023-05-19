@@ -30,6 +30,12 @@
         android:label="@string/usuarios"
         tools:layout="@layout/fragment_usuarios" />
 
+    <fragment
+        android:id="@+id/navigation_clientes"
+        android:name="com.example.reserbuddy.ui.usuarios.ClientesFragment"
+        android:label="Clientes"
+        tools:layout="@layout/fragment_clientes" />
+
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_notifications"-->
 <!--        android:name="com.example.reserbuddy.ui.notifications.NotificationsFragment"-->
