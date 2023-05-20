@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#F0F0F0" />
+    <corners android:radius="10dp" />
+    <padding
+        android:left="16dp"
+        android:top="8dp"
+        android:right="16dp"
+        android:bottom="8dp" />
+
+    <item android:top="-10dp">
+        <rotate android:fromDegrees="45" android:pivotX="0%" android:pivotY="100%">
+            <shape>
+                <solid android:color="#F0F0F0"/>
+            </shape>
+        </rotate>
+    </item>
+</shape>

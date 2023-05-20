@@ -36,6 +36,12 @@
         android:label="Clientes"
         tools:layout="@layout/fragment_clientes" />
 
+    <fragment
+        android:id="@+id/navigation_detalle_cliente"
+        android:name="com.example.reserbuddy.ui.usuarios.DetalleClienteFragment"
+        android:label="Detalle Cliente"
+        tools:layout="@layout/fragment_clientes" />
+
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_notifications"-->
 <!--        android:name="com.example.reserbuddy.ui.notifications.NotificationsFragment"-->

@@ -2,9 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/NewReserBuddy" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/NewReservasBuddy" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ReserBuddy" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Reserbuddy1" vcs="Git" />
   </component>
 </project>

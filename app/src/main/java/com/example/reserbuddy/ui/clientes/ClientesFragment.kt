@@ -92,6 +92,11 @@ class ClientesFragment : Fragment() {
         mAdapter = ClienteAdapter(listaClientes, object : OnItemClickListener {
             override fun OnItemClick(vista: View, position: Int) {
 
+                DataHolder.currentCliente = listaClientes[position]
+                goDetalles()
+
+
+
 
             }
 
@@ -127,6 +132,16 @@ class ClientesFragment : Fragment() {
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
+    }
+
+    fun goDetalles(){
+
+        val fragment = DetalleClienteFragment() // Fragment Destino
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.navigation_detalle_cliente, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
 
