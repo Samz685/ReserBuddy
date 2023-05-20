@@ -14,13 +14,13 @@ class ReservaViewModel : ViewModel() {
     private val reservaRepo = ReservaRepo()
 
 
-//    fun getByGroup(grupo : Grupo): LiveData<LinkedList<Reserva>> {
-//        val reservasData = MutableLiveData<LinkedList<Reserva>>()
-//        reservaRepo.getByGroup(grupo).observeForever {
-//            reservasData.value = it
-//        }
-//        return reservasData
-//    }
+    fun getByCliente(numCliente : String): LiveData<LinkedList<Reserva>> {
+        val reservasData = MutableLiveData<LinkedList<Reserva>>()
+        reservaRepo.getByCliente(numCliente).observeForever {
+            reservasData.value = it
+        }
+        return reservasData
+    }
 
     fun getToday(): LiveData<LinkedList<Reserva>> {
         val reservasData = MutableLiveData<LinkedList<Reserva>>()

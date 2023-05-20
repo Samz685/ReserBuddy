@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 
 import androidx.lifecycle.ViewModelProvider
+import com.example.reserbuddy.AvatarGenerator
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentNewReservaBinding
-import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ClienteViewModel
@@ -208,7 +208,10 @@ class NewReservaFragment : BottomSheetDialogFragment() {
                 val cliente = Cliente()
                 cliente.nombre = nombre
                 cliente.telefono = telefono
+                cliente.foto = AvatarGenerator().asignarIcono(nombre.lowercase())
                 clienteViewModel.addCliente(cliente)
+
+
             }
         }
     }

@@ -23,7 +23,8 @@ class ClienteRepo {
             "id" to cliente.id,
             "nombre" to cliente.nombre,
             "telefono" to cliente.telefono,
-            "email" to cliente.email
+            "email" to cliente.email,
+            "foto" to cliente.foto
         )
         clienteRef.set(datos).addOnSuccessListener {
             Log.i("Firebase", "Cliente creado correctamente")

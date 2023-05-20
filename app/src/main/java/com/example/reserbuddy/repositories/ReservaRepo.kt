@@ -79,21 +79,21 @@ class ReservaRepo {
 
 
 
-//    fun getByGroup(grupo: Grupo): LiveData<LinkedList<Reserva>> {
-//        var reservasData = MutableLiveData<LinkedList<Reserva>>()
-//        val reservaRef = db.collection("reservas")
-//
-//        val query = reservaRef.whereEqualTo("grupo", grupo.id)
-//        query.get().addOnSuccessListener { result ->
-//            var listaReservas = LinkedList<Reserva>()
-//            for (document in result) {
-//                var reserva = document.toObject<Reserva>()!!
-//                listaReservas.addLast(reserva)
-//            }
-//            reservasData.value = listaReservas
-//        }
-//        return reservasData
-//    }
+    fun getByCliente(numCliente: String): LiveData<LinkedList<Reserva>> {
+        var reservasData = MutableLiveData<LinkedList<Reserva>>()
+        val reservaRef = db.collection("reservas")
+
+        val query = reservaRef.whereEqualTo("telefono", numCliente)
+        query.get().addOnSuccessListener { result ->
+            var listaReservas = LinkedList<Reserva>()
+            for (document in result) {
+                var reserva = document.toObject<Reserva>()!!
+                listaReservas.addLast(reserva)
+            }
+            reservasData.value = listaReservas
+        }
+        return reservasData
+    }
 
     fun getToday(): LiveData<LinkedList<Reserva>> {
 
