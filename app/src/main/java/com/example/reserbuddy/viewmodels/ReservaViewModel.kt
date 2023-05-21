@@ -22,6 +22,14 @@ class ReservaViewModel : ViewModel() {
         return reservasData
     }
 
+    fun getByClienteByEstado(numCliente : String, estado : String): LiveData<LinkedList<Reserva>> {
+        val reservasData = MutableLiveData<LinkedList<Reserva>>()
+        reservaRepo.getByClienteByEstado(numCliente, estado).observeForever {
+            reservasData.value = it
+        }
+        return reservasData
+    }
+
     fun getToday(): LiveData<LinkedList<Reserva>> {
         val reservasData = MutableLiveData<LinkedList<Reserva>>()
         reservaRepo.getToday().observeForever {
@@ -66,6 +74,14 @@ class ReservaViewModel : ViewModel() {
 
     fun updateReserva(reserva: Reserva){
         reservaRepo.updateReserva(reserva)
+    }
+
+    fun getChartMonth(mes : Int) : LiveData<Int> {
+        var countReserva = MutableLiveData<Int>()
+        reservaRepo.getChartMonth(mes).observeForever {
+            countReserva.value = it
+        }
+        return countReserva
     }
 
 
