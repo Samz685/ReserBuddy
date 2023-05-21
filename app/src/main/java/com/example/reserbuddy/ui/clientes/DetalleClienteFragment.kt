@@ -1,4 +1,4 @@
-package com.example.reserbuddy.ui.usuarios
+package com.example.reserbuddy.ui.clientes
 
 import android.os.Bundle
 import android.provider.ContactsContract.Data
@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.reserbuddy.DataHolder
+import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.databinding.FragmentDetalleClienteBinding
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ClienteViewModel
 import com.example.reservarapp.viewmodels.ReservaViewModel
+import com.github.mikephil.charting.charts.PieChart
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -37,6 +39,8 @@ class DetalleClienteFragment : Fragment() {
     private lateinit var tvTelefono : TextView
     private lateinit var tvEmail: TextView
     private lateinit var tvComentario : TextView
+    private lateinit var pieChart: PieChart
+
 
 
     private val binding get() = _binding!!
@@ -59,15 +63,16 @@ class DetalleClienteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        inicializarDetalles()
 
 
 //        swipeRefresh = binding.swipeRefreshDetalleCliente
 
         listaReservas = mutableListOf<Reserva>()
 
-        getReservasByCliente(DataHolder.currentCliente.telefono)
-        inicializarAdapters()
-        refreshUsuarios()
+//        getReservasByCliente(DataHolder.currentCliente.telefono)
+//        inicializarAdapters()
+//        refreshUsuarios()
 
 
 
@@ -75,22 +80,21 @@ class DetalleClienteFragment : Fragment() {
     }
 
 
-    fun inicializarDetaller(){
+    fun inicializarDetalles(){
 
         var cliente = DataHolder.currentCliente
 
         ivFoto = binding.ivDetalleCliente
         tvNombre = binding.tvDetalleClienteNombre
         tvTelefono = binding.tvDetalleClienteTel
-        tvEmail = binding.tvDetalleClienteTel
-        tvComentario = binding.tvDetalleClienteTel
+        tvEmail = binding.tvDetalleClienteEmail
+        tvComentario = binding.tvDetalleClienteComent
 
-        ivFoto =
         ivFoto.setImageResource(cliente.foto)
         tvNombre.text = cliente.nombre
         tvTelefono.text = cliente.telefono
         tvEmail.text = cliente.nombre.toString()
-        tvComentario.text= cliente.telefono
+        tvComentario.text= cliente.descripcion
 
     }
     fun refreshUsuarios() {
@@ -99,6 +103,12 @@ class DetalleClienteFragment : Fragment() {
             swipeRefresh.isRefreshing = false
 
         }
+    }
+
+    fun inicializarChart(){
+
+         pieChart = binding.chartCliente
+
     }
 
     private fun inicializarAdapters() {

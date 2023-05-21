@@ -32,15 +32,15 @@
 
     <fragment
         android:id="@+id/navigation_clientes"
-        android:name="com.example.reserbuddy.ui.usuarios.ClientesFragment"
+        android:name="com.example.reserbuddy.ui.clientes.ClientesFragment"
         android:label="Clientes"
         tools:layout="@layout/fragment_clientes" />
 
     <fragment
         android:id="@+id/navigation_detalle_cliente"
-        android:name="com.example.reserbuddy.ui.usuarios.DetalleClienteFragment"
+        android:name="com.example.reserbuddy.ui.clientes.DetalleClienteFragment"
         android:label="Detalle Cliente"
-        tools:layout="@layout/fragment_clientes" />
+        tools:layout="@layout/fragment_detalle_cliente" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_notifications"-->

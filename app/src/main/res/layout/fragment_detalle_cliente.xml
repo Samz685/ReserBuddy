@@ -25,26 +25,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="top">
+            android:gravity="top"
+            android:layout_marginLeft="10dp"
+            >
 
             <TextView
                 android:id="@+id/tv_detalle_cliente_nombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nombre"
-            android:layout_marginTop="10dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nombre"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_detalle_cliente_tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/telefono" />
+                android:text="@string/telefono"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_detalle_cliente_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prompt_email" />
+                android:text="@string/prompt_email"
+                android:textSize="15sp"/>
 
 
         </LinearLayout>
@@ -52,31 +58,38 @@
     </LinearLayout>
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comentarios:"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="20dp"
+        />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/grey_rectangle_comic">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Comentarios:"
-                android:textSize="10sp"
-                />
+
 
 
             <TextView
                 android:id="@+id/tv_detalle_cliente_coment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comentarios"/>
+                android:text="Comentarios"
+                android:textSize="15sp"/>
 
         </LinearLayout>
 
@@ -87,8 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="16dp"
-        android:pc_sliceSpace="3dp"
-        android:pc_usePercentValues="true" />
+        />
 
 
 

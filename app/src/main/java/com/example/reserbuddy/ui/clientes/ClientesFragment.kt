@@ -1,4 +1,4 @@
-package com.example.reserbuddy.ui.usuarios
+package com.example.reserbuddy.ui.clientes
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -136,12 +137,9 @@ class ClientesFragment : Fragment() {
 
     fun goDetalles(){
 
-        val fragment = DetalleClienteFragment() // Fragment Destino
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.navigation_detalle_cliente, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        val navController = findNavController(requireParentFragment())
+        navController.navigate(R.id.navigation_detalle_cliente)
+
     }
 
 
