@@ -5,16 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
-    android:gravity="center">
+    android:orientation="vertical">
 
 
     <TextView
-        android:id="@+id/etEmailRecuperado"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:gravity="center"
+        android:text="Reservas totales"
+        android:textSize="15sp"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"/>
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart_reservas_total"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/chart_green_rectangle" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reservas por mes"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"/>
+
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart_reservas_mes"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/chart_green_rectangle" />
 
 </LinearLayout>

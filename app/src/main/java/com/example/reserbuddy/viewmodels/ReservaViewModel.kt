@@ -76,6 +76,22 @@ class ReservaViewModel : ViewModel() {
         reservaRepo.updateReserva(reserva)
     }
 
+    fun getChartTotal() : LiveData<Int> {
+        var countReserva = MutableLiveData<Int>()
+        reservaRepo.getChartTotal().observeForever {
+            countReserva.value = it
+        }
+        return countReserva
+    }
+
+    fun getChartEstado(estado: String) : LiveData<Int> {
+        var countReserva = MutableLiveData<Int>()
+        reservaRepo.getChartEstado(estado).observeForever {
+            countReserva.value = it
+        }
+        return countReserva
+    }
+
     fun getChartMonth(mes : Int) : LiveData<Int> {
         var countReserva = MutableLiveData<Int>()
         reservaRepo.getChartMonth(mes).observeForever {

@@ -231,6 +231,34 @@ class ReservaRepo {
     }
 
 
+
+    fun getChartTotal(): LiveData<Int> {
+
+        val reservasData = MutableLiveData<Int>()
+        val reservaRef = db.collection("reservas")
+
+        reservaRef.get().addOnSuccessListener { result ->
+            var countReserva = result.size()
+            reservasData.value = countReserva
+        }
+        return reservasData
+    }
+
+
+    fun getChartEstado(estado: String): LiveData<Int> {
+
+        val reservasData = MutableLiveData<Int>()
+        val reservaRef = db.collection("reservas")
+
+        var query = reservaRef.whereEqualTo("estado", estado)
+
+        query.get().addOnSuccessListener { result ->
+            var countReserva = result.size()
+            reservasData.value = countReserva
+        }
+        return reservasData
+    }
+
     fun getChartMonth(mes: Int): LiveData<Int> {
 
         val calendar = Calendar.getInstance()
