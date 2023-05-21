@@ -108,8 +108,9 @@ class HomeFragment : Fragment() {
         return countTotal
     }
 
-    fun fillMesesData() {
-        fun fillMesesData() {
+    fun inicializarChartBars() {
+
+        //llenar lista de meses y sus respectivas reservas
             val nombreMeses = mutableListOf<String>(
                 "En",
                 "Feb",
@@ -139,13 +140,13 @@ class HomeFragment : Fragment() {
                 val entry = PieEntry(count, mes)
                 entries.add(entry)
             }
-        }
-        inicializarChartBars()
+
+        barChart = binding.chartReservasMes
+
+
     }
 
-    private fun inicializarChartBars() {
-        barChart = binding.chartReservasMes
-    }
+
 
     private fun inicializarChartPie() {
         pieChart = binding.chartReservasTotal
