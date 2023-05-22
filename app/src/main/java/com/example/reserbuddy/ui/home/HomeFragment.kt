@@ -16,11 +16,12 @@ import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
+import java.util.ArrayList
+import java.util.LinkedList
 
 class HomeFragment : Fragment() {
 
@@ -31,10 +32,9 @@ class HomeFragment : Fragment() {
     private var countConfirmadas = 0
     private var countCanceladas = 0
 
-    private var countByMes = mutableMapOf<String, Int>()
+    private var reservasPorMes = mutableListOf<Int>()
     private lateinit var barChart: BarChart
     private lateinit var pieChart: PieChart
-    private var mesesChart = mutableListOf<Int>()
 
 
 
@@ -60,7 +60,9 @@ class HomeFragment : Fragment() {
         getChartTotal()
         getChartEstado("Confirmada")
         getChartEstado("Cancelada")
-        fillMesesData()
+
+        getChartYear(2023)
+
 
 
 
@@ -98,53 +100,76 @@ class HomeFragment : Fragment() {
 
 
 
-    fun getChartMonth(mes: Int) : Int{
-        reservaViewModel.getChartMonth(mes).observe(viewLifecycleOwner, Observer { reservas ->
+    fun getChartYear(year: Int) {
+        reservaViewModel.getChartYear(year).observe(viewLifecycleOwner, Observer { reservas ->
 
-
-            countTotal = reservas
+            reservasPorMes = reservas
             inicializarChartBars()
         })
-        return countTotal
+
+
     }
 
     fun inicializarChartBars() {
 
-        //llenar lista de meses y sus respectivas reservas
-            val nombreMeses = mutableListOf<String>(
-                "En",
-                "Feb",
-                "Mar",
-                "Abr",
-                "May",
-                "Jun",
-                "Jul",
-                "Ago",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dic"
-            )
-            val mesesChart = mutableListOf<Int>()
-
-            for (i in 1..12) {
-                val count = getChartMonth(i)
-                mesesChart.add(count)
-            }
-
-            val entries = mutableListOf<PieEntry>()
-
-            for (i in 0 until mesesChart.size) {
-                val mes = nombreMeses[i]
-                val count = mesesChart[i].toFloat()
-                val entry = PieEntry(count, mes)
-                entries.add(entry)
-            }
-
         barChart = binding.chartReservasMes
+        val entries = fillEntries()
+
+        //Crear datos para el grafico
+        val dataSet = BarDataSet(entries, "Reservas por mes")
+
+        dataSet.valueTextSize = 18f
+        dataSet.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.toInt().toString()
+            }
+        }
+
+        //Crear objeto PieData
+        val data = BarData(dataSet)
+
+        barChart.data = data
+        barChart.description.isEnabled = false
+        barChart.invalidate() // Actualiza el gráfico
+        barChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        // Animación del gráfico
+        barChart.animateY(1000, Easing.EaseInOutCubic)
 
 
     }
+
+    private fun fillEntries(): MutableList<BarEntry> {
+        val nombreMeses = listOf(
+            "Ene",
+            "Feb",
+            "Mar",
+            "Abr",
+            "May",
+            "Jun",
+            "Jul",
+            "Ago",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dic"
+        )
+
+        val entries = mutableListOf<BarEntry>()
+
+        for (i in 0 until reservasPorMes.size) {
+            val count = reservasPorMes[i].toFloat()
+            val entry = BarEntry(i.toFloat(), count)
+            entries.add(entry)
+        }
+
+        // Asignar etiquetas personalizadas a los valores del eje x
+        val xAxisLabels = nombreMeses.toTypedArray()
+        val xAxisValueFormatter = IndexAxisValueFormatter(xAxisLabels)
+        barChart.xAxis.valueFormatter = xAxisValueFormatter
+
+        return entries
+    }
+
 
 
 

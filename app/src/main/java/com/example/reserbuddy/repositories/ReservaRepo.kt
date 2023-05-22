@@ -283,5 +283,38 @@ class ReservaRepo {
         return reservasData
     }
 
+    fun getChartYear(year: Int): LiveData<MutableList<Int>> {
+        val reservasData = MutableLiveData<MutableList<Int>>()
+        val reservaRef = db.collection("reservas")
+
+        val mesesChart = MutableList(12) { 0 }
+        var count = 0
+
+        for (mes in 1..12) {
+            val daysInMonth = FechaGenerator.getDaysInMonth(year, mes)
+            val fechaInicial = String.format("%04d-%02d-01", year, mes)
+            val fechaFinal = String.format("%04d-%02d-%02d", year, mes, daysInMonth)
+
+            val query = reservaRef.whereGreaterThanOrEqualTo("fecha", fechaInicial)
+                .whereLessThanOrEqualTo("fecha", fechaFinal)
+
+            query.get().addOnSuccessListener { result ->
+                val countReserva = result.size()
+                mesesChart[mes - 1] = countReserva
+                count++
+
+                if (count == 12) {
+                    reservasData.value = mesesChart
+                }
+            }
+        }
+
+        return reservasData
+    }
+
+
+
+
+
 
 }

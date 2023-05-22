@@ -100,6 +100,17 @@ class ReservaViewModel : ViewModel() {
         return countReserva
     }
 
+    fun getChartYear(year : Int) : LiveData<MutableList<Int>> {
+        var countReserva = MutableLiveData<MutableList<Int>>()
+        reservaRepo.getChartYear(year).observeForever {
+            countReserva.value = it
+            println("---------------------------")
+            println(it)
+
+        }
+        return countReserva
+    }
+
 
 
 //    fun getById(userId: String): LiveData<Usuario> {
