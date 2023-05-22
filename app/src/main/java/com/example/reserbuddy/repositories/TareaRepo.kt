@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.reservarapp.models.Tarea
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -198,6 +201,44 @@ class TareaRepo {
         }
         return tareasData
     }
+
+    fun getByEstadoCount(): LiveData<MutableList<Int>> {
+        val tareasData = MutableLiveData<MutableList<Int>>()
+        val tareaRef = db.collection("tareas")
+
+        val sinAsignarQuery = tareaRef.whereEqualTo("estado", "Sin asignar")
+        val pendienteQuery = tareaRef.whereEqualTo("estado", "Pendiente")
+        val completadaQuery = tareaRef.whereEqualTo("estado", "Completada")
+
+        val queries = listOf(sinAsignarQuery, pendienteQuery, completadaQuery)
+
+        val countTareas = mutableListOf<Int>()
+
+        val queryTasks = mutableListOf<Task<QuerySnapshot>>()
+        for (query in queries) {
+            val task = query.get()
+            queryTasks.add(task)
+        }
+
+        Tasks.whenAllSuccess<QuerySnapshot>(queryTasks)
+            .addOnSuccessListener { snapshots ->
+                for (snapshot in snapshots) {
+                    val count = snapshot.size()
+                    countTareas.add(count)
+                }
+                tareasData.value = countTareas
+            }
+            .addOnFailureListener { exception ->
+                // Manejar la excepción en caso de error
+            }
+
+        return tareasData
+    }
+
+
+
+
+
 
 
 }

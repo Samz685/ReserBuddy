@@ -12,28 +12,30 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentHomeBinding
 import com.example.reservarapp.viewmodels.ReservaViewModel
+import com.example.reservarapp.viewmodels.TareaViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
-import java.util.ArrayList
-import java.util.LinkedList
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private lateinit var auth: FirebaseAuth;
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
-    private var countTotal = 0
-    private var countConfirmadas = 0
-    private var countCanceladas = 0
-
+    private val tareaViewModel by lazy { ViewModelProvider(this).get(TareaViewModel::class.java) }
+    private var countReservaTotal = 0
+    private var countReservaConfirmadas = 0
+    private var countReservaCanceladas = 0
+    private var countTareas = mutableListOf<Int>()
     private var reservasPorMes = mutableListOf<Int>()
     private lateinit var barChart: BarChart
+    private lateinit var barChart2: HorizontalBarChart
     private lateinit var pieChart: PieChart
 
 
@@ -60,15 +62,8 @@ class HomeFragment : Fragment() {
         getChartTotal()
         getChartEstado("Confirmada")
         getChartEstado("Cancelada")
-
         getChartYear(2023)
-
-
-
-
-
-
-
+        getChartTareas()
 
 
 
@@ -80,7 +75,7 @@ class HomeFragment : Fragment() {
     fun getChartTotal() {
         reservaViewModel.getChartTotal().observe(viewLifecycleOwner, Observer { reservas ->
 
-            countTotal = reservas
+            countReservaTotal = reservas
 
             inicializarChartPie()
         })
@@ -89,9 +84,9 @@ class HomeFragment : Fragment() {
     fun getChartEstado(estado : String) {
         reservaViewModel.getChartEstado(estado).observe(viewLifecycleOwner, Observer { reservas ->
             if(estado == "Confirmada"){
-                countConfirmadas = reservas
+                countReservaConfirmadas = reservas
             } else {
-                countCanceladas = reservas
+                countReservaCanceladas = reservas
             }
 
             inicializarChartPie()
@@ -170,17 +165,43 @@ class HomeFragment : Fragment() {
         return entries
     }
 
+    private fun fillEntries2(): MutableList<BarEntry> {
+        val nombreEstados = listOf(
+            "Sin Asignar",
+            "Pendientes",
+            "Completadas"
+        )
+
+        val entries = mutableListOf<BarEntry>()
+
+        for (i in 0 until countTareas.size) {
+            val count = countTareas[i].toFloat()
+            val entry = BarEntry(i.toFloat(), count)
+            entries.add(entry)
+        }
+
+
+        // Asignar etiquetas personalizadas a los valores del eje x
+        val xAxisLabels = nombreEstados.toTypedArray()
+        val xAxisValueFormatter = IndexAxisValueFormatter(xAxisLabels)
+        barChart2.xAxis.valueFormatter = xAxisValueFormatter
+        barChart2.notifyDataSetChanged()
+
+        return entries
+    }
+
+
 
 
 
     private fun inicializarChartPie() {
         pieChart = binding.chartReservasTotal
-        var pendientes = countTotal-countConfirmadas-countCanceladas
+        var pendientes = countReservaTotal-countReservaConfirmadas-countReservaCanceladas
 
         val entries = listOf(
             PieEntry(pendientes.toFloat(), "Pendientes"),
-            PieEntry(countConfirmadas.toFloat(), "Confirmadas"),
-            PieEntry(countCanceladas.toFloat(), "Canceladas")
+            PieEntry(countReservaConfirmadas.toFloat(), "Confirmadas"),
+            PieEntry(countReservaCanceladas.toFloat(), "Canceladas")
         )
         //Crear datos para el grafico
         val dataSet = PieDataSet(entries, "Reservas Totales")
@@ -206,7 +227,7 @@ class HomeFragment : Fragment() {
 
         pieChart.data = data
         pieChart.description.isEnabled = false
-        pieChart.setCenterText(countTotal.toString()) // Establece el número total de reservas en el centro
+        pieChart.setCenterText(countReservaTotal.toString()) // Establece el número total de reservas en el centro
         pieChart.setCenterTextColor(Color.BLACK) // Establece el color del texto en el centro
         pieChart.setCenterTextSize(25f) // Establece el tamaño del texto en el centro
         pieChart.invalidate() // Actualiza el gráfico
@@ -214,6 +235,50 @@ class HomeFragment : Fragment() {
         pieChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         // Animación del gráfico
         pieChart.animateY(1000, Easing.EaseInOutCubic)
+    }
+
+    fun getChartTareas() {
+        tareaViewModel.getByEstadoCount().observe(viewLifecycleOwner, Observer { reservas ->
+
+            countTareas = reservas
+
+                inicializarChartTareas()
+
+
+        })
+    }
+
+    private fun inicializarChartTareas() {
+        barChart2 = binding.chartTareas
+        val entries = fillEntries2()
+
+        //Crear datos para el grafico
+        val dataSet = BarDataSet(entries, " Estado Tareas")
+
+        dataSet.valueTextSize = 18f
+        dataSet.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return value.toInt().toString()
+            }
+        }
+
+        val pieAzulClaro = ContextCompat.getColor(requireContext(), R.color.pieAzulClaro)
+        val verdeMenta = ContextCompat.getColor(requireContext(), R.color.pieRojoCoral)
+        val rojoCoral = ContextCompat.getColor(requireContext(), R.color.pieVerdeMenta)
+
+        dataSet.colors = listOf(pieAzulClaro, verdeMenta, rojoCoral)
+
+        //Crear objeto PieData
+        val data = BarData(dataSet)
+
+        barChart2.data = data
+        barChart2.description.isEnabled = false
+        barChart2.invalidate() // Actualiza el gráfico
+        barChart2.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        // Animación del gráfico
+        barChart2.animateY(1000, Easing.EaseInOutCubic)
+
+
     }
 
 

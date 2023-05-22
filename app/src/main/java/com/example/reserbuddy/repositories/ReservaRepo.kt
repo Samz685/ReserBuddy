@@ -314,6 +314,37 @@ class ReservaRepo {
 
 
 
+//    fun getBestClientes(): LiveData<List<Pair<String, Int>>> {
+//        val topFiveClientsData = MutableLiveData<List<Pair<String, Int>>>()
+//        val reservaRef = db.collection("reservas")
+//
+//        reservaRef
+//            .groupBy("cliente") // Agrupar por el campo "cliente"
+//            .orderByDescending("count") // Ordenar por el conteo de reservas en orden descendente
+//            .limit(5) // Obtener solo los 5 primeros resultados
+//            .get()
+//            .addOnSuccessListener { result ->
+//                val topFiveClients = result.documents.mapNotNull { document ->
+//                    val cliente = document.getString("cliente")
+//                    val numReservas = document.getLong("count")?.toInt()
+//                    if (cliente != null && numReservas != null) {
+//                        cliente to numReservas
+//                    } else {
+//                        null
+//                    }
+//                }
+//                topFiveClientsData.value = topFiveClients
+//            }
+//            .addOnFailureListener { exception ->
+//                // Manejar la excepción en caso de error
+//            }
+//
+//        return topFiveClientsData
+//    }
+
+
+
+
 
 
 
