@@ -20,7 +20,7 @@
                 android:title="@string/tareas" />
 
             <item
-                android:id="@+id/nav_compras"
+                android:id="@+id/nav_lista_compra"
                 android:icon="@drawable/ic_compras"
                 android:title="@string/lista_de_la_compra" />
             <item

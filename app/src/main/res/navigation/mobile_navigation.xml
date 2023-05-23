@@ -42,6 +42,12 @@
         android:label="Detalle Cliente"
         tools:layout="@layout/fragment_detalle_cliente" />
 
+    <fragment
+        android:id="@+id/navigation_lista_compra"
+        android:name="com.example.reserbuddy.ui.listaCompra.ListaCompraFragment"
+        android:label="Lista Compra"
+        tools:layout="@layout/fragment_lista_compra" />
+
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_notifications"-->
 <!--        android:name="com.example.reserbuddy.ui.notifications.NotificationsFragment"-->

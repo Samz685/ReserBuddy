@@ -26,6 +26,7 @@ import com.example.reservarapp.viewmodels.ClienteViewModel
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -119,13 +120,15 @@ class DetalleClienteFragment : Fragment() {
 
         pieChart = binding.chartCliente
 
+        var countPendientes = countTotal-countConfirmadas-countCanceladas
+
         val entries = listOf(
-            PieEntry(countTotal.toFloat(), "Totales"),
+            PieEntry(countPendientes.toFloat(), "Pendientes"),
             PieEntry(countConfirmadas.toFloat(), "Confirmadas"),
             PieEntry(countCanceladas.toFloat(), "Canceladas")
         )
         //Crear datos para el grafico
-        val dataSet = PieDataSet(entries, "Reservas Cliente")
+        val dataSet = PieDataSet(entries, "")
 
 
         // Personalizar colores si lo deseas
@@ -153,6 +156,7 @@ class DetalleClienteFragment : Fragment() {
         pieChart.setCenterTextSize(25f) // Establece el tamaño del texto en el centro
         pieChart.invalidate() // Actualiza el gráfico
         pieChart.setDrawEntryLabels(false)
+        pieChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         // Animación del gráfico
         pieChart.animateY(1000, Easing.EaseInOutCubic)
 

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newTareaViewModel : NewTareaViewModel
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth;
+    private lateinit var tvHola: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +70,8 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
         val navViewComponent : NavigationView = findViewById(R.id.nav_view_component)
+        val headerView: View = navViewComponent.getHeaderView(0)
+        tvHola = headerView.findViewById(R.id.tvHolaHeader)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -79,6 +84,10 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         getCurrentUsuario()
+
+
+
+
 
 
 
@@ -123,8 +132,8 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
-                R.id.nav_home -> {
-                    navController.navigate(R.id.navigation_home)
+                R.id.nav_lista_compra -> {
+                    navController.navigate(R.id.navigation_lista_compra)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -164,6 +173,10 @@ class MainActivity : AppCompatActivity() {
         usuarioViewModel.getByEmail(auth.currentUser!!.email!!).observe(this, Observer {
 
             DataHolder.currentUser = it
+
+            tvHola.text = "Hola ${DataHolder.currentUser.alias}!"
+
+
 
         })
 

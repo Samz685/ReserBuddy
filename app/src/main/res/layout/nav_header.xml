@@ -34,7 +34,7 @@
                 app:srcCompat="@drawable/logo_cheftastik"/>
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tvHolaHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ChefTastik"

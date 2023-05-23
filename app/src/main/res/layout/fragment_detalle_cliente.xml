@@ -13,7 +13,8 @@
         android:orientation="horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:background="@drawable/chart_green_rectangle">
 
         <ImageView
             android:id="@+id/iv_detalle_cliente"
@@ -77,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="20dp"
-        android:background="@drawable/grey_rectangle" />
+        android:background="@drawable/chart_green_rectangle" />
 
     <View
         android:layout_width="match_parent"

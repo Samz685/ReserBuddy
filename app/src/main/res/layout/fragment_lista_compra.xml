@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ui.tareas.TareasFragment"
+    tools:context=".ui.listaCompra.ListaCompraFragment"
     android:gravity="center">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabReservas"
+        android:id="@+id/tabProductos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"/>
 
     <TextView
-        android:id="@+id/tvContadorTareas"
+        android:id="@+id/tvContadorProductos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="100"
@@ -29,7 +29,7 @@
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
+        android:id="@+id/swipeRefreshProductos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp">
@@ -40,18 +40,18 @@
             android:layout_height="match_parent">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerTareas"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerProductos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="60dp" />
 
             <TextView
-                android:id="@+id/tvMensajeTarea"
+                android:id="@+id/tvMensajeProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="No hay productos"
+                android:text="@string/no_hay_productos"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:visibility="gone"
