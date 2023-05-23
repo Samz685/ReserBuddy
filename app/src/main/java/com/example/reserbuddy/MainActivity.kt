@@ -1,10 +1,7 @@
 package com.example.reserbuddy
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -15,7 +12,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -26,7 +22,6 @@ import com.example.reserbuddy.ui.newReserva.NewReservaFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
-import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -98,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_reservas, R.id.navigation_notifications, R.id.navigation_tareas
+                R.id.navigation_home, R.id.navigation_reservas, R.id.navigation_lista_compras, R.id.navigation_tareas
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

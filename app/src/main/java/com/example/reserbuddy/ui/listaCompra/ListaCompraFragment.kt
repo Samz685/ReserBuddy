@@ -154,6 +154,7 @@ class ListaCompraFragment : Fragment() {
                 var producto = listaProductos[position]
                 producto.estado = "Comprado"
                 productoViewModel.updateEstado(producto)
+                mAdapter.notifyDataSetChanged()
 
             }
 
@@ -163,6 +164,7 @@ class ListaCompraFragment : Fragment() {
                 var producto = listaProductos[position]
                 producto.estado = "Comprado"
                 productoViewModel.updateEstado(producto)
+                mAdapter.notifyDataSetChanged()
 
             }
 

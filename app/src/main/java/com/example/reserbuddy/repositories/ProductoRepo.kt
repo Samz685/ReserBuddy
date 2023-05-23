@@ -54,7 +54,7 @@ class ProductoRepo {
 
     fun updateEstado(producto: Producto) {
 
-        var tareaRef = db.collection("tareas").document(producto.id)
+        var tareaRef = db.collection("productos").document(producto.id)
 
         val datos = hashMapOf(
             "estado" to producto.estado,
