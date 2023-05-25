@@ -12,9 +12,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reserbuddy.R
 import com.example.reservarapp.models.Producto
+import com.example.reservarapp.viewmodels.ProductoViewModel
 
 class ProductoAdapter(var listaProductos:MutableList<Producto>, var listener: OnItemClickListener):
     RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -79,10 +82,27 @@ class ProductoAdapter(var listaProductos:MutableList<Producto>, var listener: On
         }
 
         override fun onCreateContextMenu(
-            p0: ContextMenu?,
-            p1: View?,
-            p2: ContextMenu.ContextMenuInfo?
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
         ) {
+
+            menu!!.setHeaderTitle("" + listaProductos[adapterPosition].nombre)
+            val item1 = menu.add("Eliminar")
+
+
+
+            item1.setOnMenuItemClickListener {
+                var productoViewmodel = ProductoViewModel()
+                var res = listaProductos[adapterPosition]
+                productoViewmodel.deleteProducto(res)
+
+                listaProductos.removeAt(adapterPosition)
+                notifyItemRemoved(adapterPosition)
+                notifyDataSetChanged()
+
+                true
+            }
 
         }
 
