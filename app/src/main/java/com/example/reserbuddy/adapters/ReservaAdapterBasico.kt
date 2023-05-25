@@ -28,6 +28,7 @@ class ReservaAdapterBasico(var listaReservas:MutableList<Reserva>, var listener:
         holder.tvFechaReserva.text = item.fechaCard.toString()
         holder.tvCantidad.text = item.numComensales.toString()
         holder.tvHora.text = item.hora.toString()
+        holder.tvEstado.text = item.estado.toString()
         holder.ivReserva.setImageResource(item.foto)
         holder.ivReserva.setOnClickListener {
         }
