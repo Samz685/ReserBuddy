@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.reserbuddy.databinding.ActivityMainBinding
 import com.example.reserbuddy.ui.login.Login_Activity
+import com.example.reserbuddy.ui.newProducto.NewProductoFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_reservas, R.id.navigation_lista_compras, R.id.navigation_tareas
+                R.id.navigation_home, R.id.navigation_reservas, R.id.navigation_lista_compra, R.id.navigation_tareas
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -102,11 +103,19 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnAdd.setOnClickListener {
+
+
             if (DataHolder.currentFragment == "FragmentReservas"){
                 NewReservaFragment().show(supportFragmentManager, "newReserva")
             } else if(DataHolder.currentFragment == "FragmentTareas"){
                 NewTareaFragment().show(supportFragmentManager, "newTarea")
+            } else if(DataHolder.currentFragment == "FragmentListaCompra") {
+                NewProductoFragment().show(supportFragmentManager, "newProducto")
             }
+
+            println("----------------------00000")
+            println(DataHolder.currentFragment)
+            println("----------------------00000")
 
         }
 

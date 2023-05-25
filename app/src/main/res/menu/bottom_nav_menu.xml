@@ -17,9 +17,9 @@
         android:title="@string/tareas" />
 
     <item
-        android:id="@+id/navigation_lista_compras"
+        android:id="@+id/navigation_lista_compra"
         android:icon="@drawable/ic_compras"
-        android:title="@string/lista_de_la_compra" />
+        android:title="Comprar" />
 
 
 </menu>

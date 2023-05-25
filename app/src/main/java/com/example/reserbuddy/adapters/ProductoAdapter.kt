@@ -83,7 +83,7 @@ class ProductoAdapter(var listaProductos:MutableList<Producto>, var listener: On
             p1: View?,
             p2: ContextMenu.ContextMenuInfo?
         ) {
-            TODO("Not yet implemented")
+
         }
 
 

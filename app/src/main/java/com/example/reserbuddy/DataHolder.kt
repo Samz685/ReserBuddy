@@ -19,12 +19,14 @@ class DataHolder {
         var listaUsuariosSpinner = mutableListOf<Usuario>()
         var listaUsuarios = mutableListOf<Usuario>()
         var listaTareas = mutableListOf<Tarea>()
-        var listaCategorias = mutableListOf<Categoria>()
         var currentUser = Usuario()
         var currentTarea = Tarea()
         var emailRecuperado = ""
         var currentCliente = Cliente()
 
 
+
     }
+
+
 }

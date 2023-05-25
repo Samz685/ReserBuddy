@@ -69,14 +69,12 @@ class ListaCompraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        DataHolder.currentFragment = "FragmentListaCompra"
+
         user = DataHolder.currentUser
         tabLayout = binding.tabProductos
 
         productoEstado = "Pendiente"
-
-
-
-        DataHolder.currentFragment = "FragmentTareas"
 
 
         swipeRefresh = binding.swipeRefreshProductos
@@ -91,8 +89,8 @@ class ListaCompraFragment : Fragment() {
 
         setupTabs()
 
-        crearProducto()
-        crearProducto()
+//        crearProducto()
+
 
 
 

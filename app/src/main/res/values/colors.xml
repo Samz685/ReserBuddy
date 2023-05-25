@@ -16,4 +16,7 @@
     <color name="pieAzulClaro">#91BEDC</color>
     <color name="pieRojoCoral">#E4584A</color>
     <color name="pieVerdeMenta">#98FB98</color>
+    <color name="verdeSeleccion">#80FF80</color>
+
+
 </resources>

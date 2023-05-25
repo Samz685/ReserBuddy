@@ -26,8 +26,6 @@
             android:id="@+id/ivCategoria"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:clickable="true"
-            android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground" />
 
 

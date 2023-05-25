@@ -1,11 +1,14 @@
 package com.example.reserbuddy.adapters
 
+import android.graphics.Color
+import android.provider.CalendarContract.Colors
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reserbuddy.R
 import com.example.reservarapp.models.Categoria
@@ -16,10 +19,12 @@ class CategoriaAdapter(
 ) :
     RecyclerView.Adapter<CategoriaAdapter.ViewHolder>() {
 
+    private var selectedIndex: Int = -1
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.cardview_producto, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.cardview_categoria, parent, false)
         return ViewHolder(v, listener)
     }
 
@@ -27,6 +32,14 @@ class CategoriaAdapter(
         val item = listaCategoria.get(position)
         holder.tvNombre.text = item.nombre
         holder.ivCategoria.setImageResource(item.foto)
+
+        //Cambia color si es seleccionado
+        if (item.isSelected) {
+            val color = ContextCompat.getColor(holder.itemView.context, R.color.verdeSeleccion)
+            holder.itemView.setBackgroundColor(color)
+        } else {
+            holder.itemView.setBackgroundColor(Color.WHITE)
+        }
 
 
     }
@@ -38,7 +51,7 @@ class CategoriaAdapter(
     inner class ViewHolder(
         v: View,
         var listener: OnItemClickListener
-    ) : RecyclerView.ViewHolder(v), View.OnClickListener, View.OnCreateContextMenuListener {
+    ) : RecyclerView.ViewHolder(v), View.OnClickListener {
 
 
         var tvNombre: TextView = v.findViewById(R.id.tvNombreCategoria)
@@ -47,22 +60,27 @@ class CategoriaAdapter(
 
         init {
             v.setOnClickListener(this)
-            v.setOnCreateContextMenuListener(this)
         }
 
         override fun onClick(p0: View?) {
             this.listener.OnItemClick(p0!!, adapterPosition)
 
+            val clickedIndex = adapterPosition
+            val previouslySelectedIndex = selectedIndex
+
+            selectedIndex = clickedIndex
+            notifyItemChanged(clickedIndex)
+
+            if (previouslySelectedIndex != -1 && previouslySelectedIndex != clickedIndex) {
+                listaCategoria[previouslySelectedIndex].deseleccionar()
+                notifyItemChanged(previouslySelectedIndex)
+            }
+
+
+
 
         }
 
-        override fun onCreateContextMenu(
-            p0: ContextMenu?,
-            p1: View?,
-            p2: ContextMenu.ContextMenuInfo?
-        ) {
-            TODO("Not yet implemented")
-        }
 
 
     }

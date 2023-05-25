@@ -63,5 +63,8 @@
     <string name="nombre_cliente">Nombre cliente</string>
     <string name="producto">Producto</string>
     <string name="no_hay_productos">No hay productos</string>
+    <string name="nombre_tarea">Nombre tarea</string>
+    <string name="nombre_producto">Nombre producto</string>
+    <string name="seleciona_la_categoria">Seleciona la Categoria</string>
 
 </resources>
