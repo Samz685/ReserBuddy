@@ -23,6 +23,7 @@ import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.databinding.FragmentReservasBinding
 import com.example.reserbuddy.DataHolder
+import com.example.reserbuddy.interfaces.FragmentListener
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
@@ -55,6 +56,7 @@ class ReservasFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         traerReservas()
+        mAdapter.notifyDataSetChanged()
         true
     }
 
@@ -309,7 +311,6 @@ class ReservasFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
-
 
 
 

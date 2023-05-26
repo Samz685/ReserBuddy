@@ -63,22 +63,24 @@
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/btnCalendar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true">
 
             <EditText
                 android:id="@+id/etFecha"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edit_text_background"
-                android:clickable="false"
-                android:focusableInTouchMode="false"
                 android:hint="@string/dd_mm_aaaa"
                 android:inputType="number"
-                android:paddingStart="10dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:paddingStart="20dp"
+                android:focusableInTouchMode="false"/>
 
             <ImageView
                 android:id="@+id/ivDatePicker"
@@ -102,15 +104,43 @@
             android:orientation="horizontal"
             android:layout_marginStart="16dp">
 
+
+
             <EditText
                 android:id="@+id/etNumComensales"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edit_text_background"
-                android:hint="@string/n_comensales"
+                android:hint="Nº Pers"
                 android:inputType="number"
-                android:paddingStart="10dp"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="18sp"
+                />
+
+            <ImageView
+                android:id="@+id/btnLessComensales"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etNumComensales"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_less" />
+
+            <ImageView
+                android:id="@+id/btnPlusComensales"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etNumComensales"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_plus" />
+
+
+
 
 
         </RelativeLayout>
@@ -127,10 +157,13 @@
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/btnHora"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true">
 
             <EditText
                 android:id="@+id/etHora"
@@ -139,8 +172,9 @@
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/hh_mm"
                 android:inputType="number"
-                android:paddingStart="10dp"
-                android:textSize="20sp" />
+                android:paddingStart="20dp"
+                android:textSize="20sp"
+                android:focusableInTouchMode="false"/>
 
             <ImageView
                 android:id="@+id/ivHora"
@@ -161,25 +195,45 @@
             android:orientation="horizontal"
             android:layout_marginStart="16dp">
 
-<!--            <EditText-->
-<!--                android:id="@+id/sp_ubicacion"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:background="@drawable/edit_text_background"-->
-<!--                android:hint="@string/salon_o_terraza"-->
-<!--                android:importantForAutofill="no"-->
-<!--                android:inputType="text"-->
-<!--                android:paddingStart="10dp"-->
-<!--                android:textSize="20sp" />-->
 
-                <Spinner
-                    android:id="@+id/sp_ubicacion"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/edit_text_background"
-                    android:textSize="20sp"
-                    android:entries="@array/ubicaciones"
-                    android:drawableRight="@drawable/ic_down" />
+
+            <EditText
+                android:id="@+id/sp_ubicacion"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="Ubicacion"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                />
+
+            <ImageView
+                android:id="@+id/btnUbi1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/sp_ubicacion"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_left" />
+
+            <ImageView
+                android:id="@+id/btnUbi2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/sp_ubicacion"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_right" />
+
+
+
+
+
         </RelativeLayout>
     </LinearLayout>
 

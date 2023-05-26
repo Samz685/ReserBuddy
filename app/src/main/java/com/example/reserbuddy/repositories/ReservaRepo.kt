@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.reserbuddy.FechaGenerator
 import com.example.reservarapp.models.Reserva
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -15,10 +16,13 @@ import java.util.*
 class ReservaRepo {
 
     val db = Firebase.firestore
+//    val db = FirebaseDatabase.getInstance().reference
+
+
 
     fun addReserva(reserva: Reserva) : String{
 
-        val db = Firebase.firestore
+
         val solicitudRef = db.collection("reservas").document()
 
         reserva.id = solicitudRef.id
@@ -48,7 +52,7 @@ class ReservaRepo {
 
     fun deleteReserva(reserva: Reserva) : String{
 
-        val db = Firebase.firestore
+
         val solicitudRef = db.collection("reservas").document(reserva.id)
 
         reserva.id = solicitudRef.id
@@ -112,7 +116,7 @@ class ReservaRepo {
         return reservasData
     }
 
-    fun getToday(): LiveData<LinkedList<Reserva>> {
+    fun getToday(): MutableLiveData<LinkedList<Reserva>> {
 
         val calendar = Calendar.getInstance()
 

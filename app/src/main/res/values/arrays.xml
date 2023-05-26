@@ -6,11 +6,6 @@
 
     </string-array>
 
-    <string-array name="usuarios">
-        <item>Usuario A</item>
-        <item>Usuario B</item>
-        <item>Usuario C</item>
 
-    </string-array>
 
 </resources>

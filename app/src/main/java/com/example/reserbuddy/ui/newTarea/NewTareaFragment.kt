@@ -101,7 +101,7 @@ class NewTareaFragment : BottomSheetDialogFragment() {
         //recogiendo datos del form
         var nombre = binding.etNombreTarea.text.toString()
         var comentario = binding.etComentario.text.toString()
-        var foto = R.drawable.ic_tarea
+        var foto = R.drawable.ic_task1
         var asignedTo = usuarioElegido.alias
         var asignedToId = usuarioElegido.id
         var fechaAsignada = FechaGenerator.elegirFecha().Asignada

@@ -66,5 +66,6 @@
     <string name="nombre_tarea">Nombre tarea</string>
     <string name="nombre_producto">Nombre producto</string>
     <string name="seleciona_la_categoria">Seleciona la Categoria</string>
+    <string name="estado_tareas">Estado tareas</string>
 
 </resources>

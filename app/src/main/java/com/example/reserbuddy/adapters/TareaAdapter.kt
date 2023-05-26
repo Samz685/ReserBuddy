@@ -38,6 +38,8 @@ class TareaAdapter(
         holder.ivTarea.setImageResource(item.foto)
         holder.tvEstadoTarea.text = item.estado
 
+
+
         //Visibilidad de componentes del CardView
         if (item.asignedToId =="") {
             holder.bloqueFecha.visibility = GONE
@@ -46,6 +48,7 @@ class TareaAdapter(
             holder.btnNoCompletada.visibility = GONE
             holder.btnQuitar.visibility = GONE
             holder.btnAsignar.visibility = VISIBLE
+            holder.ivTarea.setImageResource(R.drawable.ic_task1)
         } else {
             holder.btnQuitar.visibility = VISIBLE
             holder.btnAsignar.visibility = GONE
@@ -56,6 +59,7 @@ class TareaAdapter(
                 holder.btnNoCompletada.visibility = VISIBLE
                 holder.bloqueFecha.visibility = GONE
                 holder.tvEstadoTarea.visibility = VISIBLE
+                holder.ivTarea.setImageResource(R.drawable.ic_task2)
 
             } else if (item.estado.equals("Completada")) {
                 holder.btnQuitar.visibility = GONE
@@ -63,6 +67,7 @@ class TareaAdapter(
                 holder.btnCompletada.visibility = VISIBLE
                 holder.btnNoCompletada.visibility = GONE
                 holder.bloqueFecha.visibility = VISIBLE
+                holder.ivTarea.setImageResource(R.drawable.ic_task3)
 
             } else if(item.estado.equals("Sin asignar")) {
                 holder.btnAsignar.visibility = VISIBLE
@@ -71,6 +76,7 @@ class TareaAdapter(
                 holder.btnCompletada.visibility = GONE
                 holder.btnNoCompletada.visibility = GONE
                 holder.bloqueFecha.visibility = GONE
+                holder.ivTarea.setImageResource(R.drawable.ic_task1)
             }
         }
 

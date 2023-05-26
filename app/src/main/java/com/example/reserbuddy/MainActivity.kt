@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,12 +19,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.reserbuddy.databinding.ActivityMainBinding
+import com.example.reserbuddy.interfaces.FragmentListener
 import com.example.reserbuddy.ui.login.Login_Activity
 import com.example.reserbuddy.ui.newProducto.NewProductoFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
+import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.example.reserbuddy.ui.usuarios.UsuariosActivity
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.navigation.NavigationView
@@ -35,6 +38,7 @@ enum class ProviderType{
     BASIC
 }
 class MainActivity : AppCompatActivity() {
+
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var usuarioViewModel : UsuarioViewModel
@@ -187,6 +191,13 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
+
+
+
+
+
+
 
 
 

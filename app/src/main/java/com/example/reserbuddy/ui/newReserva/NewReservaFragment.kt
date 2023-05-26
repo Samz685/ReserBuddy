@@ -2,6 +2,7 @@ package com.example.reserbuddy.ui.newReserva
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,11 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
 
 import androidx.lifecycle.ViewModelProvider
 import com.example.reserbuddy.AvatarGenerator
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentNewReservaBinding
+import com.example.reserbuddy.interfaces.FragmentListener
 import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ClienteViewModel
@@ -34,6 +37,12 @@ private lateinit var fechaElegida: String
 private lateinit var fechaElegida2: String
 private lateinit var horaElegida: String
 var ubiSeleccionada = ""
+var cont = 1
+var ubi = true
+
+
+
+
 
 
 class NewReservaFragment : BottomSheetDialogFragment() {
@@ -62,6 +71,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.etNumComensales.setText(cont.toString())
         binding.btnCrearReserva.isEnabled = false
         habilitarBotonAdd()
 
@@ -83,6 +93,20 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
 
 
+        binding.btnPlusComensales.setOnClickListener {
+            cont++
+            binding.etNumComensales.setText(cont.toString())
+
+        }
+
+        binding.btnLessComensales.setOnClickListener {
+            if (cont > 1) {
+                cont--
+                binding.etNumComensales.setText(cont.toString())
+            }
+
+
+        }
 
         binding.ivDatePicker.setOnClickListener {
             elegirFecha()
@@ -95,25 +119,42 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
         binding.btnCrearReserva.setOnClickListener {
             crearReserva()
-        }
-
-        binding.spUbicacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                ubiSeleccionada = parent.getItemAtPosition(position).toString()
-
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                ubiSeleccionada = "Sin seleccionar"
-            }
+            cont = 1
         }
 
 
+
+        binding.btnUbi1.setOnClickListener {
+
+            swithUbicacion()
+        }
+
+        binding.btnUbi2.setOnClickListener {
+
+            swithUbicacion()
+        }
+
+        binding.btnCalendar.setOnClickListener{
+            elegirFecha()
+        }
+
+        binding.btnHora.setOnClickListener{
+            timePickerDialog.show()
+        }
+
+    }
+
+    private fun swithUbicacion() {
+        ubi = !ubi
+        if (ubi) {
+            ubiSeleccionada = "Terraza"
+
+        } else {
+            ubiSeleccionada = "Salon"
+
+        }
+
+        binding.spUbicacion.setText(ubiSeleccionada)
     }
 
     private fun elegirFecha() {
@@ -167,6 +208,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
         reservaViewModel.addReserva(reserva)
 
+
         dismiss()
 
 
@@ -212,9 +254,13 @@ class NewReservaFragment : BottomSheetDialogFragment() {
                 clienteViewModel.addCliente(cliente)
 
 
+
+
+
             }
         }
     }
+
 
 
 

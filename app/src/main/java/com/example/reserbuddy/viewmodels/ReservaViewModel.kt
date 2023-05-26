@@ -30,7 +30,7 @@ class ReservaViewModel : ViewModel() {
         return reservasData
     }
 
-    fun getToday(): LiveData<LinkedList<Reserva>> {
+    fun getToday(): MutableLiveData<LinkedList<Reserva>> {
         val reservasData = MutableLiveData<LinkedList<Reserva>>()
         reservaRepo.getToday().observeForever {
             reservasData.value = it
