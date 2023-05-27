@@ -3,9 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".ui.clientes.ClientesFragment">
+
+
+    <EditText
+        android:id="@+id/etBuscar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:hint="Buscar"
+        android:background="@drawable/edit_text_background"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:focusableInTouchMode="true"
+        android:clickable="true"/>
 
 
 

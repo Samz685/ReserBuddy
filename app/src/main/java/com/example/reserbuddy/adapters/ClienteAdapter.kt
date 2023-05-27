@@ -4,16 +4,15 @@ import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reserbuddy.R
-import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.viewmodels.ClienteViewModel
 
-class ClienteAdapter(var listaClientes:MutableList<Cliente>, var listener: OnItemClickListener):
+
+class ClienteAdapter(var listaClientes:MutableList<Cliente>, var listener: OnItemClickListener, var clienteViewModel : ClienteViewModel):
     RecyclerView.Adapter<ClienteAdapter.ViewHolder>() {
 
 
@@ -28,6 +27,10 @@ class ClienteAdapter(var listaClientes:MutableList<Cliente>, var listener: OnIte
         holder.tvNombreCliente.text = item.nombre
         holder.tvTelefono.text = item.telefono
         holder.ivCliente.setImageResource(item.foto)
+
+
+
+
 
         holder.ivCliente.setOnClickListener {
             listener.onImageClick(position)
@@ -48,9 +51,7 @@ class ClienteAdapter(var listaClientes:MutableList<Cliente>, var listener: OnIte
 
         var tvNombreCliente: TextView = v.findViewById(R.id.tvNombreCliente)
         var tvTelefono: TextView = v.findViewById(R.id.tvTelefonoCliente)
-        var ivCliente : ImageView = v.findViewById(R.id.ivCliente)
-
-
+        var ivCliente: ImageView = v.findViewById(R.id.ivCliente)
 
 
         init {
@@ -65,14 +66,33 @@ class ClienteAdapter(var listaClientes:MutableList<Cliente>, var listener: OnIte
         }
 
         override fun onCreateContextMenu(
-            p0: ContextMenu?,
-            p1: View?,
-            p2: ContextMenu.ContextMenuInfo?
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            TODO("Not yet implemented")
+
+            menu!!.setHeaderTitle("Borrar cliente " + listaClientes[adapterPosition].nombre)
+            val item = menu!!.add("Confirmar")
+            val item2 = menu.add("Eliminar")
+
+            item.setOnMenuItemClickListener {
+
+
+                true
+            }
+
+            item2.setOnMenuItemClickListener {
+                var res = listaClientes[adapterPosition]
+
+                clienteViewModel.deleteCliente(res)
+
+                listaClientes.removeAt(adapterPosition)
+                notifyItemRemoved(adapterPosition)
+                notifyDataSetChanged()
+
+                true
+            }
+
         }
-
-
     }
 }
-

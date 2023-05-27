@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/Theme.ReserBuddy"
+    tools:context=".ui.clientes.EditarClienteFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Actualizar cliente"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etNombreClienteEd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/nombre_cliente"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+
+
+    <EditText
+        android:id="@+id/etEmailClienteEd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/prompt_email"
+        android:inputType="textCapSentences"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/etTelefonoClienteEd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/tel_fono"
+        android:inputType="textCapSentences"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/etComentarioClienteEd"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/comentario"
+        android:inputType="textMultiLine"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp"
+        android:textSize="20sp"
+        android:gravity="top" />
+
+
+
+    <Button
+        android:id="@+id/btnAplicarCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:clickable="true"
+        android:padding="12dp"
+        android:text="@string/aplicar_cambios"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

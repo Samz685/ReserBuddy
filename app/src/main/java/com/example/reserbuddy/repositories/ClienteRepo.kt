@@ -116,7 +116,6 @@ class ClienteRepo {
             "nombre" to cliente.nombre,
             "email" to cliente.email,
             "telefono" to cliente.telefono,
-            "foto" to cliente.foto,
             "descripcion" to cliente.descripcion
         )
         clienteRef.update(datos as Map<String, Any>).addOnSuccessListener {

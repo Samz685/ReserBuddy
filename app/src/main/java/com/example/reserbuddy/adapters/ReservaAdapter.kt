@@ -103,7 +103,7 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
 
-            menu!!.setHeaderTitle("" + listaReservas[adapterPosition].cliente)
+            menu!!.setHeaderTitle("Borrar reserva de " + listaReservas[adapterPosition].cliente)
             val item = menu!!.add("Confirmar")
             val item2 = menu.add("Cancelar")
 

@@ -1,10 +1,11 @@
 package com.example.reserbuddy.ui.clientes
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,25 +15,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.reserbuddy.DataHolder
-import com.example.reserbuddy.FechaGenerator
 import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.ClienteAdapter
 import com.example.reserbuddy.adapters.OnItemClickListener
-import com.example.reserbuddy.adapters.UsuarioAdapter
 import com.example.reserbuddy.databinding.FragmentClientesBinding
-import com.example.reserbuddy.databinding.FragmentUsuariosBinding
-import com.example.reserbuddy.ui.botomSheetListas.ListaTareasFragment
-import com.example.reserbuddy.ui.botomSheetListas.ListaUsuariosFragment
 import com.example.reservarapp.models.Cliente
-import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.ClienteViewModel
-import com.example.reservarapp.viewmodels.TareaViewModel
-import com.example.reservarapp.viewmodels.UsuarioViewModel
+import java.util.*
+
 
 class ClientesFragment : Fragment() {
 
     private var _binding: FragmentClientesBinding? = null
     private lateinit var listaClientes: MutableList<Cliente>
+    private lateinit var listaFiltrada: MutableList<Cliente>
     lateinit var mAdapter: RecyclerView.Adapter<ClienteAdapter.ViewHolder>
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
     private lateinit var mRecyclerView: RecyclerView
@@ -63,12 +59,26 @@ class ClientesFragment : Fragment() {
         swipeRefresh = binding.swipeRefreshClientes
 
         listaClientes = mutableListOf<Cliente>()
+        listaFiltrada = mutableListOf<Cliente>()
 
         getAllClientes()
         inicializarAdapters()
         refreshUsuarios()
 
+        binding.etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // No se necesita implementar nada aquí
+            }
 
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // Filtra la lista cada vez que el texto cambia
+                filtrarLista(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // No se necesita implementar nada aquí
+            }
+        })
 
 
     }
@@ -83,17 +93,17 @@ class ClientesFragment : Fragment() {
 
     private fun resetearContador(){
         binding.tvContadorClientes.text = listaClientes.size.toString()
+        mAdapter.notifyDataSetChanged()
     }
 
     private fun inicializarAdapters() {
 
-
         mRecyclerView = binding.recyclerClientes
         mLayoutManager = LinearLayoutManager(activity)
-        mAdapter = ClienteAdapter(listaClientes, object : OnItemClickListener {
+        mAdapter = ClienteAdapter(listaFiltrada, object : OnItemClickListener {
             override fun OnItemClick(vista: View, position: Int) {
 
-                DataHolder.currentCliente = listaClientes[position]
+                DataHolder.currentCliente = listaFiltrada[position]
                 goDetalles()
 
 
@@ -115,7 +125,7 @@ class ClientesFragment : Fragment() {
             }
 
 
-        })
+        },clienteViewModel)
         mRecyclerView.adapter = mAdapter
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -130,6 +140,8 @@ class ClientesFragment : Fragment() {
             }
 
 
+            listaFiltrada.clear()
+            listaFiltrada.addAll(listaClientes)
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
@@ -142,7 +154,15 @@ class ClientesFragment : Fragment() {
 
     }
 
-
+    private fun filtrarLista(texto: String) {
+        listaFiltrada.clear()
+        for (item in listaClientes) {
+            if (item.nombre.lowercase().contains(texto.lowercase(Locale.getDefault()))) {
+                listaFiltrada.add(item)
+            }
+        }
+        mAdapter.notifyDataSetChanged()
+    }
 
 
 

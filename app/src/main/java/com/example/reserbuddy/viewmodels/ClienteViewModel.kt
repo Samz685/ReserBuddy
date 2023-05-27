@@ -48,10 +48,12 @@ class ClienteViewModel : ViewModel() {
         return clientesData
     }
 
-    fun updateRol(cliente: Cliente) {
+    fun updateCliente(cliente: Cliente) {
         clienteRepo.updateCliente(cliente)
 
     }
+
+
 
     fun deleteCliente(cliente: Cliente) : String{
         return clienteRepo.deleteCliente(cliente)

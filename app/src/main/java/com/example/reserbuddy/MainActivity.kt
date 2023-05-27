@@ -1,10 +1,15 @@
 package com.example.reserbuddy
 
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -29,10 +34,13 @@ import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
 import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.example.reserbuddy.ui.usuarios.UsuariosActivity
 import com.example.reservarapp.viewmodels.UsuarioViewModel
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 enum class ProviderType{
     BASIC
@@ -55,6 +63,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = Firebase.auth
+        FirebaseApp.initializeApp(this)
+        registrarDispositivo()
 
         // Comprobar si el usuario ya ha iniciado sesión
         if (FirebaseAuth.getInstance().currentUser == null) {
@@ -87,10 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         getCurrentUsuario()
 
-
-
-
-
+        colorMenuItems(navViewComponent)
 
 
         val navView: BottomNavigationView = binding.navView
@@ -179,6 +186,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun colorMenuItems(navViewComponent: NavigationView) {
+        // Cambiar el color del texto de los elementos
+        val textColor = Color.parseColor("#686868") // Color rojo
+        navViewComponent.itemTextColor = ColorStateList.valueOf(textColor)
+
+        // Cambiar el color del icono de los elementos
+        val iconColor = Color.parseColor("#686868") // Color verde
+        navViewComponent.itemIconTintList = ColorStateList.valueOf(iconColor)
+    }
+
     fun getCurrentUsuario() {
         usuarioViewModel.getByEmail(auth.currentUser!!.email!!).observe(this, Observer {
 
@@ -191,6 +208,22 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
+    fun registrarDispositivo() {
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                Log.d("FCM Token", token)
+                // Aquí puedes enviar el token a tu servidor, guardar en SharedPreferences, etc.
+            } else {
+                Log.e("FCM Token", "Error al obtener el token")
+            }
+        }
+
+    }
+
+
 
 
 

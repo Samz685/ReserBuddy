@@ -67,5 +67,8 @@
     <string name="nombre_producto">Nombre producto</string>
     <string name="seleciona_la_categoria">Seleciona la Categoria</string>
     <string name="estado_tareas">Estado tareas</string>
+    <string name="comentarios">Comentarios:</string>
+    <string name="sin_comentarios">Sin comentarios</string>
+    <string name="aplicar_cambios">Aplicar cambios</string>
 
 </resources>

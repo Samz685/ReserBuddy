@@ -3,10 +3,18 @@ package com.example.reserbuddy.ui.clientes
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.ContactsContract.Data
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,6 +29,7 @@ import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.adapters.ReservaAdapterBasico
 import com.example.reserbuddy.databinding.FragmentDetalleClienteBinding
+import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ClienteViewModel
 import com.example.reservarapp.viewmodels.ReservaViewModel
@@ -48,10 +57,13 @@ class DetalleClienteFragment : Fragment() {
     private lateinit var tvNombre : TextView
     private lateinit var tvTelefono : TextView
     private lateinit var tvEmail: TextView
+    private lateinit var tvComentario: TextView
     private lateinit var pieChart: PieChart
     private var countConfirmadas : Int = 0
     private var countCanceladas : Int = 0
     private var countTotal : Int = 0
+    private lateinit var expandibleCliente: LinearLayout
+    private var isExpanded = false
 
 
 
@@ -85,12 +97,46 @@ class DetalleClienteFragment : Fragment() {
 
         inicializarDetalles()
 
+        iniciarExpandible()
+
+        zoomBoton()
+
+        binding.ivEditar.setOnClickListener {
+
+            EditarClienteFragment().show(childFragmentManager, "EditarClienteFragment")
+
+            val scaleAnimation = ScaleAnimation(1f, 1.5f, 1f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+            scaleAnimation.duration = 200
+            it.startAnimation(scaleAnimation)
+        }
 
 
-//        swipeRefresh = binding.swipeRefreshDetalleCliente
+
+
+
+
 
 
     }
+
+    fun iniciarExpandible() {
+        val expandibleCliente = binding.expandibleCliente
+        val transition = AutoTransition()
+        transition.duration = 150 // Duración de la animación en milisegundos
+
+        binding.bloqueDetalleCliente.setOnClickListener {
+            isExpanded = !isExpanded
+
+            if (isExpanded) {
+                expandibleCliente.visibility = View.VISIBLE
+            } else {
+                expandibleCliente.visibility = View.GONE
+            }
+
+            TransitionManager.beginDelayedTransition(binding.root as ViewGroup, transition)
+        }
+    }
+
 
 
     fun inicializarDetalles(){
@@ -101,11 +147,14 @@ class DetalleClienteFragment : Fragment() {
         tvNombre = binding.tvDetalleClienteNombre
         tvTelefono = binding.tvDetalleClienteTel
         tvEmail = binding.tvDetalleClienteEmail
+        tvComentario = binding.tvComentarioCliente
 
         ivFoto.setImageResource(cliente.foto)
         tvNombre.text = cliente.nombre
         tvTelefono.text = cliente.telefono
-        tvEmail.text = cliente.email.toString()
+        tvEmail.text = cliente.email
+        tvComentario.text = cliente.descripcion
+
 
     }
     fun refreshUsuarios() {
@@ -226,6 +275,20 @@ class DetalleClienteFragment : Fragment() {
             mAdapter.notifyDataSetChanged()
             inicializarChart()
         })
+    }
+
+    fun zoomBoton() {
+        binding.ivEditar.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    view.isPressed = true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    view.isPressed = false
+                }
+            }
+            false
+        }
     }
 
 
