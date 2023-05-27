@@ -4,6 +4,9 @@ import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.ContactsContract.Data
+import android.transition.Fade
+import android.transition.TransitionManager
+import android.transition.TransitionSet
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -170,14 +173,31 @@ class TareasFragment : Fragment() {
         mRecyclerView = binding.recyclerTareas
         mLayoutManager = LinearLayoutManager(activity)
         mAdapter = TareaAdapter(listaTareas, object : OnItemClickListener {
+
+            private var posicionExpandida = RecyclerView.NO_POSITION
+
             override fun OnItemClick(vista: View, position: Int) {
 
                 val expandible_tarea: LinearLayout = vista.findViewById(R.id.expandible_tarea)
 
-                if (expandible_tarea.visibility == View.VISIBLE) {
+
+                // Utiliza TransitionManager para animar el cambio de visibilidad
+                TransitionManager.beginDelayedTransition(mRecyclerView)
+
+                if (position == posicionExpandida) {
+                    // Al hacer clic en el elemento ya expandido, se colapsa
                     expandible_tarea.visibility = View.GONE
+                    posicionExpandida = RecyclerView.NO_POSITION
                 } else {
+                    // Colapsa el elemento previamente expandido (si hay alguno)
+                    if (posicionExpandida != RecyclerView.NO_POSITION) {
+                        val vistaExpandidaPrevia = mLayoutManager.findViewByPosition(posicionExpandida)
+                        val expandibleReservaPrevia: LinearLayout? = vistaExpandidaPrevia?.findViewById(R.id.expandible_tarea)
+                        expandibleReservaPrevia?.visibility = View.GONE
+                    }
+                    // Expande el elemento clicado
                     expandible_tarea.visibility = View.VISIBLE
+                    posicionExpandida = position
                 }
 
             }

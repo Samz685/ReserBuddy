@@ -109,14 +109,7 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
 
             item.setOnMenuItemClickListener {
 
-//               var fruta : Fruta = listaReservas[adapterPosition]
-//
-//
-//               listaReservas.removeAt(adapterPosition)
-//               reservaViewmodel.deleteFruta(fruta)
-//
-//               notifyItemRemoved(adapterPosition)
-//               notifyDataSetChanged()
+
                 true
             }
 

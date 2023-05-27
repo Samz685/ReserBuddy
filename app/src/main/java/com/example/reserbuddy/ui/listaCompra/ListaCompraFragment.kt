@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.airbnb.lottie.LottieAnimationView
 import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.OnItemClickListener
@@ -42,7 +43,10 @@ class ListaCompraFragment : Fragment() {
     var productoEstado = ""
     private lateinit var user : Usuario
 
+
     private val binding get() = _binding!!
+
+
 
     override fun onResume() {
         super.onResume()
@@ -153,6 +157,8 @@ class ListaCompraFragment : Fragment() {
                 producto.estado = "Comprado"
                 productoViewModel.updateEstado(producto)
                 mAdapter.notifyDataSetChanged()
+
+
 
             }
 

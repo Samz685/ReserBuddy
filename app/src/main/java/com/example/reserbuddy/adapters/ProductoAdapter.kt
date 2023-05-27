@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.reserbuddy.R
 import com.example.reservarapp.models.Producto
 import com.example.reservarapp.viewmodels.ProductoViewModel
@@ -32,16 +33,20 @@ class ProductoAdapter(var listaProductos:MutableList<Producto>, var listener: On
         holder.tvCategoriaProducto.text = item.categoria
         holder.ivProducto.setImageResource(item.foto)
 
+
         if (item.estado == "Pendiente"){
-            holder.btnComprado.visibility = GONE
+            holder.lottieAnimationView.visibility = GONE
             holder.btnPendiente.visibility = VISIBLE
          } else if (item.estado == "Comprado"){
-            holder.btnComprado.visibility = VISIBLE
+            holder.lottieAnimationView.visibility = VISIBLE
             holder.btnPendiente.visibility = GONE
         }
 
+
         holder.btnPendiente.setOnClickListener {
             listener.onClick2(position)
+
+            holder.lottieAnimationView.playAnimation()
         }
 
         holder.btnComprado.setOnClickListener {
@@ -60,12 +65,16 @@ class ProductoAdapter(var listaProductos:MutableList<Producto>, var listener: On
         var listener: OnItemClickListener
     ) : RecyclerView.ViewHolder(v), View.OnClickListener, View.OnCreateContextMenuListener {
 
+        val lottieAnimationView: LottieAnimationView = itemView.findViewById(R.id.lottieAnimationView)
+
 
         var tvNombreProducto: TextView = v.findViewById(R.id.tvNombreProducto)
         var tvCategoriaProducto: TextView = v.findViewById(R.id.tvCategoriaProducto)
         var btnComprado: ImageView = v.findViewById(R.id.btnEstadoProductoOK)
         var btnPendiente: ImageView = v.findViewById(R.id.btnEstadoProductoNO)
         var ivProducto : ImageView = v.findViewById(R.id.ivProducto)
+
+
 
 
 

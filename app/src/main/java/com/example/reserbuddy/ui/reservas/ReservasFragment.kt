@@ -4,6 +4,9 @@ package com.example.reserbuddy.ui.reservas
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.transition.Fade
+import android.transition.TransitionManager
+import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -153,16 +156,31 @@ class ReservasFragment : Fragment() {
         mRecyclerView = binding.recyclerReservas
         mLayoutManager = LinearLayoutManager(activity)
         mAdapter = ReservaAdapter(listaReservas, object : OnItemClickListener {
-            override fun OnItemClick(vista: View, position: Int) {
 
+            private var posicionExpandida = RecyclerView.NO_POSITION
+
+            override fun OnItemClick(vista: View, posicion: Int) {
                 val expandible_reserva: LinearLayout = vista.findViewById(R.id.expandible_reserva)
 
-                if (expandible_reserva.visibility == VISIBLE) {
-                    expandible_reserva.visibility = GONE
-                } else {
-                    expandible_reserva.visibility = VISIBLE
-                }
+                // Utiliza TransitionManager para animar el cambio de visibilidad
+                TransitionManager.beginDelayedTransition(mRecyclerView)
 
+                if (posicion == posicionExpandida) {
+                    // Al hacer clic en el elemento ya expandido, se colapsa
+                    expandible_reserva.visibility = View.GONE
+                    posicionExpandida = RecyclerView.NO_POSITION
+                } else {
+                    // Colapsa el elemento previamente expandido (si hay alguno)
+                    if (posicionExpandida != RecyclerView.NO_POSITION) {
+                        val vistaExpandidaPrevia = mLayoutManager.findViewByPosition(posicionExpandida)
+                        val expandibleReservaPrevia: LinearLayout? = vistaExpandidaPrevia?.findViewById(R.id.expandible_reserva)
+                        expandibleReservaPrevia?.visibility = View.GONE
+                    }
+
+                    // Expande el elemento clicado
+                    expandible_reserva.visibility = View.VISIBLE
+                    posicionExpandida = posicion
+                }
             }
 
             override fun onClick2(position: Int) {
