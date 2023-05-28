@@ -59,6 +59,14 @@ class UsuarioViewModel : ViewModel() {
         return usuarioData
     }
 
+    fun getAllTokens() : MutableLiveData<LinkedList<String>> {
+        val listaTokens = MutableLiveData<LinkedList<String>>()
+        usuarioRepo.getAllTokens().observeForever {
+            listaTokens.value = it
+        }
+        return listaTokens
+    }
+
 
 
 //

@@ -129,6 +129,28 @@ class UsuarioRepo {
     }
 
 
+    fun getAllTokens () : MutableLiveData<LinkedList<String>>{
+
+        var listaTokens = MutableLiveData<LinkedList<String>>()
+        var usuarioRef = db.collection("perfil_usuarios")
+
+        usuarioRef.get().addOnSuccessListener { result ->
+
+            var lista = LinkedList<String>()
+            var token = ""
+
+            for (user in result){
+                token = user.toObject<Usuario>()!!.token
+                if (token.isNotEmpty()){
+                    lista.add(token)
+                }
+
+            }
+            listaTokens.value = lista
+        }
+        return listaTokens
+    }
+
 
 
 //    fun findMyGrupos(usuario: Usuario) {

@@ -14,6 +14,7 @@ import android.widget.ImageView
 
 import androidx.lifecycle.ViewModelProvider
 import com.example.reserbuddy.AvatarGenerator
+import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.R
 import com.example.reserbuddy.databinding.FragmentNewReservaBinding
 import com.example.reserbuddy.interfaces.FragmentListener
@@ -22,6 +23,8 @@ import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ClienteViewModel
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 
 import java.util.*
 
@@ -207,6 +210,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         crearCliente(telefono, nombre)
 
         reservaViewModel.addReserva(reserva)
+        enviarNotificacionGeneral()
 
 
         dismiss()
@@ -260,6 +264,27 @@ class NewReservaFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
+    fun enviarNotificacionGeneral() {
+        val listaTokens = DataHolder.listaTokens
+
+        for (token in listaTokens) {
+            val message = RemoteMessage.Builder(token)
+                .setMessageId(UUID.randomUUID().toString())
+                .setData(mapOf(
+                    "title" to "Nueva reserva",
+                    "body" to "Se ha realizado una nueva reserva!"
+                ))
+                .build()
+
+            FirebaseMessaging.getInstance().send(message)
+        }
+
+
+    }
+
+
+
 
 
 

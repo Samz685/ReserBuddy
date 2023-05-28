@@ -23,6 +23,7 @@ class DataHolder {
         var currentTarea = Tarea()
         var emailRecuperado = ""
         var currentCliente = Cliente()
+        var listaTokens = mutableListOf<String>()
 
 
 

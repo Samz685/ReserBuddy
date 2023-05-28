@@ -4,9 +4,7 @@ package com.example.reserbuddy.ui.reservas
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.transition.Fade
 import android.transition.TransitionManager
-import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -21,19 +19,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.databinding.FragmentReservasBinding
-import com.example.reserbuddy.DataHolder
-import com.example.reserbuddy.interfaces.FragmentListener
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 
 class ReservasFragment : Fragment() {
@@ -329,6 +327,8 @@ class ReservasFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
+
+
 
 
 

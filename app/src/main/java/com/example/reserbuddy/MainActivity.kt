@@ -26,6 +26,7 @@ import com.example.reserbuddy.ui.newReserva.NewReservaFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
+import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var usuarioViewModel : UsuarioViewModel
+    private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
     private lateinit var newReservaViewModel : NewReservaViewModel
     private lateinit var newTareaViewModel : NewTareaViewModel
     private lateinit var toggle : ActionBarDrawerToggle
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         FirebaseApp.initializeApp(this)
         registrarDispositivo()
-        notificacion()
+        getAllTokens()
 
         // Comprobar si el usuario ya ha iniciado sesión
         if (FirebaseAuth.getInstance().currentUser == null) {
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         newReservaViewModel = ViewModelProvider(this).get(NewReservaViewModel::class.java)
         newTareaViewModel = ViewModelProvider(this).get(NewTareaViewModel::class.java)
-        usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
+
 
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
@@ -218,19 +219,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun notificacion() {
-        FirebaseMessaging.getInstance().token
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val token = task.result
-                    println("Este es el token del dispositivo: $token")
-                    // Utiliza el token de registro de FCM
-                } else {
-                    // Maneja el error
-                }
+    fun getAllTokens() {
+        DataHolder.listaTokens
+
+        usuarioViewModel.getAllTokens().observe(this, Observer {
+            DataHolder.listaTokens.clear()
+            for (token in it) {
+                DataHolder.listaTokens.add(token)
+                println("esta es la lista de tokens: $token")
             }
+        })
 
     }
+
+
 
 
 
