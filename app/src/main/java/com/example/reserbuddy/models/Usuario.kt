@@ -11,6 +11,7 @@ class Usuario {
     var rol : String = ""
     var foto: Int = 0
     var comentario : String = ""
+    var token : String = ""
 
     override fun toString(): String {
         return alias

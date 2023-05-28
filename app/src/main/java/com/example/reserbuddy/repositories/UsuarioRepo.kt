@@ -27,7 +27,8 @@ class UsuarioRepo {
             "telefono" to usuario.telefono,
             "foto" to usuario.foto,
             "rol" to usuario.rol,
-            "comentario" to usuario.comentario
+            "comentario" to usuario.comentario,
+            "token" to usuario.token
         )
         usuarioRef.set(datos).addOnSuccessListener {
             Log.i("Firebase", "Usuario añadido correctamente")

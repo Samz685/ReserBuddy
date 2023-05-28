@@ -7,6 +7,7 @@ import android.media.Image
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
@@ -21,6 +22,7 @@ import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class RegistroActivity : AppCompatActivity() {
 
@@ -36,6 +38,7 @@ class RegistroActivity : AppCompatActivity() {
     private val SELECT_ACTIVITY = 50
     private var imageUri: Uri? = null
     private var foto = 0
+    var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,8 @@ class RegistroActivity : AppCompatActivity() {
         etTelefono = binding.etUsuarioTelefono
         ivFoto = binding.ivUsuarioFoto
         auth = Firebase.auth
+
+        registrarToken()
 
         setup()
     }
@@ -89,6 +94,7 @@ class RegistroActivity : AppCompatActivity() {
             val password2 = etPassword2.text.toString().trim()
             val email = etEmail.text.toString().trim()
             val telefono = etTelefono.text.toString().trim()
+
             //Aqui uso funcion para convertir imageUri selecciona a Int (para poder asignarla al atributo de usuario)
             val fotoUsuario = R.drawable.ic_usuario
 
@@ -128,6 +134,7 @@ class RegistroActivity : AppCompatActivity() {
                         userProfile.telefono = telefono
                         userProfile.foto = fotoUsuario
                         userProfile.rol = "normal"
+                        userProfile.token = token
                         val usuario = UsuarioViewModel()
                         usuario.addUsuario(userProfile)
                         val intent = Intent(this, MainActivity::class.java)
@@ -149,6 +156,20 @@ class RegistroActivity : AppCompatActivity() {
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
+
+    }
+
+    fun registrarToken() {
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                token = task.result
+                Log.d("FCM Token", token)
+                // Aquí puedes enviar el token a tu servidor, guardar en SharedPreferences, etc.
+            } else {
+                Log.e("FCM Token", "Error al obtener el token")
+            }
+        }
 
     }
 
