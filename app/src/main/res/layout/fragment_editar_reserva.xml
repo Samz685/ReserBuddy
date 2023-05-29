@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/Theme.ReserBuddy"
+    tools:context=".ui.reservas.EditarReservaFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/editar_reserva"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/btnCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true">
+
+            <EditText
+                android:id="@+id/etFechaRes"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/dd_mm_aaaa"
+                android:inputType="number"
+                android:textSize="20sp"
+                android:paddingStart="20dp"
+                android:focusableInTouchMode="false"/>
+
+            <ImageView
+                android:id="@+id/ivDatePicker"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etFecha"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_calendar" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp">
+
+
+
+            <EditText
+                android:id="@+id/etNumComensalesRes"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="Nº Pers"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                />
+
+            <ImageView
+                android:id="@+id/btnLessComensales2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etNumComensalesRes"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_less" />
+
+            <ImageView
+                android:id="@+id/btnPlusComensales2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etNumComensalesRes"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_plus" />
+
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/btnHora"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true">
+
+            <EditText
+                android:id="@+id/etHoraRes"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/hh_mm"
+                android:inputType="number"
+                android:paddingStart="20dp"
+                android:textSize="20sp"
+                android:focusableInTouchMode="false"/>
+
+            <ImageView
+                android:id="@+id/ivHora"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/etHora"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_hora" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp">
+
+
+
+            <EditText
+                android:id="@+id/sp_ubicacionRes"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="Ubicacion"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                />
+
+            <ImageView
+                android:id="@+id/btnUbi1b"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/sp_ubicacionRes"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_left" />
+
+            <ImageView
+                android:id="@+id/btnUbi2b"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/sp_ubicacionRes"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_right" />
+
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/etComentarioRes"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/comentario"
+        android:inputType="textCapSentences"
+        android:paddingStart="10dp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnAplicarRes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:clickable="true"
+        android:padding="12dp"
+        android:text="@string/aplicar_cambios"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

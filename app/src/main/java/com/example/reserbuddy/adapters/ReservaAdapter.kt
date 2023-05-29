@@ -3,6 +3,7 @@ package com.example.reserbuddy.adapters
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -31,7 +32,7 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         holder.tvHora.text = item.hora.toString()
 //        Picasso.get().load(item.foto).fit().into(holder.ivReserva)
         holder.ivReserva.setImageResource(item.foto)
-        holder.ivReserva.setOnClickListener {
+        holder.btnEditar.setOnClickListener {
             listener.onImageClick(position)
         }
         holder.etComentario.text = item.comentario
@@ -54,8 +55,10 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         //Setear color fondo estado
         if(item.estado == "Confirmada"){
             holder.tvEstado.setBackgroundResource(R.drawable.estado_green_rectangle)
+
         } else if(item.estado == "Cancelada"){
             holder.tvEstado.setBackgroundResource(R.drawable.estado_red_rectangle)
+            holder.btnEditar.visibility = GONE
         } else {
             holder.tvEstado.setBackgroundResource(R.drawable.estado_grey_rectangle)
         }
@@ -82,7 +85,11 @@ class ReservaAdapter(var listaReservas:MutableList<Reserva>, var listener: OnIte
         var etComentario: TextView = v.findViewById(R.id.etComentario)
         var btnConfirmar: LinearLayout = v.findViewById(R.id.bloque_confirmar)
         var btnCancelar: LinearLayout = v.findViewById(R.id.bloque_cancelar)
+        var btnEditar: LinearLayout = v.findViewById(R.id.bloque_editar)
         var tvEstado : TextView = v.findViewById(R.id.tvEstado)
+
+
+
 
 
 

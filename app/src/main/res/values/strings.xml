@@ -70,5 +70,7 @@
     <string name="comentarios">Comentarios:</string>
     <string name="sin_comentarios">Sin comentarios</string>
     <string name="aplicar_cambios">Aplicar cambios</string>
+    <string name="editar">Editar</string>
+    <string name="editar_reserva">Editar reserva</string>
 
 </resources>

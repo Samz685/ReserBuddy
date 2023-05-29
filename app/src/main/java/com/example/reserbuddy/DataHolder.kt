@@ -3,10 +3,7 @@ package com.example.reserbuddy
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.reserbuddy.adapters.TareaAdapter
-import com.example.reservarapp.models.Categoria
-import com.example.reservarapp.models.Cliente
-import com.example.reservarapp.models.Tarea
-import com.example.reservarapp.models.Usuario
+import com.example.reservarapp.models.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -21,6 +18,7 @@ class DataHolder {
         var listaTareas = mutableListOf<Tarea>()
         var currentUser = Usuario()
         var currentTarea = Tarea()
+        var currentReserva = Reserva()
         var emailRecuperado = ""
         var currentCliente = Cliente()
         var listaTokens = mutableListOf<String>()

@@ -159,7 +159,7 @@
             android:orientation="vertical"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <View
                 android:layout_width="match_parent"
@@ -207,7 +207,8 @@
                     android:clickable="true"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="visible"
+                    android:layout_marginRight="20dp">
 
                     <ImageView
                         android:layout_width="50dp"
@@ -218,6 +219,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="Confirmar"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bloque_editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_editar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/editar"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 

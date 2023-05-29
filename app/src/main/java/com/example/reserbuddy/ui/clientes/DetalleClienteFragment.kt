@@ -99,15 +99,17 @@ class DetalleClienteFragment : Fragment() {
 
         iniciarExpandible()
 
-        zoomBoton()
+
 
         binding.ivEditar.setOnClickListener {
 
-            EditarClienteFragment().show(childFragmentManager, "EditarClienteFragment")
 
-            val scaleAnimation = ScaleAnimation(1f, 1.5f, 1f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+
+            val scaleAnimation = ScaleAnimation(1f, 1.2f, 1f, 1.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
             scaleAnimation.duration = 200
             it.startAnimation(scaleAnimation)
+
+            EditarClienteFragment().show(childFragmentManager, "EditarClienteFragment")
         }
 
 
@@ -275,20 +277,6 @@ class DetalleClienteFragment : Fragment() {
             mAdapter.notifyDataSetChanged()
             inicializarChart()
         })
-    }
-
-    fun zoomBoton() {
-        binding.ivEditar.setOnTouchListener { view, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    view.isPressed = true
-                }
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    view.isPressed = false
-                }
-            }
-            false
-        }
     }
 
 
