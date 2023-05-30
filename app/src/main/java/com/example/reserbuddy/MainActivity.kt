@@ -1,6 +1,4 @@
 package com.example.reserbuddy
-
-
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -75,27 +73,23 @@ class MainActivity : AppCompatActivity() {
         newReservaViewModel = ViewModelProvider(this).get(NewReservaViewModel::class.java)
         newTareaViewModel = ViewModelProvider(this).get(NewTareaViewModel::class.java)
 
-
-
-        val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
-        val navViewComponent : NavigationView = findViewById(R.id.nav_view_component)
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navViewComponent: NavigationView = findViewById(R.id.nav_view_component)
         val headerView: View = navViewComponent.getHeaderView(0)
         tvHola = headerView.findViewById(R.id.tvHolaHeader)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+        toggle.setHomeAsUpIndicator(R.drawable.ic_menu);
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
-//        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
-//        drawerLayout.addDrawerListener(toggle)
-//        toggle.syncState()
 
-
-        toggle = ActionBarDrawerToggle(this,drawerLayout,R.string.open_drawer,R.string.close_drawer)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         getCurrentUsuario()
 
@@ -109,7 +103,8 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_reservas, R.id.navigation_lista_compra, R.id.navigation_tareas
+                R.id.navigation_home, R.id.navigation_reservas, R.id.navigation_lista_compra, R.id.navigation_tareas,
+                R.id.navigation_clientes, R.id.navigation_detalle_cliente, R.id.navigation_usuarios
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
