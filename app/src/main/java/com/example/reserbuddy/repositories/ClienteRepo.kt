@@ -1,8 +1,11 @@
 package com.example.reservarapp.repositories
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.reserbuddy.FechaGenerator
 import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Usuario
 import com.google.firebase.firestore.ktx.firestore
@@ -14,6 +17,7 @@ class ClienteRepo {
 
     val db = Firebase.firestore
 
+
     fun addCliente(cliente: Cliente): String {
 
         val clienteRef = db.collection("clientes").document()
@@ -24,7 +28,8 @@ class ClienteRepo {
             "nombre" to cliente.nombre,
             "telefono" to cliente.telefono,
             "email" to cliente.email,
-            "foto" to cliente.foto
+            "foto" to cliente.foto,
+            "fecha_creacion" to cliente.fecha_creacion
         )
         clienteRef.set(datos).addOnSuccessListener {
             Log.i("Firebase", "Cliente creado correctamente")

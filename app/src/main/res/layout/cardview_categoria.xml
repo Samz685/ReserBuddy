@@ -31,12 +31,13 @@
 
         <TextView
             android:id="@+id/tvNombreCategoria"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="@string/categoria"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
 
 
     </LinearLayout>

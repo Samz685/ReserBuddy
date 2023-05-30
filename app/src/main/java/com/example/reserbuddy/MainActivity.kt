@@ -26,6 +26,7 @@ import com.example.reserbuddy.ui.newReserva.NewReservaFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
+import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -85,6 +86,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+//        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+//        drawerLayout.addDrawerListener(toggle)
+//        toggle.syncState()
+
 
         toggle = ActionBarDrawerToggle(this,drawerLayout,R.string.open_drawer,R.string.close_drawer)
         drawerLayout.addDrawerListener(toggle)
@@ -232,29 +238,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun actualizarReservas() {
+        val reservasFragment = supportFragmentManager.findFragmentByTag("ReservasFragment") as? ReservasFragment
+        reservasFragment?.traerReservas()
+        reservasFragment?.mAdapter?.notifyDataSetChanged()
+        reservasFragment?.onResume()
+    }
 
 
 
 
 
-
-
-
-
-
-
-
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                // Abre el DrawerLayout cuando se toca el botón de menú de la ActionBar
-//                binding.drawerLayout.openDrawer(GravityCompat.START)
-//                return true
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
 
 }

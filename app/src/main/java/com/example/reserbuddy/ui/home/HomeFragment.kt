@@ -28,7 +28,6 @@ import com.google.firebase.auth.FirebaseAuth
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var auth: FirebaseAuth;
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
     private val tareaViewModel by lazy { ViewModelProvider(this).get(TareaViewModel::class.java) }
     private var countReservaTotal = 0
@@ -205,11 +204,17 @@ class HomeFragment : Fragment() {
         pieChart = binding.chartReservasTotal
         var pendientes = countReservaTotal-countReservaConfirmadas-countReservaCanceladas
 
-        val entries = listOf(
-            PieEntry(pendientes.toFloat(), "Pendientes"),
-            PieEntry(countReservaConfirmadas.toFloat(), "Confirmadas"),
-            PieEntry(countReservaCanceladas.toFloat(), "Canceladas")
-        )
+        val entries = mutableListOf<PieEntry>()
+
+        if (pendientes > 0) {
+            entries.add(PieEntry(pendientes.toFloat(), "Pendientes"))
+        }
+        if (countReservaConfirmadas > 0) {
+            entries.add(PieEntry(countReservaConfirmadas.toFloat(), "Confirmadas"))
+        }
+        if (countReservaCanceladas > 0) {
+            entries.add(PieEntry(countReservaCanceladas.toFloat(), "Canceladas"))
+        }
         //Crear datos para el grafico
         val dataSet = PieDataSet(entries, "Reservas Totales")
 

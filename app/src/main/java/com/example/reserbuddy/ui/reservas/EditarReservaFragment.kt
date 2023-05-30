@@ -14,13 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.reserbuddy.BotonHelper
 import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.R
-import com.example.reserbuddy.databinding.FragmentEditarClienteBinding
 import com.example.reserbuddy.databinding.FragmentEditarReservaBinding
 import com.example.reserbuddy.ui.newReserva.*
-import com.example.reserbuddy.ui.usuarios.UsuariosFragment
-import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Reserva
-import com.example.reservarapp.viewmodels.ClienteViewModel
 import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.*
@@ -82,22 +78,41 @@ class EditarReservaFragment : BottomSheetDialogFragment() {
         )
 
         btnAplicar.setOnClickListener {
-            actualizarCliente()
+            actualizarReserva()
         }
 
-        binding.btnPlusComensales.setOnClickListener {
+        binding.ivHora.setOnClickListener {
+            timePickerDialog.show()
+
+        }
+
+        binding.ivDatePicker.setOnClickListener {
+            elegirFecha()
+        }
+
+        binding.btnPlusComensales2.setOnClickListener {
             cont++
             binding.etNumComensalesRes.setText(cont.toString())
 
         }
 
-        binding.btnLessComensales.setOnClickListener {
+        binding.btnLessComensales2.setOnClickListener {
             if (cont > 1) {
                 cont--
                 binding.etNumComensalesRes.setText(cont.toString())
             }
 
 
+        }
+
+        binding.btnUbi1b.setOnClickListener {
+
+            swithUbicacion()
+        }
+
+        binding.btnUbi2b.setOnClickListener {
+
+            swithUbicacion()
         }
 
 
@@ -117,7 +132,7 @@ class EditarReservaFragment : BottomSheetDialogFragment() {
         etComentario = binding.etComentarioRes
 
         val editTexts = arrayOf(
-            etHora, etFecha, etNumComensales, etUbicacion, etComentario
+            etHora, etFecha, etNumComensales, etUbicacion
         )
 
         BotonHelper.habilitarBotonAdd(btnAplicar, *editTexts)
@@ -129,13 +144,20 @@ class EditarReservaFragment : BottomSheetDialogFragment() {
 
         etHora.setText(reservaActual.hora)
         etFecha.setText(reservaActual.fecha)
-        etNumComensales.setText(reservaActual.numComensales)
+        etNumComensales.setText(reservaActual.numComensales.toString())
         etUbicacion.setText(reservaActual.ubicacion)
         etComentario.setText(reservaActual.comentario)
+        cont = reservaActual.numComensales
+        //setear el boolean para que no esté desfasado
+        if (etUbicacion.text.toString() == "Terraza") {
+            ubi = true
+        }
+
+
 
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun actualizarCliente() {
+    private fun actualizarReserva() {
 
         //llenando objeto tarea para firebase
         var reserva = Reserva()
@@ -146,23 +168,26 @@ class EditarReservaFragment : BottomSheetDialogFragment() {
         reserva.numComensales = etNumComensales.text.toString().toInt()
         reserva.ubicacion = etUbicacion.text.toString()
         reserva.comentario = etComentario.text.toString()
-        var img = R.drawable.ic_terraza
+        var img : Int
         if(reserva.ubicacion == "Terraza"){
-            var img = R.drawable.ic_terraza
+            img = R.drawable.ic_terraza
         } else {
-            var img = R.drawable.ic_comedor
+            img = R.drawable.ic_comedor
         }
         reserva.foto = img
+        println("-----------------esta es la reserva que se guarda")
+        println(reserva)
         reservaViewModel.updateReserva(reserva)
 
 
 
 
         DataHolder.currentReserva = reserva //Una vez se persisten los datos, actualizamos el DataHolder
-        (parentFragment as ReservasFragment).mAdapter.notifyDataSetChanged()
+
 
 
         dismiss()
+        (parentFragment as ReservasFragment).onResume()
 
     }
 

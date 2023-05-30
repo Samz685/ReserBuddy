@@ -72,6 +72,10 @@ class ReservaViewModel : ViewModel() {
 
     }
 
+    fun updateEstado(reserva: Reserva){
+        reservaRepo.updateEstado(reserva)
+    }
+
     fun updateReserva(reserva: Reserva){
         reservaRepo.updateReserva(reserva)
     }
@@ -112,29 +116,4 @@ class ReservaViewModel : ViewModel() {
     }
 
 
-
-//    fun getById(userId: String): LiveData<Usuario> {
-//        val usuarioData = MutableLiveData<Usuario>()
-//        usuarioRepo.getById(userId).observeForever {
-//            usuarioData.value = it
-//        }
-//
-//        return usuarioData
-//    }
-
-//    fun getAll(): LiveData<LinkedList<Solicitud>> {
-//        val solicitudesData = MutableLiveData<LinkedList<Solicitud>>()
-//        solicitudRepo.getAll().observeForever {
-//            solicitudesData.value = it
-//        }
-//        return solicitudesData
-//    }
-
-
-
-
-//
-//    fun updateSolicitud(solicitud: Solicitud){
-//        solicitudRepo.updateSolicitud(solicitud)
-//    }
 }

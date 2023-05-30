@@ -26,10 +26,7 @@ import com.example.reserbuddy.adapters.ReservaAdapter
 import com.example.reserbuddy.databinding.FragmentReservasBinding
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ReservaViewModel
-import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,7 +54,6 @@ class ReservasFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         traerReservas()
-        mAdapter.notifyDataSetChanged()
         true
     }
 
@@ -124,7 +120,7 @@ class ReservasFragment : Fragment() {
         }
     }
 
-    private fun traerReservas() {
+    fun traerReservas() {
 
         when (reservaTiming) {
             "Hoy" -> getReservasToday()
@@ -163,6 +159,7 @@ class ReservasFragment : Fragment() {
                 // Utiliza TransitionManager para animar el cambio de visibilidad
                 TransitionManager.beginDelayedTransition(mRecyclerView)
 
+
                 if (posicion == posicionExpandida) {
                     // Al hacer clic en el elemento ya expandido, se colapsa
                     expandible_reserva.visibility = View.GONE
@@ -184,7 +181,7 @@ class ReservasFragment : Fragment() {
             override fun onClick2(position: Int) {
                 var reserva = listaReservas[position]
                 reserva.estado = "Confirmada"
-                reservaViewModel.updateReserva(reserva)
+                reservaViewModel.updateEstado(reserva)
                 mAdapter.notifyDataSetChanged()
 
             }
@@ -192,7 +189,7 @@ class ReservasFragment : Fragment() {
             override fun onClick3(position: Int) {
                 var reserva = listaReservas[position]
                 reserva.estado = "Cancelada"
-                reservaViewModel.updateReserva(reserva)
+                reservaViewModel.updateEstado(reserva)
                 mAdapter.notifyDataSetChanged()
 
 
@@ -200,6 +197,10 @@ class ReservasFragment : Fragment() {
             }
 
             override fun onImageClick(position: Int) {
+
+                DataHolder.currentReserva = listaReservas[position]
+
+                EditarReservaFragment().show(childFragmentManager, "EditarReservaFragment")
 
 
             }

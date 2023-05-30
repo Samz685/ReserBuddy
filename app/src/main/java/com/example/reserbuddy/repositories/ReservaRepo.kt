@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.reserbuddy.FechaGenerator
 import com.example.reservarapp.models.Reserva
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -66,7 +65,7 @@ class ReservaRepo {
         return reserva.id
     }
 
-    fun updateReserva(reserva: Reserva) {
+    fun updateEstado(reserva: Reserva) {
 
         var reservaRef = db.collection("reservas").document(reserva.id)
 
@@ -74,6 +73,27 @@ class ReservaRepo {
         val datos = hashMapOf(
 
             "estado" to reserva.estado
+        )
+        reservaRef.update(datos as Map<String, Any>).addOnSuccessListener {
+            Log.i("FireBase", "Estado reserva Actualizado")
+        }.addOnFailureListener { error ->
+            Log.e("FirebaseError", error.message.toString())
+        }
+    }
+
+    fun updateReserva(reserva: Reserva) {
+
+        var reservaRef = db.collection("reservas").document(reserva.id)
+
+
+        val datos = hashMapOf(
+
+            "fecha" to reserva.fecha,
+            "hora" to reserva.hora,
+            "numComensales" to reserva.numComensales,
+            "ubicacion" to reserva.ubicacion,
+            "comentario" to reserva.comentario,
+            "foto" to reserva.foto
         )
         reservaRef.update(datos as Map<String, Any>).addOnSuccessListener {
             Log.i("FireBase", "Reserva Actualizada")

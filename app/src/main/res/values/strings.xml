@@ -72,5 +72,7 @@
     <string name="aplicar_cambios">Aplicar cambios</string>
     <string name="editar">Editar</string>
     <string name="editar_reserva">Editar reserva</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="fecha_completada">Fecha completada:</string>
 
 </resources>

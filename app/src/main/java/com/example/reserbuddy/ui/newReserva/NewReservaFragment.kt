@@ -3,6 +3,8 @@ package com.example.reserbuddy.ui.newReserva
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,13 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 
 import androidx.lifecycle.ViewModelProvider
-import com.example.reserbuddy.AvatarGenerator
-import com.example.reserbuddy.DataHolder
-import com.example.reserbuddy.R
+import com.example.reserbuddy.*
 import com.example.reserbuddy.databinding.FragmentNewReservaBinding
 import com.example.reserbuddy.interfaces.FragmentListener
+import com.example.reserbuddy.ui.reservas.ReservasFragment
 import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.viewmodels.ClienteViewModel
@@ -48,6 +50,8 @@ var ubi = true
 
 
 
+
+
 class NewReservaFragment : BottomSheetDialogFragment() {
 
     private val reservaViewModel by lazy { ViewModelProvider(this).get(ReservaViewModel::class.java) }
@@ -71,6 +75,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -178,6 +183,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun crearReserva() {
 
         var nombre = binding.etNombreCliente.text.toString()
@@ -214,6 +220,13 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
 
         dismiss()
+//        (parentFragment as ReservasFragment).onResume()
+
+        // Llama a este método para ejecutar la función en el Fragmento B
+        (activity as MainActivity).actualizarReservas()
+
+
+
 
 
     }
@@ -248,6 +261,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun crearCliente(telefono: String, nombre: String) {
         clienteViewModel.exists(telefono).observeForever { existe ->
             if (!existe) {
@@ -255,6 +269,7 @@ class NewReservaFragment : BottomSheetDialogFragment() {
                 cliente.nombre = nombre
                 cliente.telefono = telefono
                 cliente.foto = AvatarGenerator().asignarIcono(nombre.lowercase())
+                cliente.fecha_creacion = FechaGenerator.elegirFecha().Asignada
                 clienteViewModel.addCliente(cliente)
 
 
@@ -282,6 +297,13 @@ class NewReservaFragment : BottomSheetDialogFragment() {
 
 
     }
+
+
+
+
+
+
+
 
 
 

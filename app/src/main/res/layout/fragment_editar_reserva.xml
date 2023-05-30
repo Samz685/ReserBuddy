@@ -145,7 +145,7 @@
                 android:id="@+id/ivHora"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignBottom="@id/etHora"
+                android:layout_alignBottom="@id/etHoraRes"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:background="?attr/selectableItemBackground"

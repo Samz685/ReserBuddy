@@ -173,11 +173,17 @@ class DetalleClienteFragment : Fragment() {
 
         var countPendientes = countTotal-countConfirmadas-countCanceladas
 
-        val entries = listOf(
-            PieEntry(countPendientes.toFloat(), "Pendientes"),
-            PieEntry(countConfirmadas.toFloat(), "Confirmadas"),
-            PieEntry(countCanceladas.toFloat(), "Canceladas")
-        )
+        val entries = mutableListOf<PieEntry>()
+
+        if (countPendientes > 0) {
+            entries.add(PieEntry(countPendientes.toFloat(), "Pendientes"))
+        }
+        if (countConfirmadas > 0) {
+            entries.add(PieEntry(countConfirmadas.toFloat(), "Confirmadas"))
+        }
+        if (countCanceladas > 0) {
+            entries.add(PieEntry(countCanceladas.toFloat(), "Canceladas"))
+        }
         //Crear datos para el grafico
         val dataSet = PieDataSet(entries, "")
 
