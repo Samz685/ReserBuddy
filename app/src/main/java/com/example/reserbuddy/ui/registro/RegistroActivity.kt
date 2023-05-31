@@ -12,10 +12,7 @@ import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import com.example.reserbuddy.DialogUtils
-import com.example.reserbuddy.ImageController
-import com.example.reserbuddy.MainActivity
-import com.example.reserbuddy.R
+import com.example.reserbuddy.*
 import com.example.reserbuddy.databinding.ActivityRegistroBinding
 import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.UsuarioViewModel
@@ -80,7 +77,6 @@ class RegistroActivity : AppCompatActivity() {
 
         ivFoto.setOnClickListener {
 
-            ImageController.selectPhotoFromGallery(this, SELECT_ACTIVITY)
 
         }
 
@@ -96,7 +92,7 @@ class RegistroActivity : AppCompatActivity() {
             val telefono = etTelefono.text.toString().trim()
 
             //Aqui uso funcion para convertir imageUri selecciona a Int (para poder asignarla al atributo de usuario)
-            val fotoUsuario = R.drawable.ic_usuario
+            val fotoUsuario = AvatarGenerator().asignarIcono(nombre.lowercase())
 
 
             if(email.isNotEmpty() && password1.isNotEmpty() && password2.isNotEmpty() && nombre.isNotEmpty() && telefono.isNotEmpty()){

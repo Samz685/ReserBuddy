@@ -74,5 +74,6 @@
     <string name="editar_reserva">Editar reserva</string>
     <string name="confirmar">Confirmar</string>
     <string name="fecha_completada">Fecha completada:</string>
+    <string name="actualizar_cliente">Actualizar cliente</string>
 
 </resources>

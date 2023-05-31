@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Actualizar cliente"
+        android:text="@string/actualizar_cliente"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -61,11 +61,11 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_background"
         android:hint="@string/comentario"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:paddingStart="15dp"
         android:paddingTop="5dp"
         android:textSize="20sp"
-        android:gravity="top" />
+        android:gravity="top"/>
 
 
 
