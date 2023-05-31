@@ -93,9 +93,9 @@ class DetalleUsuarioFragment : Fragment() {
 
         listaTareasTotales = mutableListOf<Tarea>()
 
-        getReservasByCliente(DataHolder.currentCliente.telefono)
-        getReservasByClienteByEstado(DataHolder.currentCliente.telefono, "Confirmada")
-        getReservasByClienteByEstado(DataHolder.currentCliente.telefono, "Cancelada")
+        getTareasByCliente(DataHolder.currentCliente.telefono)
+        getTareasByClienteByEstado(DataHolder.currentCliente.telefono, "Confirmada")
+        getTareasByClienteByEstado(DataHolder.currentCliente.telefono, "Cancelada")
 
         inicializarAdapters()
 
@@ -105,7 +105,7 @@ class DetalleUsuarioFragment : Fragment() {
 
 
 
-        binding.ivEditar.setOnClickListener {
+        binding.ivEditarUs.setOnClickListener {
 
 
 
@@ -113,7 +113,7 @@ class DetalleUsuarioFragment : Fragment() {
             scaleAnimation.duration = 200
             it.startAnimation(scaleAnimation)
 
-            EditarClienteFragment().show(childFragmentManager, "EditarClienteFragment")
+//            EditarUsuarioFragment().show(childFragmentManager, "EditarClienteFragment")
         }
 
 
@@ -126,11 +126,11 @@ class DetalleUsuarioFragment : Fragment() {
     }
 
     fun iniciarExpandible() {
-        val expandibleCliente = binding.expandibleCliente
+        val expandibleCliente = binding.expandibleUsuario
         val transition = AutoTransition()
         transition.duration = 150 // Duración de la animación en milisegundos
 
-        binding.bloqueDetalleCliente.setOnClickListener {
+        binding.bloqueDetalleUsuario.setOnClickListener {
             isExpanded = !isExpanded
 
             if (isExpanded) {
@@ -147,25 +147,25 @@ class DetalleUsuarioFragment : Fragment() {
 
     fun inicializarDetalles(){
 
-        var cliente = DataHolder.currentCliente
+        var usuario = DataHolder.currentUser
 
-        ivFoto = binding.ivDetalleCliente
-        tvNombre = binding.tvDetalleClienteNombre
-        tvTelefono = binding.tvDetalleClienteTel
-        tvEmail = binding.tvDetalleClienteEmail
-        tvComentario = binding.tvComentarioCliente
+        ivFoto = binding.ivDetalleUsuario
+        tvNombre = binding.tvDetalleUsuarioNombre
+        tvTelefono = binding.tvDetalleUsuarioTel
+        tvEmail = binding.tvDetalleUsuarioEmail
+        tvComentario = binding.tvComentarioUsuario
 
-        ivFoto.setImageResource(cliente.foto)
-        tvNombre.text = cliente.nombre
-        tvTelefono.text = cliente.telefono
-        tvEmail.text = cliente.email
-        tvComentario.text = cliente.descripcion
+        ivFoto.setImageResource(usuario.foto)
+        tvNombre.text = usuario.alias
+        tvTelefono.text = usuario.telefono
+        tvEmail.text = usuario.email
+        tvComentario.text = usuario.comentario
 
 
     }
     fun refreshUsuarios() {
         swipeRefresh.setOnRefreshListener {
-            getReservasByCliente(DataHolder.currentCliente.telefono)
+            getTareasByCliente(DataHolder.currentCliente.telefono)
             swipeRefresh.isRefreshing = false
 
         }
@@ -173,7 +173,7 @@ class DetalleUsuarioFragment : Fragment() {
 
     fun inicializarChart(){
 
-        pieChart = binding.chartCliente
+        pieChart = binding.chartUsuario
 
         var countPendientes = countTotal-countConfirmadas-countCanceladas
 
@@ -234,9 +234,9 @@ class DetalleUsuarioFragment : Fragment() {
     private fun inicializarAdapters() {
 
 
-        mRecyclerView = binding.recyclerReservas2
+        mRecyclerView = binding.recyclerTareas2
         mLayoutManager = LinearLayoutManager(activity)
-        mAdapter = ReservaAdapterBasico(listaReservasTotales, object : OnItemClickListener {
+        mAdapter = TareaAdapterBasico(listaTareasTotales, object : OnItemClickListener {
             override fun OnItemClick(vista: View, position: Int) {
 
 
@@ -262,19 +262,19 @@ class DetalleUsuarioFragment : Fragment() {
         mRecyclerView.layoutManager = mLayoutManager
     }
 
-    fun getReservasByCliente(numCliente: String) {
-        reservaViewModel.getByCliente(numCliente).observe(viewLifecycleOwner, Observer { reservas ->
-            listaReservasTotales.clear()
-            listaReservasTotales.addAll(reservas)
-            countTotal = listaReservasTotales.size
+    fun getTareasByCliente(usuario: String) {
+        tareaViewModel.getByUsuario(usuario).observe(viewLifecycleOwner, Observer { reservas ->
+            listaTareasTotales.clear()
+            listaTareasTotales.addAll(reservas)
+            countTotal = listaTareasTotales.size
 
             mAdapter.notifyDataSetChanged()
             inicializarChart()
         })
     }
 
-    fun getReservasByClienteByEstado(numCliente: String, estado: String) {
-        reservaViewModel.getByClienteByEstado(numCliente, estado).observe(viewLifecycleOwner, Observer { reservas ->
+    fun getTareasByClienteByEstado(numCliente: String, estado: String) {
+        tareaViewModel.getByUsuarioEstado(numCliente, estado).observe(viewLifecycleOwner, Observer { reservas ->
             val listaReservas = reservas.toMutableList()
             val countReservas = listaReservas.size
 

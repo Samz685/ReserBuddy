@@ -170,7 +170,7 @@ class UsuariosFragment : Fragment() {
     fun goDetalles(){
 
         val navController = findNavController(requireParentFragment())
-        navController.navigate(R.id.navigation_detalle_cliente)
+        navController.navigate(R.id.navigation_detalle_usuario)
 
     }
 
