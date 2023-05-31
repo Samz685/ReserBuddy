@@ -2,14 +2,10 @@ package com.example.reserbuddy.ui.usuarios
 
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
@@ -25,34 +21,26 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.reserbuddy.DataHolder
 import com.example.reserbuddy.R
-import com.example.reserbuddy.adapters.OnItemClickListener
-import com.example.reserbuddy.adapters.ReservaAdapter
-import com.example.reserbuddy.adapters.ReservaAdapterBasico
-import com.example.reserbuddy.adapters.TareaAdapterBasico
-import com.example.reserbuddy.databinding.FragmentDetalleClienteBinding
+import com.example.reserbuddy.adapters.*
 import com.example.reserbuddy.databinding.FragmentDetalleUsuarioBinding
-import com.example.reserbuddy.ui.newTarea.NewTareaFragment
-import com.example.reservarapp.models.Reserva
 import com.example.reservarapp.models.Tarea
-import com.example.reservarapp.viewmodels.ClienteViewModel
-import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.TareaViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class DetalleUsuarioFragment : Fragment() {
 
     private var _binding: FragmentDetalleUsuarioBinding? = null
     private lateinit var listaTareasTotales: MutableList<Tarea>
-    lateinit var mAdapter: RecyclerView.Adapter<TareaAdapterBasico.ViewHolder>
+    lateinit var mAdapter: RecyclerView.Adapter<TareaAdapterBasico2.ViewHolder>
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
     private lateinit var mRecyclerView: RecyclerView
     private val tareaViewModel by lazy { ViewModelProvider(this).get(TareaViewModel::class.java) }
@@ -66,8 +54,9 @@ class DetalleUsuarioFragment : Fragment() {
     private var countConfirmadas : Int = 0
     private var countCanceladas : Int = 0
     private var countTotal : Int = 0
-    private lateinit var expandibleCliente: LinearLayout
+    private lateinit var expandibleUsuario: LinearLayout
     private var isExpanded = false
+    private var countTareas = mutableListOf<Int>()
 
 
 
@@ -93,9 +82,9 @@ class DetalleUsuarioFragment : Fragment() {
 
         listaTareasTotales = mutableListOf<Tarea>()
 
-        getTareasByCliente(DataHolder.currentCliente.telefono)
-        getTareasByClienteByEstado(DataHolder.currentCliente.telefono, "Confirmada")
-        getTareasByClienteByEstado(DataHolder.currentCliente.telefono, "Cancelada")
+        getTareasByCliente(DataHolder.currentUser.id)
+        getByUsuarioEstadoCount(DataHolder.currentUser.id)
+
 
         inicializarAdapters()
 
@@ -177,17 +166,8 @@ class DetalleUsuarioFragment : Fragment() {
 
         var countPendientes = countTotal-countConfirmadas-countCanceladas
 
-        val entries = mutableListOf<PieEntry>()
+        val entries = fillEntries()
 
-        if (countPendientes > 0) {
-            entries.add(PieEntry(countPendientes.toFloat(), "Pendientes"))
-        }
-        if (countConfirmadas > 0) {
-            entries.add(PieEntry(countConfirmadas.toFloat(), "Confirmadas"))
-        }
-        if (countCanceladas > 0) {
-            entries.add(PieEntry(countCanceladas.toFloat(), "Canceladas"))
-        }
         //Crear datos para el grafico
         val dataSet = PieDataSet(entries, "")
 
@@ -197,9 +177,8 @@ class DetalleUsuarioFragment : Fragment() {
         // Accede a los colores definidos en colors.xml utilizando el contexto de la aplicación
         val pieAzulClaro = ContextCompat.getColor(requireContext(), R.color.pieAzulClaro)
         val verdeMenta = ContextCompat.getColor(requireContext(), R.color.pieVerdeMenta)
-        val rojoCoral = ContextCompat.getColor(requireContext(), R.color.pieRojoCoral)
 
-        dataSet.colors = listOf(pieAzulClaro, verdeMenta, rojoCoral)
+        dataSet.colors = listOf(pieAzulClaro, verdeMenta)
         dataSet.valueTextSize = 18f
         dataSet.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -212,7 +191,7 @@ class DetalleUsuarioFragment : Fragment() {
 
         pieChart.data = data
         pieChart.description.isEnabled = false
-        pieChart.setCenterText(countTotal.toString()) // Establece el número total de reservas en el centro
+        pieChart.setCenterText(countTotal.toString()) // Establece el número total de tareas en el centro
         pieChart.setCenterTextColor(Color.BLACK) // Establece el color del texto en el centro
         pieChart.setCenterTextSize(25f) // Establece el tamaño del texto en el centro
         pieChart.invalidate() // Actualiza el gráfico
@@ -222,13 +201,24 @@ class DetalleUsuarioFragment : Fragment() {
         pieChart.animateY(1000, Easing.EaseInOutCubic)
 
 
+    }
 
 
+    private fun fillEntries(): MutableList<PieEntry> {
+
+        val entries = mutableListOf<PieEntry>()
+        val estados = mutableListOf<String>("Pendientes", "Completadas")
 
 
+        for (i in 0 until countTareas.size) {
+            val count = countTareas[i]
+            val estado = estados[i]
+            if (count > 0) {
+                entries.add(PieEntry(count.toFloat(), estado))
+            }
+        }
 
-
-
+        return entries
     }
 
     private fun inicializarAdapters() {
@@ -236,7 +226,7 @@ class DetalleUsuarioFragment : Fragment() {
 
         mRecyclerView = binding.recyclerTareas2
         mLayoutManager = LinearLayoutManager(activity)
-        mAdapter = TareaAdapterBasico(listaTareasTotales, object : OnItemClickListener {
+        mAdapter = TareaAdapterBasico2(listaTareasTotales, object : OnItemClickListener {
             override fun OnItemClick(vista: View, position: Int) {
 
 
@@ -262,10 +252,10 @@ class DetalleUsuarioFragment : Fragment() {
         mRecyclerView.layoutManager = mLayoutManager
     }
 
-    fun getTareasByCliente(usuario: String) {
-        tareaViewModel.getByUsuario(usuario).observe(viewLifecycleOwner, Observer { reservas ->
+    fun getTareasByCliente(IdUsuario: String) {
+        tareaViewModel.getByUsuario(IdUsuario).observe(viewLifecycleOwner, Observer { tareas ->
             listaTareasTotales.clear()
-            listaTareasTotales.addAll(reservas)
+            listaTareasTotales.addAll(tareas)
             countTotal = listaTareasTotales.size
 
             mAdapter.notifyDataSetChanged()
@@ -273,19 +263,14 @@ class DetalleUsuarioFragment : Fragment() {
         })
     }
 
-    fun getTareasByClienteByEstado(numCliente: String, estado: String) {
-        tareaViewModel.getByUsuarioEstado(numCliente, estado).observe(viewLifecycleOwner, Observer { reservas ->
-            val listaReservas = reservas.toMutableList()
-            val countReservas = listaReservas.size
+    fun getByUsuarioEstadoCount(IdUsuario: String) {
+        tareaViewModel.getByUsuarioEstadoCount(IdUsuario).observe(viewLifecycleOwner, Observer { tareas ->
 
-            if (estado == "Confirmada") {
-                countConfirmadas = countReservas
-            } else {
-                countCanceladas = countReservas
-            }
+            countTareas = tareas
 
-            mAdapter.notifyDataSetChanged()
             inicializarChart()
+
+
         })
     }
 

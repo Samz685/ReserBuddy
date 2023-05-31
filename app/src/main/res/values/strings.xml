@@ -77,5 +77,6 @@
     <string name="actualizar_cliente">Actualizar cliente</string>
     <string name="inicia_con_google">Inicia con google</string>
     <string name="lista_reservas">Lista reservas</string>
+    <string name="no_hay_tareas">No hay tareas</string>
 
 </resources>

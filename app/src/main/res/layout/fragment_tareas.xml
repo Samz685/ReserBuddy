@@ -21,7 +21,7 @@
         android:text="100"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:drawableEnd="@drawable/ic_usuario"
+        android:drawableEnd="@drawable/ic_tareas"
         android:drawablePadding="2dp"
         android:paddingTop="5dp"
         android:layout_marginBottom="10dp"/>
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="No hay productos"
+                android:text="@string/no_hay_tareas"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:visibility="gone"

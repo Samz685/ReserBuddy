@@ -84,6 +84,14 @@ class TareaViewModel : ViewModel() {
         return countTarea
     }
 
+    fun getByUsuarioEstadoCount(IdUsuario : String) : LiveData<MutableList<Int>> {
+        var countTarea = MutableLiveData<MutableList<Int>>()
+        tareaRepo.getByUsuarioEstadoCount(IdUsuario).observeForever {
+            countTarea.value = it
+        }
+        return countTarea
+    }
+
 
 
 

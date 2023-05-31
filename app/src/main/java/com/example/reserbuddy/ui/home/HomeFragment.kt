@@ -252,7 +252,7 @@ class HomeFragment : Fragment() {
 
             countTareas = reservas
 
-                inicializarChartTareas()
+            inicializarChartTareas()
 
 
         })

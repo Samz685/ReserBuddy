@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.reserbuddy.DataHolder
+import com.example.reserbuddy.DataHolder.Companion.currentUser
 import com.example.reserbuddy.FechaGenerator
 import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.OnItemClickListener
@@ -47,7 +48,7 @@ class TareasFragment : Fragment() {
     private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
     private lateinit var tabLayout: TabLayout
     var tareaTiming = ""
-    private lateinit var user : Usuario
+    private var user = Usuario()
 
     private val binding get() = _binding!!
 
@@ -76,7 +77,7 @@ class TareasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        user = DataHolder.currentUser
+        user = currentUser
         tabLayout = binding.tabReservas
 
 
@@ -107,7 +108,7 @@ class TareasFragment : Fragment() {
     }
 
     private fun traerTareasRol() {
-        if(DataHolder.currentUser.rol == "admin"){
+        if(currentUser.rol == "admin"){
             getAllTareas()
         } else{
             getTareasByUsuario()
@@ -116,16 +117,16 @@ class TareasFragment : Fragment() {
     }
 
     private fun traerTareasPendientesUsuario() {
-        if(DataHolder.currentUser.rol == "admin"){
+        if(currentUser.rol == "admin"){
             getByEstado("Pendiente")
         } else{
-            getTareasByUsuarioEstado(DataHolder.currentUser.id,"Pendiente")
+            getTareasByUsuarioEstado(currentUser.id,"Pendiente")
         }
         tareaTiming = "Pendiente"
     }
 
     private fun traerTareasSinAsignar() {
-        if(DataHolder.currentUser.rol == "admin"){
+        if(currentUser.rol == "admin"){
             getByEstado("Sin asignar")
         }
         tareaTiming = "Sin asignar"
@@ -274,7 +275,7 @@ class TareasFragment : Fragment() {
     }
 
     fun getTareasByUsuario() {
-        tareaViewModel.getByUsuario(DataHolder.currentUser.id).observe(viewLifecycleOwner, Observer {
+        tareaViewModel.getByUsuario(currentUser.id).observe(viewLifecycleOwner, Observer {
             listaTareas.clear()
             for (tarea in it) {
                 listaTareas.add(tarea)
@@ -353,7 +354,7 @@ class TareasFragment : Fragment() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.todas))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pendientes))
 //        tabLayout.addTab(tabLayout.newTab().setText(R.string.completadas))
-        if(user.rol == "admin"){
+        if (currentUser.rol == "admin") {
             tabLayout.addTab(tabLayout.newTab().setText(R.string.sin_asignar))
         }
 
