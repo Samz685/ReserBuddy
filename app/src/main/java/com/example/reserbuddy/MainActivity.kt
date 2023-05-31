@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -169,8 +170,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_usuarios -> {
-                    navController.navigate(R.id.navigation_usuarios)
-                    drawerLayout.closeDrawer(GravityCompat.START)
+                    if(DataHolder.currentUser.rol == "admin") {
+                        navController.navigate(R.id.navigation_usuarios)
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    } else {
+                        Toast.makeText(applicationContext, "No estas autorizado", Toast.LENGTH_SHORT).show()
+                    }
+
+
                     true
                 }
 
