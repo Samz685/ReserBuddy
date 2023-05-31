@@ -1,33 +1,39 @@
 package com.example.reserbuddy.ui.usuarios
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.reserbuddy.DataHolder
-import com.example.reserbuddy.FechaGenerator
 import com.example.reserbuddy.R
+import com.example.reserbuddy.adapters.ClienteAdapter
 import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.UsuarioAdapter
+import com.example.reserbuddy.databinding.FragmentClientesBinding
 import com.example.reserbuddy.databinding.FragmentUsuariosBinding
-import com.example.reserbuddy.ui.botomSheetListas.ListaTareasFragment
-import com.example.reserbuddy.ui.botomSheetListas.ListaUsuariosFragment
+import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Usuario
+import com.example.reservarapp.viewmodels.ClienteViewModel
 import com.example.reservarapp.viewmodels.TareaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
+import java.util.*
+
 
 class UsuariosFragment : Fragment() {
 
     private var _binding: FragmentUsuariosBinding? = null
     private lateinit var listaUsuarios: MutableList<Usuario>
+    private lateinit var listaFiltrada: MutableList<Usuario>
     lateinit var mAdapter: RecyclerView.Adapter<UsuarioAdapter.ViewHolder>
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
     private lateinit var mRecyclerView: RecyclerView
@@ -55,15 +61,30 @@ class UsuariosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        swipeRefresh = binding.swipeRefresh
+        swipeRefresh = binding.swipeRefreshUsuarios
 
         listaUsuarios = mutableListOf<Usuario>()
+        listaFiltrada = mutableListOf<Usuario>()
 
         getAllUsuarios()
         inicializarAdapters()
         refreshUsuarios()
         getTareasSinAsignar()
 
+        binding.etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // No se necesita implementar nada aquí
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // Filtra la lista cada vez que el texto cambia
+                filtrarLista(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // No se necesita implementar nada aquí
+            }
+        })
 
 
     }
@@ -78,34 +99,30 @@ class UsuariosFragment : Fragment() {
 
     private fun resetearContador(){
         binding.tvContadorUsuarios.text = listaUsuarios.size.toString()
+        mAdapter.notifyDataSetChanged()
     }
 
     private fun inicializarAdapters() {
 
-
         mRecyclerView = binding.recyclerUsuarios
         mLayoutManager = LinearLayoutManager(activity)
-        mAdapter = UsuarioAdapter(listaUsuarios, object : OnItemClickListener {
+        mAdapter = UsuarioAdapter(listaFiltrada, object : OnItemClickListener {
             override fun OnItemClick(vista: View, position: Int) {
 
-                val expandible_usuario: LinearLayout = vista.findViewById(R.id.expandible_usuario)
+                DataHolder.currentUser = listaFiltrada[position]
+                goDetalles()
 
-                if (expandible_usuario.visibility == View.VISIBLE) {
-                    expandible_usuario.visibility = View.GONE
-                } else {
-                    expandible_usuario.visibility = View.VISIBLE
-                }
+
+
 
             }
 
             override fun onClick2(position: Int) {
-                var usuario = listaUsuarios[position]
-                    DataHolder.currentUser = usuario
-                    ListaTareasFragment().show(childFragmentManager, "listaTareasFragment")
+
             }
 
             override fun onClick3(position: Int) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onImageClick(position: Int) {
@@ -114,7 +131,7 @@ class UsuariosFragment : Fragment() {
             }
 
 
-        }, usuarioViewModel)
+        },usuarioViewModel)
         mRecyclerView.adapter = mAdapter
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -129,10 +146,15 @@ class UsuariosFragment : Fragment() {
             }
 
 
+            listaFiltrada.clear()
+            listaFiltrada.addAll(listaUsuarios)
+
             resetearContador()
             mAdapter.notifyDataSetChanged()
         })
     }
+
+
 
     fun getTareasSinAsignar() {
         val tareaViewModel = TareaViewModel()
@@ -145,6 +167,22 @@ class UsuariosFragment : Fragment() {
         })
     }
 
+    fun goDetalles(){
+
+        val navController = findNavController(requireParentFragment())
+        navController.navigate(R.id.navigation_detalle_cliente)
+
+    }
+
+    private fun filtrarLista(texto: String) {
+        listaFiltrada.clear()
+        for (item in listaUsuarios) {
+            if (item.alias.lowercase().contains(texto.lowercase(Locale.getDefault()))) {
+                listaFiltrada.add(item)
+            }
+        }
+        mAdapter.notifyDataSetChanged()
+    }
 
 
 
