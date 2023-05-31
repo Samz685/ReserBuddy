@@ -1,12 +1,17 @@
 package com.example.reserbuddy
+
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -21,11 +26,9 @@ import com.example.reserbuddy.databinding.ActivityMainBinding
 import com.example.reserbuddy.ui.login.Login_Activity
 import com.example.reserbuddy.ui.newProducto.NewProductoFragment
 import com.example.reserbuddy.ui.newReserva.NewReservaFragment
-import com.example.reserbuddy.ui.newReserva.NewReservaViewModel
 import com.example.reserbuddy.ui.newTarea.NewTareaFragment
 import com.example.reserbuddy.ui.newTarea.NewTareaViewModel
 import com.example.reserbuddy.ui.reservas.ReservasFragment
-import com.example.reservarapp.viewmodels.ReservaViewModel
 import com.example.reservarapp.viewmodels.UsuarioViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -36,17 +39,17 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 
 
-enum class ProviderType{
-    BASIC
+enum class ProviderType {
+    BASIC,
+    GOOGLE
 }
+
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
     private val usuarioViewModel by lazy { ViewModelProvider(this).get(UsuarioViewModel::class.java) }
-    private lateinit var newReservaViewModel : NewReservaViewModel
-    private lateinit var newTareaViewModel : NewTareaViewModel
-    private lateinit var toggle : ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var auth: FirebaseAuth;
     private lateinit var tvHola: TextView
 
@@ -54,24 +57,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        auth = Firebase.auth
-        FirebaseApp.initializeApp(this)
-        registrarDispositivo()
-        getAllTokens()
 
-        // Comprobar si el usuario ya ha iniciado sesión
-        if (FirebaseAuth.getInstance().currentUser == null) {
-            // El usuario ya ha iniciado sesión, llevarlo a la pantalla principal de la aplicación
-            val intent = Intent(this, Login_Activity::class.java)
-            startActivity(intent)
-            finish()
-            return
-        }
 
-        newReservaViewModel = ViewModelProvider(this).get(NewReservaViewModel::class.java)
-        newTareaViewModel = ViewModelProvider(this).get(NewTareaViewModel::class.java)
+
+
+
+        if (inicializarComponentes()) return
+
+        getCurrentUsuario()
+
+
+
+
+
+
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navViewComponent: NavigationView = findViewById(R.id.nav_view_component)
@@ -81,7 +80,13 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+        toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.open_drawer,
+            R.string.close_drawer
+        )
         toggle.setHomeAsUpIndicator(R.drawable.ic_menu);
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -91,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        getCurrentUsuario()
+
 
         colorMenuItems(navViewComponent)
 
@@ -103,8 +108,13 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_reservas, R.id.navigation_lista_compra, R.id.navigation_tareas,
-                R.id.navigation_clientes, R.id.navigation_detalle_cliente, R.id.navigation_usuarios
+                R.id.navigation_home,
+                R.id.navigation_reservas,
+                R.id.navigation_lista_compra,
+                R.id.navigation_tareas,
+                R.id.navigation_clientes,
+                R.id.navigation_detalle_cliente,
+                R.id.navigation_usuarios
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -115,11 +125,11 @@ class MainActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener {
 
 
-            if (DataHolder.currentFragment == "FragmentReservas"){
+            if (DataHolder.currentFragment == "FragmentReservas") {
                 NewReservaFragment().show(supportFragmentManager, "newReserva")
-            } else if(DataHolder.currentFragment == "FragmentTareas"){
+            } else if (DataHolder.currentFragment == "FragmentTareas") {
                 NewTareaFragment().show(supportFragmentManager, "newTarea")
-            } else if(DataHolder.currentFragment == "FragmentListaCompra") {
+            } else if (DataHolder.currentFragment == "FragmentListaCompra") {
                 NewProductoFragment().show(supportFragmentManager, "newProducto")
             }
 
@@ -130,7 +140,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         navViewComponent.setNavigationItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.nav_home -> {
                     navController.navigate(R.id.navigation_home)
                     drawerLayout.closeDrawer(GravityCompat.START)
@@ -180,7 +190,59 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
 
+    private fun inicializarComponentes(): Boolean {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        auth = Firebase.auth
+        FirebaseApp.initializeApp(this)
+        registrarDispositivo()
+        getAllTokens()
+
+        // Comprobar si el usuario ya ha iniciado sesión
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            // El usuario no ha iniciado sesión, llevarlo a la pantalla Login
+            val intent = Intent(this, Login_Activity::class.java)
+            startActivity(intent)
+            finish()
+            return true
+        }
+        return false
+    }
+
+    private fun showWelcome() {
+        // El usuario ha iniciado sesión recientemente, mostrar el AlertDialog
+        val dialogBuilder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.confirmacion_registro, null)
+        dialogBuilder.setView(dialogView)
+
+
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
+
+        // Obtener el botón del diseño personalizado
+        val btnCerrar = dialogView.findViewById<Button>(R.id.btnAceptarConfir)
+
+        //Customizar saludo y avatar
+        val ivUsuario = dialogView.findViewById<ImageView>(R.id.ivUsuarioConf)
+        val tvNombre = dialogView.findViewById<TextView>(R.id.tvConfir)
+
+
+
+
+        tvNombre.setText("Bienvenido ${DataHolder.currentUser.alias}")
+        ivUsuario.setImageResource(DataHolder.currentUser.foto)
+
+
+        // Agregar la funcionalidad al botón para cerrar el diálogo
+        btnCerrar.setOnClickListener {
+            alertDialog.dismiss() // Cierra el AlertDialog
+        }
+
+        // Configurar el fondo transparente del AlertDialog
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
 
     private fun colorMenuItems(navViewComponent: NavigationView) {
@@ -200,6 +262,20 @@ class MainActivity : AppCompatActivity() {
 
             tvHola.text = "Hola ${DataHolder.currentUser.alias}!"
 
+            val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
+            val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+            println("Estos son los sharedPreferences, su estado es: $isLoggedIn")
+            if (isLoggedIn) {
+
+                showWelcome()
+
+                // Actualizar el indicador de inicio de sesión en SharedPreferences
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("isLoggedIn", false)
+                editor.apply()
+
+
+            }
 
 
         })
@@ -234,16 +310,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun actualizarReservas() {
-        val reservasFragment = supportFragmentManager.findFragmentByTag("ReservasFragment") as? ReservasFragment
+        val reservasFragment =
+            supportFragmentManager.findFragmentByTag("ReservasFragment") as? ReservasFragment
         reservasFragment?.traerReservas()
         reservasFragment?.mAdapter?.notifyDataSetChanged()
         reservasFragment?.onResume()
     }
-
-
-
-
-
 
 
 }

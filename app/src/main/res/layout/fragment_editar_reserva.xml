@@ -51,12 +51,13 @@
                 android:id="@+id/ivDatePicker"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignBottom="@id/etFecha"
+                android:layout_alignBottom="@id/etFechaRes"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:background="?attr/selectableItemBackground"
                 android:padding="12dp"
-                android:src="@drawable/ic_calendar" />
+                android:src="@drawable/ic_calendar"
+                tools:ignore="NotSibling" />
 
 
         </RelativeLayout>

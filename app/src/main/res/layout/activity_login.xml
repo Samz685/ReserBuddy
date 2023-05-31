@@ -79,8 +79,8 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:enabled="false"
-        android:text="Inicia con google"
+        android:enabled="true"
+        android:text="@string/inicia_con_google"
         android:drawableLeft="@drawable/ic_google"/>
 
     <ProgressBar

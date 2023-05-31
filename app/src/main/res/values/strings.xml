@@ -75,5 +75,6 @@
     <string name="confirmar">Confirmar</string>
     <string name="fecha_completada">Fecha completada:</string>
     <string name="actualizar_cliente">Actualizar cliente</string>
+    <string name="inicia_con_google">Inicia con google</string>
 
 </resources>

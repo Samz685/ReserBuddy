@@ -2,6 +2,7 @@ package com.example.reserbuddy.ui.registro
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.media.Image
 import android.net.Uri
@@ -132,10 +133,18 @@ class RegistroActivity : AppCompatActivity() {
                         userProfile.rol = "normal"
                         userProfile.token = token
                         val usuario = UsuarioViewModel()
-                        usuario.addUsuario(userProfile)
+                        userProfile.id = usuario.addUsuario(userProfile)
+                        DataHolder.currentUser = userProfile
+
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
-//                        DialogUtils.showSuccessDialog(this, "Registro exitoso")
+
+                        // Después de la autenticación exitosa con Firebase
+                        val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putBoolean("isLoggedIn", true)
+                        editor.apply()
+
 
                     } else{
                         showAlert()
