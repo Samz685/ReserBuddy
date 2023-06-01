@@ -88,13 +88,9 @@ class NewReservaFragment : BottomSheetDialogFragment() {
         timePickerDialog = TimePickerDialog(
             requireContext(),
             TimePickerDialog.OnTimeSetListener { view, _hourOfDay, _minute ->
-                val selectedTime = "$_hourOfDay:$_minute"
+                val selectedTime = String.format("%02d:%02d",_hourOfDay, _minute)
                 binding.etHora.setText(selectedTime)
-                val timeSelected = Calendar.getInstance()
-                timeSelected.set(Calendar.HOUR_OF_DAY, _hourOfDay)
-                timeSelected.set(Calendar.MINUTE, _minute)
-
-                horaElegida = "$_hourOfDay:$_minute"
+                horaElegida = selectedTime
 
             }, 12, 0, true
         )

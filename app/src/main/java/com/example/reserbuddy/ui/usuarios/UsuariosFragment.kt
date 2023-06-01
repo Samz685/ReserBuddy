@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.reserbuddy.DataHolder
+import com.example.reserbuddy.FechaGenerator
 import com.example.reserbuddy.R
 import com.example.reserbuddy.adapters.ClienteAdapter
 import com.example.reserbuddy.adapters.OnItemClickListener
 import com.example.reserbuddy.adapters.UsuarioAdapter
 import com.example.reserbuddy.databinding.FragmentClientesBinding
 import com.example.reserbuddy.databinding.FragmentUsuariosBinding
+import com.example.reserbuddy.ui.botomSheetListas.ListaTareasFragment
+import com.example.reserbuddy.ui.botomSheetListas.ListaUsuariosFragment
 import com.example.reservarapp.models.Cliente
 import com.example.reservarapp.models.Usuario
 import com.example.reservarapp.viewmodels.ClienteViewModel
@@ -118,6 +121,12 @@ class UsuariosFragment : Fragment() {
             }
 
             override fun onClick2(position: Int) {
+
+                var usuario = listaUsuarios[position]
+
+                    DataHolder.currentUser = usuario
+
+                ListaTareasFragment().show(childFragmentManager, "listaTareasFragment")
 
             }
 
