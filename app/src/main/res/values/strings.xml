@@ -81,5 +81,6 @@
     <string name="ubicacion">Ubicacion</string>
     <string name="rol">Rol</string>
     <string name="actualizar_usuario">Actualizar usuario</string>
+    <string name="registrate">Registrate</string>
 
 </resources>

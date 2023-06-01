@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingBottom="@dimen/fragment_vertical_margin"
     tools:context=".ui.login.Login_Activity"
-    android:background="@drawable/bg_reserbuddy">
+    android:background="@drawable/reserbuddy_back">
 
 
     <EditText
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/edit_text_background"
         android:hint="@string/prompt_email"
@@ -70,7 +70,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:enabled="true"
-            android:text="Registrarte"
+            android:text="@string/registrate"
             android:backgroundTint="@color/white"/>
 
     </LinearLayout>
@@ -81,7 +81,8 @@
         android:layout_gravity="center"
         android:enabled="true"
         android:text="@string/inicia_con_google"
-        android:drawableLeft="@drawable/ic_google"/>
+        android:drawableLeft="@drawable/ic_google"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/loading"
