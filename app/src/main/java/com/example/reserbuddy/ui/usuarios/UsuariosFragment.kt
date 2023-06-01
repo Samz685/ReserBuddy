@@ -112,7 +112,7 @@ class UsuariosFragment : Fragment() {
         mAdapter = UsuarioAdapter(listaFiltrada, object : OnItemClickListener {
             override fun OnItemClick(vista: View, position: Int) {
 
-                DataHolder.currentUser = listaFiltrada[position]
+                DataHolder.selectedUser = listaFiltrada[position]
                 goDetalles()
 
 
@@ -124,7 +124,7 @@ class UsuariosFragment : Fragment() {
 
                 var usuario = listaUsuarios[position]
 
-                    DataHolder.currentUser = usuario
+                    DataHolder.selectedUser = usuario
 
                 ListaTareasFragment().show(childFragmentManager, "listaTareasFragment")
 

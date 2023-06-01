@@ -58,13 +58,16 @@ class UsuarioRepo {
         }
     }
 
+
+
     fun updateRol(usuario: Usuario) {
 
         var usuarioRef = db.collection("perfil_usuarios").document(usuario.id)
 
 
         val datos = hashMapOf(
-            "rol" to usuario.rol
+            "rol" to usuario.rol,
+            "comentario" to usuario.comentario
         )
         usuarioRef.update(datos as Map<String, Any>).addOnSuccessListener {
             Log.i("FireBaase", "Rol Usuario Actualizado")

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/Theme.ReserBuddy"
+    tools:context=".ui.usuarios.EditarUsuarioFragment">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Actualizar usuario"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/sp_rol"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/rol"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:focusable="false"
+            android:clickable="false"/>
+
+        <ImageView
+            android:id="@+id/btnRolMas"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@id/sp_rol"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="12dp"
+            android:src="@drawable/ic_left"
+            android:focusable="true"
+            android:clickable="true"/>
+
+        <ImageView
+            android:id="@+id/btnRolMenos"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@id/sp_rol"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="12dp"
+            android:src="@drawable/ic_right"
+            android:focusable="true"
+            android:clickable="true"/>
+
+
+    </RelativeLayout>
+
+
+    <EditText
+        android:id="@+id/etComentarioUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:gravity="top"
+        android:hint="@string/comentario"
+        android:inputType="textMultiLine|textCapSentences"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp"
+        android:textSize="20sp" />
+
+
+    <Button
+        android:id="@+id/btnAplicarRol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:clickable="true"
+        android:padding="12dp"
+        android:text="@string/aplicar_cambios"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

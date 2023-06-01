@@ -19,6 +19,7 @@ class DataHolder {
         var currentUser = Usuario()
         var currentTarea = Tarea()
         var currentReserva = Reserva()
+        var selectedUser = Usuario()
         var emailRecuperado = ""
         var currentCliente = Cliente()
         var listaTokens = mutableListOf<String>()

@@ -82,8 +82,8 @@ class DetalleUsuarioFragment : Fragment() {
 
         listaTareasTotales = mutableListOf<Tarea>()
 
-        getTareasByCliente(DataHolder.currentUser.id)
-        getByUsuarioEstadoCount(DataHolder.currentUser.id)
+        getTareasByCliente(DataHolder.selectedUser.id)
+        getByUsuarioEstadoCount(DataHolder.selectedUser.id)
 
 
         inicializarAdapters()
@@ -102,7 +102,7 @@ class DetalleUsuarioFragment : Fragment() {
             scaleAnimation.duration = 200
             it.startAnimation(scaleAnimation)
 
-//            EditarUsuarioFragment().show(childFragmentManager, "EditarClienteFragment")
+            EditarUsuarioFragment().show(childFragmentManager, "EditarUsuarioFragment")
         }
 
 
@@ -136,7 +136,7 @@ class DetalleUsuarioFragment : Fragment() {
 
     fun inicializarDetalles(){
 
-        var usuario = DataHolder.currentUser
+        var usuario = DataHolder.selectedUser
 
         ivFoto = binding.ivDetalleUsuario
         tvNombre = binding.tvDetalleUsuarioNombre
@@ -152,13 +152,13 @@ class DetalleUsuarioFragment : Fragment() {
 
 
     }
-    fun refreshUsuarios() {
-        swipeRefresh.setOnRefreshListener {
-            getTareasByCliente(DataHolder.currentCliente.telefono)
-            swipeRefresh.isRefreshing = false
-
-        }
-    }
+//    fun refreshUsuarios() {
+//        swipeRefresh.setOnRefreshListener {
+//            getTareasByCliente(DataHolder.currentCliente.telefono)
+//            swipeRefresh.isRefreshing = false
+//
+//        }
+//    }
 
     fun inicializarChart(){
 
