@@ -88,7 +88,7 @@ class UsuarioRepo {
 
     fun getAll(): LiveData<LinkedList<Usuario>> {
         var usuariosData = MutableLiveData<LinkedList<Usuario>>()
-        val usuarioRef = db.collection("perfil_usuarios")
+        val usuarioRef = db.collection("perfil_usuarios").orderBy("alias")
         usuarioRef.get().addOnSuccessListener { result ->
             var listaUsuarios = LinkedList<Usuario>()
             for (document in result) {

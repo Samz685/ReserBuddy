@@ -268,6 +268,19 @@ class ReservaRepo {
         return reservasData
     }
 
+//    fun getChartTotalMesActual(): LiveData<Int> {
+//
+//        val reservasData = MutableLiveData<Int>()
+//        val reservaRef = db.collection("reservas")
+//        val query = reservaRef.whereEqualTo()
+//
+//        reservaRef.get().addOnSuccessListener { result ->
+//            var countReserva = result.size()
+//            reservasData.value = countReserva
+//        }
+//        return reservasData
+//    }
+
 
     fun getChartEstado(estado: String): LiveData<Int> {
 
